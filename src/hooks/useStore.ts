@@ -1,49 +1,50 @@
-import { useRef, useEffect } from 'react';
-import { useFieldStore } from '../store/useFieldStore';
-import { useValidationStore } from '../store/useValidationStore';
-import { useDebounce } from './useDebounce'; // Importando o hook de debounce
+import { useCallback, useRef } from 'react';
+import { useApiStore } from '../store/useApiStore';
 
-interface UseStoreProps {
-  rules: Array<(value: string) => boolean | string>; // Regras de validação podem retornar um boolean ou uma string de erro
-  debounceTime?: number; // Tempo de debounce em milissegundos (opcional)
+interface StoreField<T> {
+  value: T;
+  setValue: (newValue: T) => void;
+  error: string | null;
+  inputRef: React.RefObject<HTMLInputElement>;
 }
 
-export const useStore = ({ rules, debounceTime = 500 }: UseStoreProps) => {
+// Hook para gerenciar campos de forma genérica dentro da store
+export const useStore = <T extends Record<string, any>>(
+  initialValue: T[keyof T],  // Corrige para pegar o tipo correto do valor
+  fieldName: keyof T,        // Corrige para aceitar chaves de string
+  rules: ((value: T[keyof T]) => string | null)[] // Regras aplicadas ao tipo correto
+): StoreField<T[keyof T]> => {
+  const data = useApiStore((state) => state.data); // Usa um seletor para acessar data
+  const setData = useApiStore((state) => state.setData); // Usa um seletor para acessar setData
+
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { setFieldValue, getFieldValue } = useFieldStore();
-  const { validateField, getError, setError } = useValidationStore();
-
-  // Obtém o valor do campo da store
-  const value = inputRef.current ? getFieldValue(inputRef.current.name) : '';
-
-  // Usa o debounce para retardar a validação
-  const debouncedValue = useDebounce(value, debounceTime);
-
-  useEffect(() => {
-    if (inputRef.current) {
-      const field = inputRef.current.name;
-
-      // Valida o valor apenas após o debounce
-      const errorMessage = validateField(field, debouncedValue, rules);
-
-      // Define a mensagem de erro (se houver)
-      setError(field, errorMessage);
+  // Função para validar o campo com base nas regras fornecidas
+  const validateField = useCallback((): string | null => {
+    const value = data?.[fieldName];
+    for (const rule of rules) {
+      const errorMessage = rule(value as T[keyof T]); // Garantindo que o valor seja do tipo correto
+      if (errorMessage) return errorMessage;
     }
-  }, [debouncedValue]); // O efeito só roda quando o valor "debounced" muda
+    return null;
+  }, [data, fieldName, rules]);
 
-  // Função para atualizar o valor e validar
-  const setValue = (value: string) => {
-    if (inputRef.current) {
-      const field = inputRef.current.name;
-      setFieldValue(field, value); // Atualiza o valor na store de campos
-    }
-  };
+  const setValue = useCallback(
+    (newValue: T[keyof T]) => {
+      setData((prevData: any) => ({
+        ...prevData,
+        [fieldName]: newValue,
+      }));
+    },
+    [setData, fieldName]
+  );
+
+  const error = validateField();
 
   return {
-    inputRef, // Retorna a ref que será usada no componente de input
-    setValue, // Função para atualizar o valor do campo
-    value, // Retorna o valor atual do campo
-    error: inputRef.current ? getError(inputRef.current.name) : '', // Retorna o erro (se houver)
+    value: data?.[fieldName] || initialValue,
+    setValue,
+    error,
+    inputRef,
   };
 };
