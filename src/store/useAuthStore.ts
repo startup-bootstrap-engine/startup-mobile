@@ -1,49 +1,88 @@
 import { create } from 'zustand';
+import { getToken, removeToken, setToken } from '../utils/tokenStorage';
+import { isTokenValid } from '../utils/jwtUtils';
 
 interface AuthState {
   token: string | null;
+  isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (username: string, password: string) => Promise<void>;
-  logout: () => void;
-  isAuthenticated: boolean; // Estado calculado a partir do token
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  checkAuth: () => Promise<void>; // Função para verificar o estado de autenticação
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   token: null,
-  isLoading: false,
+  isAuthenticated: false,
+  isLoading: true,
   error: null,
 
-  login: async (username, password) => {
+  // Função de login que faz a chamada à API e armazena o token
+  login: async (email, password) => {
     set({ isLoading: true, error: null });
 
     try {
-      const response = await fetch('https://example.com/api/login', {
+      // Substitua pela sua URL de API de login
+      const response = await fetch('http://localhost:5002/auth/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
+        referrerPolicy: 'strict-origin-when-cross-origin', // Set the referrer policy
       });
 
       if (!response.ok) {
-        throw new Error('Falha ao autenticar');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Falha no login');
       }
 
       const data = await response.json();
-      set({ token: data.token, isLoading: false, error: null });
+      const token = data.token;
+
+      // Armazenar o token no Capacitor Storage (seguro)
+      await setToken(token);
+
+      set({
+        token,
+        isAuthenticated: true,
+        isLoading: false,
+        error: null,
+      });
     } catch (error: unknown) {
-      // Define que o erro será do tipo unknown
-      if (error instanceof Error) {
-        set({ isLoading: false, error: error.message });
-      } else {
-        set({ isLoading: false, error: 'An unknown error occurred' });
-      }
+      set({
+        isLoading: false,
+        error: 'Erro no login. Verifique suas credenciais.',
+      });
     }
   },
 
-  logout: () => set({ token: null }),
+  // Função para verificar se o usuário está autenticado (token válido)
+  checkAuth: async () => {
+    set({ isLoading: true });
+    const token = await getToken(); // Carrega o token do Capacitor Storage
+    if (token && isTokenValid(token)) {
+      set({ token, isAuthenticated: true, isLoading: false });
+    } else {
+      set({ token: null, isAuthenticated: false, isLoading: false });
+    }
+  },
 
-  // Verifica se o usuário está autenticado com base no token
-  isAuthenticated: get().token !== null, // Se houver token, o usuário está autenticado
+  // Função de logout que remove o token
+  logout: async () => {
+    const token = await getToken();
+    if (token) {
+      await fetch('https://localhost:5002/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'content-Type': 'application/json',
+        },
+        referrerPolicy: 'strict-origin-when-cross-origin', // Set the referrer policy
+      });
+    }
+    await removeToken();
+    set({ token: null, isAuthenticated: false });
+  },
 }));

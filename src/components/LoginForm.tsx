@@ -1,54 +1,81 @@
-import React from 'react';
-import { IonButton, IonInput, IonItem, IonLabel, IonText } from '@ionic/react';
-import { useStore } from '../hooks/useStore';
+import React, { useState, useEffect } from 'react';
+import { IonButton, IonInput, IonItem, IonLabel, IonText, IonLoading } from '@ionic/react';
 import { required } from '../validation/required';
 import { minLength } from '../validation/minLength';
 import { emailValidator } from '../validation/emailValidator';
+import { useAuthStore } from '../store/useAuthStore';
+import { useHistory } from 'react-router-dom';
 
-interface LoginFormData {
-  email: string;
-  password: string;
-}
+const LoginForm: React.FC = () => {
+  const history = useHistory();
+  const { login, isLoading, error, isAuthenticated, checkAuth } = useAuthStore();
 
-const LoginForm = () => {
-  // Hook para gerenciar o campo email com regras de validação
-  const emailField = useStore<LoginFormData>(
-    '', // Valor inicial
-    'email', // Nome do campo
-    [required('Email'), emailValidator] // Regras de validação
-  );
+  // Estados locais para os campos
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  // Hook para gerenciar o campo senha com regras de validação
-  const passwordField = useStore<LoginFormData>(
-    '', // Valor inicial
-    'password', // Nome do campo
-    [required('Senha'), minLength(6)] // Regras de validação
-  );
+  // Verifica a autenticação quando o componente é montado
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Validação de campos
+  const validateEmail = () => {
+    const error = emailValidator(email) || required('Email')(email);
+    setEmailError(error);
+    return !error;
+  };
+
+  const validatePassword = () => {
+    const error = minLength(2)(password) || required('Senha')(password);
+    setPasswordError(error);
+    return !error;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!emailField.error && !passwordField.error) {
-      console.log('Formulário enviado com sucesso');
+
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+
+    if (isEmailValid && isPasswordValid) {
+      await login(email, password); // Chama o login da store
     }
   };
+
+  // Redireciona se autenticado
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/dashboard');
+    }
+  }, [isAuthenticated, history]);
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
+
+      {/* Exibe erros de login, se houver */}
+      {error && (
+        <IonText color="danger">
+          <p>{error}</p>
+        </IonText>
+      )}
 
       {/* Campo de Email com Ionic */}
       <IonItem>
         <IonLabel position="floating">Email</IonLabel>
         <IonInput
           type="email"
-          value={emailField.value}
-          onIonChange={(e) => emailField.setValue(e.detail.value!)}
-          ref={emailField.inputRef}
+          value={email} // Estado local gerencia o valor
+          onIonChange={(e) => setEmail(e.detail.value!)} // Atualiza o estado local
+          onBlur={validateEmail} // Valida ao perder o foco
         />
       </IonItem>
-      {emailField.error && (
+      {emailError && (
         <IonText color="danger">
-          <p>{emailField.error}</p>
+          <p>{emailError}</p>
         </IonText>
       )}
 
@@ -57,16 +84,19 @@ const LoginForm = () => {
         <IonLabel position="floating">Senha</IonLabel>
         <IonInput
           type="password"
-          value={passwordField.value}
-          onIonChange={(e) => passwordField.setValue(e.detail.value!)}
-          ref={passwordField.inputRef}
+          value={password} // Estado local gerencia o valor
+          onIonChange={(e) => setPassword(e.detail.value!)} // Atualiza o estado local
+          onBlur={validatePassword} // Valida ao perder o foco
         />
       </IonItem>
-      {passwordField.error && (
+      {passwordError && (
         <IonText color="danger">
-          <p>{passwordField.error}</p>
+          <p>{passwordError}</p>
         </IonText>
       )}
+
+      {/* Exibe um spinner de carregamento enquanto o login está em andamento */}
+      <IonLoading isOpen={isLoading} message={'Entrando...'} />
 
       {/* Botão de Login com Ionic */}
       <IonButton expand="full" type="submit">
