@@ -14,7 +14,7 @@ const Register: React.FC = () => {
     setLoading(true);
     setError(null);
     setSuccessMessage(null);
-
+    const apiURL = import.meta.env.VITE_API_URL;
     if (password !== passwordConfirmation) {
       setError('As senhas não coincidem.');
       setLoading(false);
@@ -22,7 +22,7 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5002/auth/signup', {
+      const response = await fetch(`${apiURL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

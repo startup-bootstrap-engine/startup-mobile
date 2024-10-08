@@ -11,17 +11,17 @@ interface AuthState {
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>; // Função para verificar o estado de autenticação
 }
-
+const apiURL = import.meta.env.VITE_API_URL;
 export const useAuthStore = create<AuthState>((set) => ({
   token: null,
   isAuthenticated: false,
   isLoading: true,
   error: null,
-
+  
   // Função de login que faz a chamada à API e armazena o token
   login: async (email, password) => {
+ 
     set({ isLoading: true, error: null });
-    const apiURL = import.meta.env.VITE_API_URL;
     try {
       // Substitua pela sua URL de API de login
       const response = await fetch(`${apiURL}auth/login`, {
@@ -73,7 +73,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     const token = await getToken();
     if (token) {
-      await fetch('https://localhost:5002/auth/logout', {
+      await fetch(`${apiURL}/auth/logout`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
