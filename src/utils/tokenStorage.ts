@@ -1,17 +1,17 @@
-import { Storage } from '@capacitor/storage';
+import { Preferences } from "@capacitor/preferences";
 
 export const setToken = async (token: string) => {
-  await Storage.set({
+  await Preferences.set({
     key: 'authToken',
     value: token,
   });
 };
 
 export const getToken = async () => {
-  const { value } = await Storage.get({ key: 'authToken' });
+  const { value } = await Preferences.get({ key: 'authToken' });
   return value;
 };
 
 export const removeToken = async () => {
-  await Storage.remove({ key: 'authToken' });
+  await Preferences.remove({ key: 'authToken' });
 };

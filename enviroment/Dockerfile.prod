@@ -1,0 +1,29 @@
+# Etapa 1: Build do frontend
+FROM node:18 AS build
+
+# Define o diretório de trabalho
+WORKDIR /usr/src/app
+
+# Copia o package.json e o package-lock.json
+COPY package*.json ./
+
+# Instala as dependências de produção
+RUN npm install --only=production
+
+# Copia o restante do código para o contêiner
+COPY . .
+
+# Executa o build do projeto
+RUN npm run build
+
+# Etapa 2: Servir o frontend em produção usando o Nginx
+FROM nginx:alpine AS prod
+
+# Copia o build da etapa anterior para o Nginx
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+
+# Exposição da porta do Nginx
+EXPOSE 80
+
+# Comando para iniciar o Nginx
+CMD ["nginx", "-g", "daemon off;"]

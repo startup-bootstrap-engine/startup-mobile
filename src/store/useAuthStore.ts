@@ -21,10 +21,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   // Função de login que faz a chamada à API e armazena o token
   login: async (email, password) => {
     set({ isLoading: true, error: null });
-
+    const apiURL = import.meta.env.VITE_API_URL;
     try {
       // Substitua pela sua URL de API de login
-      const response = await fetch('http://localhost:5002/auth/login', {
+      const response = await fetch(`${apiURL}auth/login`, {
         method: 'POST',
         headers: {
           'content-Type': 'application/json',

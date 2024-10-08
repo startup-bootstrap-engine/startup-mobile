@@ -1,0 +1,23 @@
+# Etapa 1: Build do desenvolvimento
+FROM node:18 AS dev
+
+# Define o diretório de trabalho
+WORKDIR /usr/src/app
+
+# Copia o package.json e o package-lock.json
+COPY package*.json ./
+
+# Instala as dependências
+RUN npm install
+
+# Copia o restante do código para o contêiner
+COPY . .
+
+# Define a variável de ambiente para o modo de desenvolvimento
+ENV NODE_ENV=development
+
+# Exposição da porta do frontend (Vite por padrão usa a porta 5173)
+EXPOSE 5173
+
+# Comando para rodar o Vite no modo desenvolvimento
+CMD ["npm", "run", "dev"]
