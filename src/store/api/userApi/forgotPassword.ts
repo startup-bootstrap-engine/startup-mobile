@@ -1,10 +1,10 @@
-import { AuthState } from "./types/authTypes";
+import { AuthState } from './types/authTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
 export const forgotPassword = async (
   email: string,
-  set: (state: Partial<AuthState>) => void
+  set: (state: Partial<AuthState>) => void,
 ): Promise<void> => {
   try {
     set({ isLoading: true, error: null });

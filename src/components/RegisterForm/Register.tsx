@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonButton, IonText, IonLoading } from '@ionic/react';
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonText,
+  IonLoading,
+} from '@ionic/react';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -58,22 +70,37 @@ const Register: React.FC = () => {
       <IonContent className="ion-padding">
         <IonItem>
           <IonLabel position="floating">Nome</IonLabel>
-          <IonInput value={name} onIonChange={(e) => setName(e.detail.value!)} />
+          <IonInput
+            value={name}
+            onIonChange={(e) => setName(e.detail.value!)}
+          />
         </IonItem>
 
         <IonItem>
           <IonLabel position="floating">Email</IonLabel>
-          <IonInput type="email" value={email} onIonChange={(e) => setEmail(e.detail.value!)} />
+          <IonInput
+            type="email"
+            value={email}
+            onIonChange={(e) => setEmail(e.detail.value!)}
+          />
         </IonItem>
 
         <IonItem>
           <IonLabel position="floating">Senha</IonLabel>
-          <IonInput type="password" value={password} onIonChange={(e) => setPassword(e.detail.value!)} />
+          <IonInput
+            type="password"
+            value={password}
+            onIonChange={(e) => setPassword(e.detail.value!)}
+          />
         </IonItem>
 
         <IonItem>
           <IonLabel position="floating">Confirme sua senha</IonLabel>
-          <IonInput type="password" value={passwordConfirmation} onIonChange={(e) => setPasswordConfirmation(e.detail.value!)} />
+          <IonInput
+            type="password"
+            value={passwordConfirmation}
+            onIonChange={(e) => setPasswordConfirmation(e.detail.value!)}
+          />
         </IonItem>
 
         {error && (

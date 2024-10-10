@@ -9,7 +9,10 @@ interface PrivateRouteProps {
   exact?: boolean;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
+  component: Component,
+  ...rest
+}) => {
   const { isAuthenticated, isLoading } = useAuthStore();
 
   if (isLoading) {

@@ -4,7 +4,7 @@ import { isTokenValid } from '../../../utils/jwtUtils';
 import { TokenResponse } from './types/tokenTypes';
 
 export const checkAuth = async (
-  set: (state: Partial<AuthState>) => void
+  set: (state: Partial<AuthState>) => void,
 ): Promise<void> => {
   set({ isLoading: true });
 

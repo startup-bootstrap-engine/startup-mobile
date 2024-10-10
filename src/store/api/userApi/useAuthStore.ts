@@ -14,13 +14,25 @@ interface AuthState {
   isLoading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, passwordConfirmation: string, name: string) => Promise<void>;
+  signUp: (
+    email: string,
+    password: string,
+    passwordConfirmation: string,
+    name: string,
+  ) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
-  changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
+  changePassword: (
+    currentPassword: string,
+    newPassword: string,
+  ) => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
   getGoogleOAuthUrl: () => Promise<void>;
-  appleLogin: (idToken: string, email: string, authorizationCode: string) => Promise<void>; // Adiciona a função para login com Apple
+  appleLogin: (
+    idToken: string,
+    email: string,
+    authorizationCode: string,
+  ) => Promise<void>; // Adiciona a função para login com Apple
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -36,18 +48,29 @@ export const useAuthStore = create<AuthState>((set) => ({
       await login(email, password, set);
       set({ isLoading: false });
     } catch (error: any) {
-      set({ isLoading: false, error: error.message || 'Erro no login. Verifique suas credenciais.' });
+      set({
+        isLoading: false,
+        error: error.message || 'Erro no login. Verifique suas credenciais.',
+      });
     }
   },
 
   // Função de sign up
-  signUp: async (email: string, password: string, passwordConfirmation: string, name: string) => {
+  signUp: async (
+    email: string,
+    password: string,
+    passwordConfirmation: string,
+    name: string,
+  ) => {
     try {
       set({ isLoading: true, error: null });
       await signUp(email, password, passwordConfirmation, name, set);
       set({ isLoading: false });
     } catch (error: any) {
-      set({ isLoading: false, error: error.message || 'Erro no registro. Verifique suas informações.' });
+      set({
+        isLoading: false,
+        error: error.message || 'Erro no registro. Verifique suas informações.',
+      });
     }
   },
 
@@ -80,7 +103,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       await changePassword(currentPassword, newPassword, set);
       set({ isLoading: false });
     } catch (error: any) {
-      set({ isLoading: false, error: error.message || 'Erro ao alterar a senha.' });
+      set({
+        isLoading: false,
+        error: error.message || 'Erro ao alterar a senha.',
+      });
     }
   },
 
@@ -91,7 +117,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       await forgotPassword(email, set);
       set({ isLoading: false });
     } catch (error: any) {
-      set({ isLoading: false, error: error.message || 'Erro ao tentar recuperar a senha.' });
+      set({
+        isLoading: false,
+        error: error.message || 'Erro ao tentar recuperar a senha.',
+      });
     }
   },
 
@@ -103,18 +132,28 @@ export const useAuthStore = create<AuthState>((set) => ({
       window.location.href = googleOAuthUrl; // Redireciona para a URL do Google OAuth
       set({ isLoading: false });
     } catch (error: any) {
-      set({ isLoading: false, error: error.message || 'Erro ao gerar URL de autenticação do Google.' });
+      set({
+        isLoading: false,
+        error: error.message || 'Erro ao gerar URL de autenticação do Google.',
+      });
     }
   },
 
   // Função para login com Apple
-  appleLogin: async (idToken: string, email: string, authorizationCode: string) => {
+  appleLogin: async (
+    idToken: string,
+    email: string,
+    authorizationCode: string,
+  ) => {
     try {
       set({ isLoading: true });
       await appleLogin(idToken, email, authorizationCode, set); // Chama a função appleLogin
       set({ isLoading: false });
     } catch (error: any) {
-      set({ isLoading: false, error: error.message || 'Erro ao fazer login com Apple.' });
+      set({
+        isLoading: false,
+        error: error.message || 'Erro ao fazer login com Apple.',
+      });
     }
   },
 }));

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useApiStore } from '../store/useApiStore';
 
 interface StoreField<T> {
@@ -10,9 +10,9 @@ interface StoreField<T> {
 
 // Hook para gerenciar campos de forma genérica dentro da store
 export const useStore = <T extends Record<string, any>>(
-  initialValue: T[keyof T],  // Corrige para pegar o tipo correto do valor
-  fieldName: keyof T,        // Corrige para aceitar chaves de string
-  rules: ((value: T[keyof T]) => string | null)[] // Regras aplicadas ao tipo correto
+  initialValue: T[keyof T], // Corrige para pegar o tipo correto do valor
+  fieldName: keyof T, // Corrige para aceitar chaves de string
+  rules: ((value: T[keyof T]) => string | null)[], // Regras aplicadas ao tipo correto
 ): StoreField<T[keyof T]> => {
   const data = useApiStore((state) => state.data); // Usa um seletor para acessar data
   const setData = useApiStore((state) => state.setData); // Usa um seletor para acessar setData
@@ -36,7 +36,7 @@ export const useStore = <T extends Record<string, any>>(
         [fieldName]: newValue,
       }));
     },
-    [setData, fieldName]
+    [setData, fieldName],
   );
 
   const error = validateField();

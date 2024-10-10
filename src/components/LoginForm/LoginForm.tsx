@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { IonButton, IonInput, IonItem, IonLabel, IonText, IonLoading } from '@ionic/react';
+import {
+  IonButton,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonText,
+  IonLoading,
+} from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
 import GoogleLoginButton from './GoogleLoginButton'; // Importando o botão de login com Google
@@ -7,7 +14,8 @@ import AppleLoginButton from './AppleLoginButton';
 
 const LoginForm: React.FC = () => {
   const history = useHistory();
-  const { login, isLoading, error, isAuthenticated, checkAuth } = useAuthStore();
+  const { login, isLoading, error, isAuthenticated, checkAuth } =
+    useAuthStore();
 
   // Estados locais para os campos
   const [email, setEmail] = useState<string>('');
@@ -28,7 +36,8 @@ const LoginForm: React.FC = () => {
   };
 
   const validatePassword = () => {
-    const error = password.length < 6 ? 'A senha deve ter no mínimo 6 caracteres' : null;
+    const error =
+      password.length < 6 ? 'A senha deve ter no mínimo 6 caracteres' : null;
     setPasswordError(error);
     return !error;
   };
@@ -54,14 +63,12 @@ const LoginForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
-
       {/* Exibe erros de login, se houver */}
       {error && (
         <IonText color="danger">
           <p>{error}</p>
         </IonText>
       )}
-
       {/* Campo de Email com Ionic */}
       <IonItem>
         <IonLabel position="floating">Email</IonLabel>
@@ -77,7 +84,6 @@ const LoginForm: React.FC = () => {
           <p>{emailError}</p>
         </IonText>
       )}
-
       {/* Campo de Senha com Ionic */}
       <IonItem>
         <IonLabel position="floating">Senha</IonLabel>
@@ -93,19 +99,15 @@ const LoginForm: React.FC = () => {
           <p>{passwordError}</p>
         </IonText>
       )}
-
       {/* Exibe um spinner de carregamento enquanto o login está em andamento */}
       <IonLoading isOpen={isLoading} message={'Entrando...'} />
-
       {/* Botão de Login com Email/Senha */}
       <IonButton expand="full" type="submit">
         Entrar
       </IonButton>
-
       {/* Botão de Login com Google */}
       <GoogleLoginButton /> {/* Botão de login com Google */}
       <AppleLoginButton />
-
     </form>
   );
 };

@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { IonButton, IonInput, IonItem, IonLabel, IonText, IonLoading } from '@ionic/react';
+import {
+  IonButton,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonText,
+  IonLoading,
+} from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
 const ChangePasswordForm: React.FC = () => {
@@ -8,7 +15,8 @@ const ChangePasswordForm: React.FC = () => {
   // Estados locais para os campos
   const [currentPassword, setCurrentPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
-  const [newPasswordConfirmation, setNewPasswordConfirmation] = useState<string>('');
+  const [newPasswordConfirmation, setNewPasswordConfirmation] =
+    useState<string>('');
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const validatePassword = () => {

@@ -10,7 +10,7 @@ export const signUp = async (
   password: string,
   passwordConfirmation: string,
   name: string,
-  set: (state: Partial<AuthState>) => void
+  set: (state: Partial<AuthState>) => void,
 ): Promise<IUser> => {
   set({ isLoading: true, error: null });
   try {

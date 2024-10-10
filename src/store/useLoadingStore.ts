@@ -7,12 +7,12 @@ interface LoadingStore {
   stopLoading: () => void;
 }
 
-export const useLoadingStore = create<LoadingStore>(set => ({
+export const useLoadingStore = create<LoadingStore>((set) => ({
   isLoading: false,
   activeRequests: 0, // Inicializa sem requisições ativas
 
   startLoading: () =>
-    set(state => {
+    set((state) => {
       const newActiveRequests = state.activeRequests + 1;
       return {
         activeRequests: newActiveRequests,
@@ -21,7 +21,7 @@ export const useLoadingStore = create<LoadingStore>(set => ({
     }),
 
   stopLoading: () =>
-    set(state => {
+    set((state) => {
       const newActiveRequests = state.activeRequests - 1;
       return {
         activeRequests: newActiveRequests,

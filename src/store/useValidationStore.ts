@@ -1,10 +1,12 @@
-// src/store/useValidationStore.ts
-
 import { create } from 'zustand';
 
 interface ValidationState {
   errors: Record<string, string | null>;
-  validateField: (field: string, value: string, rules: Array<(value: string) => boolean | string>) => string;
+  validateField: (
+    field: string,
+    value: string,
+    rules: Array<(value: string) => boolean | string>,
+  ) => string;
   setError: (field: string, error: string | null) => void;
   getError: (field: string) => string | null;
 }
