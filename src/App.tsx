@@ -33,9 +33,9 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import PrivateRoute from './components/PrivateRoute';
-import LoginForm from './components/LoginForm';
+import LoginForm from './components/LoginForm/LoginForm';
 import Dashboard from './components/Dashboard';
-import Register from './components/Register';
+import Register from './components/RegisterForm/Register';
 
 setupIonicReact();
 

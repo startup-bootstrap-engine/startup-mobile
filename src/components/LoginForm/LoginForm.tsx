@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonText, IonLoading } from '@ionic/react';
-import { useAuthStore } from '../store/api/userApi/useAuthStore';
+import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
 import GoogleLoginButton from './GoogleLoginButton'; // Importando o botão de login com Google
 import AppleLoginButton from './AppleLoginButton';

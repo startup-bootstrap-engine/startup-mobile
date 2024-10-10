@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonText, IonLoading } from '@ionic/react';
-import { useAuthStore } from '../store/api/userApi/useAuthStore';
+import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
 const ForgotPasswordForm: React.FC = () => {
   const { forgotPassword, isLoading, error } = useAuthStore();

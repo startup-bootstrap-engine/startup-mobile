@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonButton } from '@ionic/react';
-import { useAuthStore } from '../store/api/userApi/useAuthStore';
+import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
 const AppleLoginButton: React.FC = () => {
   const { appleLogin } = useAuthStore();
