@@ -3,7 +3,8 @@ import { login } from './login';
 import { signUp } from './signUp';
 import { logout } from './logout';
 import { checkAuth } from './checkAuth';
-import { changePassword } from './changePassword'; // Importando a função de changePassword
+import { changePassword } from './changePassword';
+import { forgotPassword } from './forgotPassword'; // Importa a função de forgotPassword
 
 interface AuthState {
   token: string | null;
@@ -14,7 +15,8 @@ interface AuthState {
   signUp: (email: string, password: string, passwordConfirmation: string, name: string) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
-  changePassword: (currentPassword: string, newPassword: string) => Promise<void>; // Adicionando a assinatura da função
+  changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>; // Adicionando a assinatura da função
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -71,10 +73,21 @@ export const useAuthStore = create<AuthState>((set) => ({
   changePassword: async (currentPassword: string, newPassword: string) => {
     try {
       set({ isLoading: true });
-      await changePassword(currentPassword, newPassword, set); // Chama a função changePassword com os dados necessários
+      await changePassword(currentPassword, newPassword, set);
       set({ isLoading: false });
     } catch (error: any) {
       set({ isLoading: false, error: error.message || 'Erro ao alterar a senha.' });
+    }
+  },
+
+  // Função de recuperação de senha (forgot password)
+  forgotPassword: async (email: string) => {
+    try {
+      set({ isLoading: true });
+      await forgotPassword(email, set); // Chama a função forgotPassword
+      set({ isLoading: false });
+    } catch (error: any) {
+      set({ isLoading: false, error: error.message || 'Erro ao tentar recuperar a senha.' });
     }
   },
 }));
