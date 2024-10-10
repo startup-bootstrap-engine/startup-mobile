@@ -3,6 +3,7 @@ import { IonButton, IonInput, IonItem, IonLabel, IonText, IonLoading } from '@io
 import { useAuthStore } from '../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
 import GoogleLoginButton from './GoogleLoginButton'; // Importando o botão de login com Google
+import AppleLoginButton from './AppleLoginButton';
 
 const LoginForm: React.FC = () => {
   const history = useHistory();
@@ -103,6 +104,7 @@ const LoginForm: React.FC = () => {
 
       {/* Botão de Login com Google */}
       <GoogleLoginButton /> {/* Botão de login com Google */}
+      <AppleLoginButton />
 
     </form>
   );

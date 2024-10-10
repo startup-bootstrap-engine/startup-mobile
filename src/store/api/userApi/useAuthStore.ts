@@ -5,7 +5,8 @@ import { logout } from './logout';
 import { checkAuth } from './checkAuth';
 import { changePassword } from './changePassword';
 import { forgotPassword } from './forgotPassword';
-import { getGoogleOAuthUrl } from './googleOAuth'; // Importa a função para Google OAuth
+import { getGoogleOAuthUrl } from './googleOAuth';
+import { appleLogin } from './appleLogin'; // Importa a função de login com Apple
 
 interface AuthState {
   token: string | null;
@@ -18,7 +19,8 @@ interface AuthState {
   checkAuth: () => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
-  getGoogleOAuthUrl: () => Promise<void>; // Adiciona a função para obter a URL do Google OAuth
+  getGoogleOAuthUrl: () => Promise<void>;
+  appleLogin: (idToken: string, email: string, authorizationCode: string) => Promise<void>; // Adiciona a função para login com Apple
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -102,6 +104,17 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ isLoading: false });
     } catch (error: any) {
       set({ isLoading: false, error: error.message || 'Erro ao gerar URL de autenticação do Google.' });
+    }
+  },
+
+  // Função para login com Apple
+  appleLogin: async (idToken: string, email: string, authorizationCode: string) => {
+    try {
+      set({ isLoading: true });
+      await appleLogin(idToken, email, authorizationCode, set); // Chama a função appleLogin
+      set({ isLoading: false });
+    } catch (error: any) {
+      set({ isLoading: false, error: error.message || 'Erro ao fazer login com Apple.' });
     }
   },
 }));
