@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/react';
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuthStore } from '../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {

@@ -3,7 +3,7 @@ import { IonButton, IonInput, IonItem, IonLabel, IonText, IonLoading } from '@io
 import { required } from '../validation/required';
 import { minLength } from '../validation/minLength';
 import { emailValidator } from '../validation/emailValidator';
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuthStore } from '../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
@@ -29,7 +29,7 @@ const LoginForm: React.FC = () => {
   };
 
   const validatePassword = () => {
-    const error = minLength(2)(password) || required('Senha')(password);
+    const error = minLength(6)(password) || required('Senha')(password); // Ajuste no mínimo de caracteres para senha
     setPasswordError(error);
     return !error;
   };

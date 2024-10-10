@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuthStore } from '../store/api/userApi/useAuthStore';
 import { IonLoading } from '@ionic/react';
 
 interface PrivateRouteProps {
