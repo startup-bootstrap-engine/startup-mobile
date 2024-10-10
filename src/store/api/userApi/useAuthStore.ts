@@ -4,7 +4,8 @@ import { signUp } from './signUp';
 import { logout } from './logout';
 import { checkAuth } from './checkAuth';
 import { changePassword } from './changePassword';
-import { forgotPassword } from './forgotPassword'; // Importa a função de forgotPassword
+import { forgotPassword } from './forgotPassword';
+import { getGoogleOAuthUrl } from './googleOAuth'; // Importa a função para Google OAuth
 
 interface AuthState {
   token: string | null;
@@ -16,7 +17,8 @@ interface AuthState {
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
-  forgotPassword: (email: string) => Promise<void>; // Adicionando a assinatura da função
+  forgotPassword: (email: string) => Promise<void>;
+  getGoogleOAuthUrl: () => Promise<void>; // Adiciona a função para obter a URL do Google OAuth
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -84,10 +86,22 @@ export const useAuthStore = create<AuthState>((set) => ({
   forgotPassword: async (email: string) => {
     try {
       set({ isLoading: true });
-      await forgotPassword(email, set); // Chama a função forgotPassword
+      await forgotPassword(email, set);
       set({ isLoading: false });
     } catch (error: any) {
       set({ isLoading: false, error: error.message || 'Erro ao tentar recuperar a senha.' });
+    }
+  },
+
+  // Função para obter a URL de OAuth do Google
+  getGoogleOAuthUrl: async () => {
+    try {
+      set({ isLoading: true });
+      const googleOAuthUrl = await getGoogleOAuthUrl();
+      window.location.href = googleOAuthUrl; // Redireciona para a URL do Google OAuth
+      set({ isLoading: false });
+    } catch (error: any) {
+      set({ isLoading: false, error: error.message || 'Erro ao gerar URL de autenticação do Google.' });
     }
   },
 }));

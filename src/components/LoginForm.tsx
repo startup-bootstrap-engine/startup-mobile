@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonText, IonLoading } from '@ionic/react';
-import { required } from '../validation/required';
-import { minLength } from '../validation/minLength';
-import { emailValidator } from '../validation/emailValidator';
 import { useAuthStore } from '../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
+import GoogleLoginButton from './GoogleLoginButton'; // Importando o botão de login com Google
 
 const LoginForm: React.FC = () => {
   const history = useHistory();
@@ -23,13 +21,13 @@ const LoginForm: React.FC = () => {
 
   // Validação de campos
   const validateEmail = () => {
-    const error = emailValidator(email) || required('Email')(email);
+    const error = email.length === 0 ? 'Email é obrigatório' : null;
     setEmailError(error);
     return !error;
   };
 
   const validatePassword = () => {
-    const error = minLength(6)(password) || required('Senha')(password); // Ajuste no mínimo de caracteres para senha
+    const error = password.length < 6 ? 'A senha deve ter no mínimo 6 caracteres' : null;
     setPasswordError(error);
     return !error;
   };
@@ -98,10 +96,14 @@ const LoginForm: React.FC = () => {
       {/* Exibe um spinner de carregamento enquanto o login está em andamento */}
       <IonLoading isOpen={isLoading} message={'Entrando...'} />
 
-      {/* Botão de Login com Ionic */}
+      {/* Botão de Login com Email/Senha */}
       <IonButton expand="full" type="submit">
         Entrar
       </IonButton>
+
+      {/* Botão de Login com Google */}
+      <GoogleLoginButton /> {/* Botão de login com Google */}
+
     </form>
   );
 };
