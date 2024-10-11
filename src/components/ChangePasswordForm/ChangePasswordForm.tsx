@@ -8,7 +8,7 @@ import {
   IonLoading,
 } from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
-import { changePasswordSchema } from './zodValidation';
+import { changePasswordSchema } from './changePassowrdSchema';
 
 export const ChangePasswordForm: React.FC = () => {
   const { changePassword, isLoading, error } = useAuthStore();

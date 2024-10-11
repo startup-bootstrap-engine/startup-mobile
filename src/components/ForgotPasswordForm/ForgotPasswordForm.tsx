@@ -9,7 +9,7 @@ import {
 } from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 import { z } from 'zod';
-import { forgotPasswordSchema } from './zodValidation';
+import { forgotPasswordSchema } from './forgotPasswordSchema';
 
 export const ForgotPasswordForm: React.FC = () => {
   const { forgotPassword, isLoading, error } = useAuthStore();
