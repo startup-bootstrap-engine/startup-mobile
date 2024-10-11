@@ -1732,17 +1732,9 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@*":
+"@types/jest@*", "@types/jest@^29.5.13":
   version "29.5.13"
   resolved "https://registry.npmjs.org/@types/jest/-/jest-29.5.13.tgz"
-  integrity sha512-wd+MVEZCHt23V0/L642O5APvspWply/rGY5BcW4SUETo2UzPU3Z26qr8jC2qxpimI2jjx9h7+2cj2FwIr01bXg==
-  dependencies:
-    expect "^29.0.0"
-    pretty-format "^29.0.0"
-
-"@types/jest@^29.5.13":
-  version "29.5.13"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-29.5.13.tgz#8bc571659f401e6a719a7bf0dbcb8b78c71a8adc"
   integrity sha512-wd+MVEZCHt23V0/L642O5APvspWply/rGY5BcW4SUETo2UzPU3Z26qr8jC2qxpimI2jjx9h7+2cj2FwIr01bXg==
   dependencies:
     expect "^29.0.0"
@@ -6146,6 +6138,11 @@ yocto-queue@^1.0.0:
   version "1.1.1"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-1.1.1.tgz"
   integrity sha512-b4JR1PFR10y1mKjhHY9LaGo6tmrgjit7hxVIeAmyMw3jegXR4dhYqLaQF5zMXZxY7tLpMyJeLjr1C4rLmkVe8g==
+
+zod@^3.23.8:
+  version "3.23.8"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.23.8.tgz#e37b957b5d52079769fb8097099b592f0ef4067d"
+  integrity sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==
 
 zustand@^5.0.0-rc.2:
   version "5.0.0-rc.2"

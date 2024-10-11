@@ -10,7 +10,7 @@ import {
 import { useAuthStore } from '../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
 
-const Dashboard: React.FC = () => {
+export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore(); // Hook para realizar o logout
   const history = useHistory();
 
@@ -38,5 +38,3 @@ const Dashboard: React.FC = () => {
     </IonPage>
   );
 };
-
-export default Dashboard;

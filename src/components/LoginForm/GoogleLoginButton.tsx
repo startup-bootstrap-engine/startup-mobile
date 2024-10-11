@@ -2,7 +2,7 @@ import React from 'react';
 import { IonButton } from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
-const GoogleLoginButton: React.FC = () => {
+export const GoogleLoginButton: React.FC = () => {
   const { getGoogleOAuthUrl } = useAuthStore();
 
   const handleGoogleLogin = async () => {
@@ -15,5 +15,3 @@ const GoogleLoginButton: React.FC = () => {
     </IonButton>
   );
 };
-
-export default GoogleLoginButton;

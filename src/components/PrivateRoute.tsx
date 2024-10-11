@@ -9,7 +9,7 @@ interface PrivateRouteProps {
   exact?: boolean;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   component: Component,
   ...rest
 }) => {
@@ -28,5 +28,3 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
     />
   );
 };
-
-export default PrivateRoute;

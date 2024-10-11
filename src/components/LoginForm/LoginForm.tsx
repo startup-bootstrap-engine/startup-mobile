@@ -9,10 +9,12 @@ import {
 } from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
-import GoogleLoginButton from './GoogleLoginButton'; // Importando o botão de login com Google
+import { GoogleLoginButton } from './GoogleLoginButton';
 import AppleLoginButton from './AppleLoginButton';
+import { z } from 'zod';
+import { loginSchema } from './loginSchema';
 
-const LoginForm: React.FC = () => {
+export const LoginForm: React.FC = () => {
   const history = useHistory();
   const { login, isLoading, error, isAuthenticated, checkAuth } =
     useAuthStore();
@@ -28,29 +30,39 @@ const LoginForm: React.FC = () => {
     checkAuth();
   }, [checkAuth]);
 
-  // Validação de campos
-  const validateEmail = () => {
-    const error = email.length === 0 ? 'Email é obrigatório' : null;
-    setEmailError(error);
-    return !error;
-  };
+  // Função de validação com Zod
+  const validateForm = () => {
+    const validation = loginSchema.safeParse({ email, password });
 
-  const validatePassword = () => {
-    const error =
-      password.length < 6 ? 'A senha deve ter no mínimo 6 caracteres' : null;
-    setPasswordError(error);
-    return !error;
+    if (!validation.success) {
+      // Reseta os erros
+      setEmailError(null);
+      setPasswordError(null);
+
+      // Mapeia os erros
+      validation.error.errors.forEach((err) => {
+        if (err.path[0] === 'email') {
+          setEmailError(err.message);
+        } else if (err.path[0] === 'password') {
+          setPasswordError(err.message);
+        }
+      });
+      return false;
+    }
+
+    // Limpa os erros se a validação passar
+    setEmailError(null);
+    setPasswordError(null);
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const isEmailValid = validateEmail();
-    const isPasswordValid = validatePassword();
+    // Valida o formulário usando Zod antes de tentar o login
+    if (!validateForm()) return;
 
-    if (isEmailValid && isPasswordValid) {
-      await login(email, password); // Chama o login da store
-    }
+    await login(email, password); // Chama o login da store
   };
 
   // Redireciona se autenticado
@@ -74,9 +86,9 @@ const LoginForm: React.FC = () => {
         <IonLabel position="floating">Email</IonLabel>
         <IonInput
           type="email"
-          value={email} // Estado local gerencia o valor
+          value={email}
           onIonChange={(e) => setEmail(e.detail.value!)} // Atualiza o estado local
-          onBlur={validateEmail} // Valida ao perder o foco
+          onBlur={() => validateForm()} // Valida ao perder o foco
         />
       </IonItem>
       {emailError && (
@@ -89,9 +101,9 @@ const LoginForm: React.FC = () => {
         <IonLabel position="floating">Senha</IonLabel>
         <IonInput
           type="password"
-          value={password} // Estado local gerencia o valor
+          value={password}
           onIonChange={(e) => setPassword(e.detail.value!)} // Atualiza o estado local
-          onBlur={validatePassword} // Valida ao perder o foco
+          onBlur={() => validateForm()} // Valida ao perder o foco
         />
       </IonItem>
       {passwordError && (
@@ -111,5 +123,3 @@ const LoginForm: React.FC = () => {
     </form>
   );
 };
-
-export default LoginForm;

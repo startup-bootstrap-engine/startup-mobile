@@ -8,30 +8,47 @@ import {
   IonLoading,
 } from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
+import { changePasswordSchema } from './zodValidation';
 
-const ChangePasswordForm: React.FC = () => {
+export const ChangePasswordForm: React.FC = () => {
   const { changePassword, isLoading, error } = useAuthStore();
 
   // Estados locais para os campos
-  const [currentPassword, setCurrentPassword] = useState<string>('');
-  const [newPassword, setNewPassword] = useState<string>('');
-  const [newPasswordConfirmation, setNewPasswordConfirmation] =
-    useState<string>('');
-  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    newPasswordConfirmation: '',
+  });
 
-  const validatePassword = () => {
-    if (newPassword !== newPasswordConfirmation) {
-      setPasswordError('As senhas não coincidem');
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  // Atualiza os valores dos campos
+  const handleInputChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  // Validação com Zod
+  const validateForm = () => {
+    const validation = changePasswordSchema.safeParse(formData);
+
+    if (!validation.success) {
+      const errors: Record<string, string> = {};
+      validation.error.errors.forEach((err) => {
+        errors[err.path[0]] = err.message;
+      });
+      setFormErrors(errors);
       return false;
     }
-    setPasswordError(null);
+
+    setFormErrors({});
     return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validatePassword()) return;
+    if (!validateForm()) return;
 
+    const { currentPassword, newPassword } = formData;
     await changePassword(currentPassword, newPassword);
   };
 
@@ -51,33 +68,47 @@ const ChangePasswordForm: React.FC = () => {
         <IonLabel position="floating">Senha Atual</IonLabel>
         <IonInput
           type="password"
-          value={currentPassword}
-          onIonChange={(e) => setCurrentPassword(e.detail.value!)}
+          value={formData.currentPassword}
+          onIonChange={(e) =>
+            handleInputChange('currentPassword', e.detail.value!)
+          }
         />
       </IonItem>
+      {formErrors.currentPassword && (
+        <IonText color="danger">
+          <p>{formErrors.currentPassword}</p>
+        </IonText>
+      )}
 
       {/* Campo de Nova Senha */}
       <IonItem>
         <IonLabel position="floating">Nova Senha</IonLabel>
         <IonInput
           type="password"
-          value={newPassword}
-          onIonChange={(e) => setNewPassword(e.detail.value!)}
+          value={formData.newPassword}
+          onIonChange={(e) => handleInputChange('newPassword', e.detail.value!)}
         />
       </IonItem>
+      {formErrors.newPassword && (
+        <IonText color="danger">
+          <p>{formErrors.newPassword}</p>
+        </IonText>
+      )}
 
       {/* Campo de Confirmação de Nova Senha */}
       <IonItem>
         <IonLabel position="floating">Confirmação de Nova Senha</IonLabel>
         <IonInput
           type="password"
-          value={newPasswordConfirmation}
-          onIonChange={(e) => setNewPasswordConfirmation(e.detail.value!)}
+          value={formData.newPasswordConfirmation}
+          onIonChange={(e) =>
+            handleInputChange('newPasswordConfirmation', e.detail.value!)
+          }
         />
       </IonItem>
-      {passwordError && (
+      {formErrors.newPasswordConfirmation && (
         <IonText color="danger">
-          <p>{passwordError}</p>
+          <p>{formErrors.newPasswordConfirmation}</p>
         </IonText>
       )}
 
@@ -91,5 +122,3 @@ const ChangePasswordForm: React.FC = () => {
     </form>
   );
 };
-
-export default ChangePasswordForm;

@@ -1,128 +1,127 @@
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonButton,
-  IonText,
-  IonLoading,
-} from '@ionic/react';
+import { IonButton, IonInput, IonItem, IonLabel, IonText } from '@ionic/react';
+import { useHistory } from 'react-router-dom';
+import { z } from 'zod';
+import { useAuthStore } from '../../store/api/userApi/useAuthStore';
+import { registrationSchema } from './zodValldation';
 
-const Register: React.FC = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+export const RegisterForm: React.FC = () => {
+  const history = useHistory();
+  const { signUp, isLoading, error } = useAuthStore();
 
-  const handleRegister = async () => {
-    setLoading(true);
-    setError(null);
-    setSuccessMessage(null);
-    const apiURL = import.meta.env.VITE_API_URL;
-    if (password !== passwordConfirmation) {
-      setError('As senhas não coincidem.');
-      setLoading(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+  });
+
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validação usando Zod
+    const validation = registrationSchema.safeParse(formData);
+
+    if (!validation.success) {
+      const errors: Record<string, string> = {};
+      validation.error.errors.forEach((err) => {
+        errors[err.path[0]] = err.message;
+      });
+      setFormErrors(errors);
       return;
     }
 
-    try {
-      const response = await fetch(`${apiURL}/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          passwordConfirmation,
-          name,
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Erro ao criar usuário');
-      }
-
-      setSuccessMessage('Usuário criado com sucesso!');
-    } catch (err: any) {
-      setError(err.message || 'Erro desconhecido');
-    } finally {
-      setLoading(false);
-    }
+    // Chama a função de registro se a validação passar
+    const { name, email, password, passwordConfirmation } = formData;
+    await signUp(email, password, passwordConfirmation, name);
+    history.push('/login');
   };
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Registrar</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-        <IonItem>
-          <IonLabel position="floating">Nome</IonLabel>
-          <IonInput
-            value={name}
-            onIonChange={(e) => setName(e.detail.value!)}
-          />
-        </IonItem>
+    <form onSubmit={handleSubmit}>
+      <h2>Registrar-se</h2>
 
-        <IonItem>
-          <IonLabel position="floating">Email</IonLabel>
-          <IonInput
-            type="email"
-            value={email}
-            onIonChange={(e) => setEmail(e.detail.value!)}
-          />
-        </IonItem>
+      {error && (
+        <IonText color="danger">
+          <p>{error}</p>
+        </IonText>
+      )}
 
-        <IonItem>
-          <IonLabel position="floating">Senha</IonLabel>
-          <IonInput
-            type="password"
-            value={password}
-            onIonChange={(e) => setPassword(e.detail.value!)}
-          />
-        </IonItem>
+      <IonItem>
+        <IonLabel position="floating">Nome</IonLabel>
+        <IonInput
+          type="text"
+          value={formData.name}
+          onIonChange={(e) => handleInputChange('name', e.detail.value!)}
+        />
+      </IonItem>
+      {formErrors.name && (
+        <IonText color="danger">
+          <p>{formErrors.name}</p>
+        </IonText>
+      )}
 
-        <IonItem>
-          <IonLabel position="floating">Confirme sua senha</IonLabel>
-          <IonInput
-            type="password"
-            value={passwordConfirmation}
-            onIonChange={(e) => setPasswordConfirmation(e.detail.value!)}
-          />
-        </IonItem>
+      <IonItem>
+        <IonLabel position="floating">Email</IonLabel>
+        <IonInput
+          type="email"
+          value={formData.email}
+          onIonChange={(e) => handleInputChange('email', e.detail.value!)}
+        />
+      </IonItem>
+      {formErrors.email && (
+        <IonText color="danger">
+          <p>{formErrors.email}</p>
+        </IonText>
+      )}
 
-        {error && (
-          <IonText color="danger">
-            <p>{error}</p>
-          </IonText>
-        )}
+      <IonItem>
+        <IonLabel position="floating">Senha</IonLabel>
+        <IonInput
+          type="password"
+          value={formData.password}
+          onIonChange={(e) => handleInputChange('password', e.detail.value!)}
+        />
+      </IonItem>
+      {formErrors.password && (
+        <IonText color="danger">
+          <p>{formErrors.password}</p>
+        </IonText>
+      )}
 
-        {successMessage && (
-          <IonText color="success">
-            <p>{successMessage}</p>
-          </IonText>
-        )}
+      <IonItem>
+        <IonLabel position="floating">Confirmar Senha</IonLabel>
+        <IonInput
+          type="password"
+          value={formData.passwordConfirmation}
+          onIonChange={(e) =>
+            handleInputChange('passwordConfirmation', e.detail.value!)
+          }
+        />
+      </IonItem>
+      {formErrors.passwordConfirmation && (
+        <IonText color="danger">
+          <p>{formErrors.passwordConfirmation}</p>
+        </IonText>
+      )}
 
-        <IonButton expand="full" onClick={handleRegister} disabled={loading}>
-          Criar Conta
-        </IonButton>
+      <IonButton expand="full" type="submit" disabled={isLoading}>
+        Registrar-se
+      </IonButton>
 
-        <IonLoading isOpen={loading} message="Criando conta..." />
-      </IonContent>
-    </IonPage>
+      <IonButton
+        expand="full"
+        fill="outline"
+        onClick={() => history.push('/login')}
+      >
+        Já tem uma conta? Faça login
+      </IonButton>
+    </form>
   );
 };
-
-export default Register;

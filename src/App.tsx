@@ -32,10 +32,11 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import PrivateRoute from './components/PrivateRoute';
-import LoginForm from './components/LoginForm/LoginForm';
-import Dashboard from './components/Dashboard';
-import Register from './components/RegisterForm/Register';
+import { LoginForm } from './components/LoginForm/LoginForm';
+import { ForgotPasswordForm } from './components/ForgotPasswordForm/ForgotPasswordForm';
+import { Dashboard } from './components/Dashboard';
+import { PrivateRoute } from './components/PrivateRoute';
+import { RegisterForm } from './components/RegisterForm/Register';
 
 setupIonicReact();
 
@@ -43,10 +44,11 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
+        <Route exact path="/register" component={RegisterForm} />
         <Route exact path="/login" component={LoginForm} />
-        <Route exact path="/register" component={Register} />
+        <Route exact path="/changePassoword" component={ForgotPasswordForm} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
-        <Redirect exact from="/" to="/login" />
+        <Redirect exact from="/" to="/register" />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
