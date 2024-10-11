@@ -31,12 +31,11 @@ import '@ionic/react/css/display.css';
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-import './theme/variables.css';
-import { LoginForm } from './components/LoginForm/LoginForm';
-import { ForgotPasswordForm } from './components/ForgotPasswordForm/ForgotPasswordForm';
+import { LoginForm } from './pages/LoginForm/LoginForm';
+import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordForm';
 import { Dashboard } from './components/Dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
-import { RegisterForm } from './components/RegisterForm/Register';
+import { RegisterForm } from './pages/RegisterForm/Register';
 
 setupIonicReact();
 
