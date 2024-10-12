@@ -16,8 +16,20 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint",
-    "prepare": "husky"
+    "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "prepare": "husky",
+     "ionic:serve": "ionic serve",
+     "ionic:build": "ionic build",
+     "ionic:info": "ionic info",
+     "cap:add:android": "npx cap add android",
+     "cap:add:ios": "npx cap add ios",
+     "cap:sync": "npx cap sync",
+     "cap:copy": "npx cap copy",
+     "cap:open:android": "npx cap open android",
+     "cap:open:ios": "npx cap open ios",
+     "cap:build:android": "npx cap run android --target emulator",
+     "cap:build:ios": "npx cap run ios --target simulator",
+     "clean": "rm -rf node_modules && rm -rf dist && yarn install"
   },
   "dependencies": {
     "@capacitor/app": "6.0.1",
