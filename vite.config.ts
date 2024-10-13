@@ -8,7 +8,7 @@ import type { UserConfig as VitestUserConfig } from 'vitest/config';
 
 declare module 'vite' {
   export interface UserConfig {
-    test: VitestUserConfig['test'];
+    test?: VitestUserConfig['test'];
   }
 }
 
