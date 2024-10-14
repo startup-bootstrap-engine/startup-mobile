@@ -1,2 +1,2 @@
 yarn tsc
-yarn lint-staged
+yarn lint --fix
