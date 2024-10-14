@@ -15,5 +15,5 @@ export const useDebounce = (value: string, delay: number) => {
     };
   }, [value, delay]);
 
-  return debouncedValue; // Retorna o valor atualizado apenas após o debounce
+  return debouncedValue;
 };
