@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   IonButton,
   IonInput,
@@ -8,52 +8,35 @@ import {
   IonLoading,
 } from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { changePasswordSchema } from './changePassowrdSchema';
+
+interface ChangePasswordFormData {
+  currentPassword: string;
+  newPassword: string;
+  newPasswordConfirmation: string;
+}
 
 export const ChangePasswordForm: React.FC = () => {
   const { changePassword, isLoading, error } = useAuthStore();
 
-  // Estados locais para os campos
-  const [formData, setFormData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    newPasswordConfirmation: '',
+  // Setup React Hook Form com Zod resolver
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ChangePasswordFormData>({
+    resolver: zodResolver(changePasswordSchema),
   });
 
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-
-  // Atualiza os valores dos campos
-  const handleInputChange = (field: string, value: string) => {
-    setFormData({ ...formData, [field]: value });
-  };
-
-  // Validação com Zod
-  const validateForm = () => {
-    const validation = changePasswordSchema.safeParse(formData);
-
-    if (!validation.success) {
-      const errors: Record<string, string> = {};
-      validation.error.errors.forEach((err) => {
-        errors[err.path[0]] = err.message;
-      });
-      setFormErrors(errors);
-      return false;
-    }
-
-    setFormErrors({});
-    return true;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    const { currentPassword, newPassword } = formData;
+  const onSubmit = async (data: ChangePasswordFormData) => {
+    const { currentPassword, newPassword } = data;
     await changePassword(currentPassword, newPassword);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h2>Alterar Senha</h2>
 
       {/* Exibe erros de alteração de senha */}
@@ -66,49 +49,33 @@ export const ChangePasswordForm: React.FC = () => {
       {/* Campo de Senha Atual */}
       <IonItem>
         <IonLabel position="floating">Senha Atual</IonLabel>
-        <IonInput
-          type="password"
-          value={formData.currentPassword}
-          onIonChange={(e) =>
-            handleInputChange('currentPassword', e.detail.value!)
-          }
-        />
+        <IonInput type="password" {...register('currentPassword')} />
       </IonItem>
-      {formErrors.currentPassword && (
+      {errors.currentPassword && (
         <IonText color="danger">
-          <p>{formErrors.currentPassword}</p>
+          <p>{errors.currentPassword.message}</p>
         </IonText>
       )}
 
       {/* Campo de Nova Senha */}
       <IonItem>
         <IonLabel position="floating">Nova Senha</IonLabel>
-        <IonInput
-          type="password"
-          value={formData.newPassword}
-          onIonChange={(e) => handleInputChange('newPassword', e.detail.value!)}
-        />
+        <IonInput type="password" {...register('newPassword')} />
       </IonItem>
-      {formErrors.newPassword && (
+      {errors.newPassword && (
         <IonText color="danger">
-          <p>{formErrors.newPassword}</p>
+          <p>{errors.newPassword.message}</p>
         </IonText>
       )}
 
       {/* Campo de Confirmação de Nova Senha */}
       <IonItem>
         <IonLabel position="floating">Confirmação de Nova Senha</IonLabel>
-        <IonInput
-          type="password"
-          value={formData.newPasswordConfirmation}
-          onIonChange={(e) =>
-            handleInputChange('newPasswordConfirmation', e.detail.value!)
-          }
-        />
+        <IonInput type="password" {...register('newPasswordConfirmation')} />
       </IonItem>
-      {formErrors.newPasswordConfirmation && (
+      {errors.newPasswordConfirmation && (
         <IonText color="danger">
-          <p>{formErrors.newPasswordConfirmation}</p>
+          <p>{errors.newPasswordConfirmation.message}</p>
         </IonText>
       )}
 

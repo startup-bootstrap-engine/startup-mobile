@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonText } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import { z } from 'zod';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 import { registrationSchema } from './registerSchema';
 

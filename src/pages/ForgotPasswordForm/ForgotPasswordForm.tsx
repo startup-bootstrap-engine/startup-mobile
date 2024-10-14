@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   IonButton,
   IonInput,
@@ -8,40 +8,32 @@ import {
   IonLoading,
 } from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
-import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { forgotPasswordSchema } from './forgotPasswordSchema';
+
+interface ForgotPasswordFormData {
+  email: string;
+}
 
 export const ForgotPasswordForm: React.FC = () => {
   const { forgotPassword, isLoading, error } = useAuthStore();
-  const [email, setEmail] = useState<string>('');
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-  // Validação com Zod
-  const validateForm = () => {
-    const validation = forgotPasswordSchema.safeParse({ email });
+  // Configura o React Hook Form com Zod
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ForgotPasswordFormData>({
+    resolver: zodResolver(forgotPasswordSchema),
+  });
 
-    if (!validation.success) {
-      const errors: Record<string, string> = {};
-      validation.error.errors.forEach((err) => {
-        errors[err.path[0]] = err.message;
-      });
-      setFormErrors(errors);
-      return false;
-    }
-
-    setFormErrors({});
-    return true;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    await forgotPassword(email);
+  const onSubmit = async (data: ForgotPasswordFormData) => {
+    await forgotPassword(data.email);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h2>Recuperar Senha</h2>
 
       {/* Exibe erros de recuperação de senha */}
@@ -56,13 +48,12 @@ export const ForgotPasswordForm: React.FC = () => {
         <IonLabel position="floating">Email</IonLabel>
         <IonInput
           type="email"
-          value={email}
-          onIonChange={(e) => setEmail(e.detail.value!)}
+          {...register('email')} // Vincula o campo ao controle do React Hook Form
         />
       </IonItem>
-      {formErrors.email && (
+      {errors.email && (
         <IonText color="danger">
-          <p>{formErrors.email}</p>
+          <p>{errors.email.message}</p>
         </IonText>
       )}
 
