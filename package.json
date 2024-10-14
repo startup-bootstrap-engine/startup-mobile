@@ -19,7 +19,6 @@
     "test": "yarn test.unit",
     "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
     "prepare": "husky",
-    "ionic:serve": "ionic serve",
     "ionic:build": "ionic build",
     "ionic:info": "ionic info",
     "cap:add:android": "npx cap add android",
