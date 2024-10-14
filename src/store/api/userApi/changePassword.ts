@@ -1,5 +1,6 @@
-import { getToken } from '../../../utils/tokenStorage';
+import { getToken, removeToken } from '../../../utils/tokenStorage';
 import { AuthState } from './types/authTypes';
+import { logout } from './logout'; // Importa a função de logout para reutilizar
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -29,6 +30,10 @@ export const changePassword = async (
       const errorData = await response.json();
       throw new Error(errorData.message || 'Erro ao alterar a senha');
     }
+
+    // Limpa os tokens e faz o logout após a troca de senha
+    await removeToken(); // Remove os tokens armazenados localmente
+    await logout(set); // Desloga o usuário (limpa o estado de autenticação)
 
     set({ isLoading: false, error: null });
   } catch (error: any) {
