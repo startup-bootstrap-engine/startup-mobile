@@ -1,0 +1,56 @@
+{
+  "common": {
+    "error": "Erro",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "noData": "Nenhum dado disponível.",
+    "add": "Adicionar",
+    "save": "Salvar",
+    "submit": "Enviar",
+    "loading": "Carregando dados",
+    "backToLogin": "Voltar para o login"
+  },
+  "dashboard": {
+    "title": "Painel",
+    "subtitle": "Bem-vindo ao painel.",
+    "description": "Aqui você pode ver o conteúdo privado do usuário autenticado."
+  },
+  "loginForm": {
+    "title": "Formulário de login",
+    "logout": "Sair",
+    "login": "Entrar",
+    "email": "E-mail",
+    "password": "Senha",
+    "forgotPassword": "Esqueceu a senha?",
+    "appleLogin": "Entrar com Apple",
+    "googleLogin": "Entrar com Google",
+    "loggingIn": "Entrando"
+  },
+  "passwordForms": {
+    "currentPassword": "Senha atual",
+    "newPassword": "Nova senha",
+    "updatingPassword": "Atualizando senha",
+    "confirmPassword": "Confirmar senha",
+    "passwordRecoveryForm": "Formulário de recuperação de senha",
+    "changePasswordForm": "Formulário de alteração de senha",
+    "updatePassword": "Altere a senha"
+  },
+  "validations": {
+    "required": "Campo obrigatório.",
+    "email": "E-mail inválido.",
+    "password": "A senha deve ter pelo menos {{number}} caracteres.",
+    "passwordNotMatch": "As senhas não coincidem."
+  },
+  "registrationForm": {
+    "title": "Formulário de registro",
+    "name": "Nome",
+    "confirmPassword": "Confirmar senha",
+    "register": "Registrar",
+    "registerSuccess": "Usuário registrado com sucesso.",
+    "registerError": "Erro ao registrar o usuário.",
+    "registeringUser": "Registrando usuário",
+    "existingUser": "Já tem uma conta? Faça login",
+    "authenticationVerification": "Verificando autenticação"
+  }
+}

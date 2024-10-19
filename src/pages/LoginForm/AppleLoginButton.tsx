@@ -1,9 +1,11 @@
 import React from 'react';
 import { IonButton } from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
+import { useTranslations } from '../../hooks/useTranslations';
 
 const AppleLoginButton: React.FC = () => {
   const { appleLogin } = useAuthStore();
+  const { t } = useTranslations();
 
   const handleAppleLogin = async () => {
     // Aqui você pegaria os dados da Apple (idToken, email, authorizationCode) de algum modo, como a API da Apple
@@ -15,7 +17,7 @@ const AppleLoginButton: React.FC = () => {
 
   return (
     <IonButton expand="full" onClick={handleAppleLogin}>
-      Login com Apple
+      {t('loginForm.appleLogin')}
     </IonButton>
   );
 };

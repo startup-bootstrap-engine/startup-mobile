@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonText } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
-import { registrationSchema } from './registerSchema';
+import { useTranslations } from '../../hooks/useTranslations';
+import { useRegistrationSchema } from '../../hooks/useRegistrationSchema';
 
 export const RegisterForm: React.FC = () => {
   const history = useHistory();
   const { signUp, isLoading, error } = useAuthStore();
+  const { t } = useTranslations();
+  const registrationSchema = useRegistrationSchema();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -24,7 +27,6 @@ export const RegisterForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validação usando Zod
     const validation = registrationSchema.safeParse(formData);
 
     if (!validation.success) {
@@ -35,8 +37,6 @@ export const RegisterForm: React.FC = () => {
       setFormErrors(errors);
       return;
     }
-
-    // Chama a função de registro se a validação passar
     const { name, email, password, passwordConfirmation } = formData;
     await signUp(email, password, passwordConfirmation, name);
     history.push('/login');
@@ -44,7 +44,7 @@ export const RegisterForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Registrar-se</h2>
+      <h2>{t('registrationForm.title')}</h2>
 
       {error && (
         <IonText color="danger">
@@ -53,7 +53,7 @@ export const RegisterForm: React.FC = () => {
       )}
 
       <IonItem>
-        <IonLabel position="floating">Nome</IonLabel>
+        <IonLabel position="floating">{t('registrationForm.name')}</IonLabel>
         <IonInput
           type="text"
           value={formData.name}
@@ -67,7 +67,7 @@ export const RegisterForm: React.FC = () => {
       )}
 
       <IonItem>
-        <IonLabel position="floating">Email</IonLabel>
+        <IonLabel position="floating">{t('loginForm.email')}</IonLabel>
         <IonInput
           type="email"
           value={formData.email}
@@ -81,7 +81,7 @@ export const RegisterForm: React.FC = () => {
       )}
 
       <IonItem>
-        <IonLabel position="floating">Senha</IonLabel>
+        <IonLabel position="floating">{t('loginForm.password')}</IonLabel>
         <IonInput
           type="password"
           value={formData.password}
@@ -95,7 +95,9 @@ export const RegisterForm: React.FC = () => {
       )}
 
       <IonItem>
-        <IonLabel position="floating">Confirmar Senha</IonLabel>
+        <IonLabel position="floating">
+          {t('registrationForm.confirmPassword')}
+        </IonLabel>
         <IonInput
           type="password"
           value={formData.passwordConfirmation}
@@ -111,7 +113,7 @@ export const RegisterForm: React.FC = () => {
       )}
 
       <IonButton expand="full" type="submit" disabled={isLoading}>
-        Registrar-se
+        {t('registrationForm.register')}
       </IonButton>
 
       <IonButton
@@ -119,7 +121,7 @@ export const RegisterForm: React.FC = () => {
         fill="outline"
         onClick={() => history.push('/login')}
       >
-        Já tem uma conta? Faça login
+        {t('registrationForm.existingUser')}
       </IonButton>
     </form>
   );
