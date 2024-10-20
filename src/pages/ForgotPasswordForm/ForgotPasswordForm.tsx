@@ -10,7 +10,8 @@ import {
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { forgotPasswordSchema } from './forgotPasswordSchema';
+import { useTranslations } from '../../hooks/useTranslations';
+import { useForgotPasswordForm } from '../../hooks/useForgotPasswordSchema';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -18,8 +19,9 @@ interface ForgotPasswordFormData {
 
 export const ForgotPasswordForm: React.FC = () => {
   const { forgotPassword, isLoading, error } = useAuthStore();
+  const { t } = useTranslations();
+  const forgotPasswordSchema = useForgotPasswordForm();
 
-  // Configura o React Hook Form com Zod
   const {
     register,
     handleSubmit,
@@ -34,35 +36,27 @@ export const ForgotPasswordForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Recuperar Senha</h2>
-
-      {/* Exibe erros de recuperação de senha */}
+      <h2>{t('passwordForms.passwordRecoveryForm')}</h2>
       {error && (
         <IonText color="danger">
           <p>{error}</p>
         </IonText>
       )}
-
-      {/* Campo de Email */}
       <IonItem>
-        <IonLabel position="floating">Email</IonLabel>
-        <IonInput
-          type="email"
-          {...register('email')} // Vincula o campo ao controle do React Hook Form
-        />
+        <IonLabel position="floating">{t('loginForm.email')}</IonLabel>
+        <IonInput type="email" {...register('email')} />
       </IonItem>
       {errors.email && (
         <IonText color="danger">
           <p>{errors.email.message}</p>
         </IonText>
       )}
-
-      {/* Exibe um spinner de carregamento enquanto a recuperação está em andamento */}
-      <IonLoading isOpen={isLoading} message={'Processando...'} />
-
-      {/* Botão de Solicitar Senha */}
+      <IonLoading
+        isOpen={isLoading}
+        message={t('passwordForms.updatingPassword')}
+      />
       <IonButton expand="full" type="submit">
-        Enviar
+        {t('common.submit')}
       </IonButton>
     </form>
   );

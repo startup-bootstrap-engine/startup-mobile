@@ -10,7 +10,8 @@ import {
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { changePasswordSchema } from './changePassowrdSchema';
+import { useChangePasswordSchema } from '../../hooks/useChangePasswordSchema';
+import { useTranslations } from '../../hooks/useTranslations';
 
 interface ChangePasswordFormData {
   currentPassword: string;
@@ -20,8 +21,9 @@ interface ChangePasswordFormData {
 
 export const ChangePasswordForm: React.FC = () => {
   const { changePassword, isLoading, error } = useAuthStore();
+  const { t } = useTranslations();
+  const changePasswordSchema = useChangePasswordSchema();
 
-  // Setup React Hook Form com Zod resolver
   const {
     register,
     handleSubmit,
@@ -37,18 +39,16 @@ export const ChangePasswordForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Alterar Senha</h2>
-
-      {/* Exibe erros de alteração de senha */}
+      <h2>{t('passwordForms.changePasswordForm')}</h2>
       {error && (
         <IonText color="danger">
           <p>{error}</p>
         </IonText>
       )}
-
-      {/* Campo de Senha Atual */}
       <IonItem>
-        <IonLabel position="floating">Senha Atual</IonLabel>
+        <IonLabel position="floating">
+          {t('passwordForms.currentPassword')}
+        </IonLabel>
         <IonInput type="password" {...register('currentPassword')} />
       </IonItem>
       {errors.currentPassword && (
@@ -56,10 +56,10 @@ export const ChangePasswordForm: React.FC = () => {
           <p>{errors.currentPassword.message}</p>
         </IonText>
       )}
-
-      {/* Campo de Nova Senha */}
       <IonItem>
-        <IonLabel position="floating">Nova Senha</IonLabel>
+        <IonLabel position="floating">
+          {t('passwordForms.newPassword')}
+        </IonLabel>
         <IonInput type="password" {...register('newPassword')} />
       </IonItem>
       {errors.newPassword && (
@@ -67,10 +67,10 @@ export const ChangePasswordForm: React.FC = () => {
           <p>{errors.newPassword.message}</p>
         </IonText>
       )}
-
-      {/* Campo de Confirmação de Nova Senha */}
       <IonItem>
-        <IonLabel position="floating">Confirmação de Nova Senha</IonLabel>
+        <IonLabel position="floating">
+          {t('passwordForms.confirmPassword')}
+        </IonLabel>
         <IonInput type="password" {...register('newPasswordConfirmation')} />
       </IonItem>
       {errors.newPasswordConfirmation && (
@@ -78,13 +78,12 @@ export const ChangePasswordForm: React.FC = () => {
           <p>{errors.newPasswordConfirmation.message}</p>
         </IonText>
       )}
-
-      {/* Exibe um spinner de carregamento enquanto a alteração está em andamento */}
-      <IonLoading isOpen={isLoading} message={'Alterando senha...'} />
-
-      {/* Botão de Alterar Senha */}
+      <IonLoading
+        isOpen={isLoading}
+        message={t('passwordForms.updatingPassword')}
+      />
       <IonButton expand="full" type="submit">
-        Alterar Senha
+        {t('passwordForms.updatePassword')}
       </IonButton>
     </form>
   );

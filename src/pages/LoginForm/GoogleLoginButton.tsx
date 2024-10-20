@@ -1,9 +1,11 @@
 import React from 'react';
 import { IonButton } from '@ionic/react';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
+import { useTranslations } from '../../hooks/useTranslations';
 
 export const GoogleLoginButton: React.FC = () => {
   const { getGoogleOAuthUrl } = useAuthStore();
+  const { t } = useTranslations();
 
   const handleGoogleLogin = async () => {
     await getGoogleOAuthUrl();
@@ -11,7 +13,7 @@ export const GoogleLoginButton: React.FC = () => {
 
   return (
     <IonButton expand="full" onClick={handleGoogleLogin}>
-      Login com Google
+      {t('loginForm.googleLogin')}
     </IonButton>
   );
 };

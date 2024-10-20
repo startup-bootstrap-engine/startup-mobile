@@ -7,12 +7,14 @@ import {
   IonContent,
   IonButton,
 } from '@ionic/react';
-import { useAuthStore } from '../store/api/userApi/useAuthStore';
+import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
+import { useTranslations } from '../../hooks/useTranslations';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore(); // Hook para realizar o logout
   const history = useHistory();
+  const { t } = useTranslations();
 
   const handleLogout = async () => {
     await logout(); // Chama a função de logout da store
@@ -23,16 +25,14 @@ export const Dashboard: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Dashboard</IonTitle>
+          <IonTitle>{t('dashboard.title')}</IonTitle>
         </IonToolbar>
       </IonHeader>
-
       <IonContent className="ion-padding">
-        <h2>Bem-vindo ao Dashboard!</h2>
-        <p>Aqui você pode ver o conteúdo privado do usuário autenticado.</p>
-
+        <h2>{t('dashboard.subtitle')}</h2>
+        <p>{t('dashboard.description')}</p>
         <IonButton expand="full" color="danger" onClick={handleLogout}>
-          Logout
+          {t('loginForm.logout')}
         </IonButton>
       </IonContent>
     </IonPage>

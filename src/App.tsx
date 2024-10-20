@@ -1,7 +1,12 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import {
+  IonApp,
+  IonLoading,
+  IonRouterOutlet,
+  setupIonicReact,
+} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -33,7 +38,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import { LoginForm } from './pages/LoginForm/LoginForm';
 import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordForm';
-import { Dashboard } from './components/Dashboard';
+import { Dashboard } from './pages/Dashboard/Dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
 import { RegisterForm } from './pages/RegisterForm/Register';
 
@@ -43,11 +48,15 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/register" component={RegisterForm} />
-        <Route exact path="/login" component={LoginForm} />
-        <Route exact path="/changePassoword" component={ForgotPasswordForm} />
-        <PrivateRoute path="/dashboard" component={Dashboard} />
-        <Redirect exact from="/" to="/register" />
+        <Suspense
+          fallback={<IonLoading isOpen={true} message={'Loading...'} />}
+        >
+          <Route exact path="/register" component={RegisterForm} />
+          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/changePassoword" component={ForgotPasswordForm} />
+          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <Redirect exact from="/" to="/register" />
+        </Suspense>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

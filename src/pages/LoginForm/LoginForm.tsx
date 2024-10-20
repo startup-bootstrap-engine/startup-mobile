@@ -11,24 +11,30 @@ import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
 import { GoogleLoginButton } from './GoogleLoginButton';
 import AppleLoginButton from './AppleLoginButton';
-import { loginSchema } from './loginSchema';
+import { useLoginSchema } from '../../hooks/useLoginSchema';
+import { useTranslations } from '../../hooks/useTranslations';
+
+interface User {
+  email: string;
+  password: string;
+}
 
 export const LoginForm: React.FC = () => {
   const history = useHistory();
   const { login, isLoading, error, isAuthenticated, checkAuth } =
     useAuthStore();
+  const { t } = useTranslations();
+  const loginSchema = useLoginSchema();
 
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [user, setUser] = useState<User>({ email: '', password: '' });
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
-
   const validateForm = () => {
-    const validation = loginSchema.safeParse({ email, password });
+    const validation = loginSchema.safeParse({
+      email: user.email,
+      password: user.password,
+    });
 
     setEmailError(null);
     setPasswordError(null);
@@ -51,7 +57,9 @@ export const LoginForm: React.FC = () => {
 
     if (!validateForm()) return;
 
-    await login(email, password);
+    await login(user.email, user.password);
+
+    checkAuth();
   };
 
   useEffect(() => {
@@ -62,18 +70,18 @@ export const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+      <h2>{t('loginForm.login')}</h2>
       {error && (
         <IonText color="danger">
           <p>{error}</p>
         </IonText>
       )}
       <IonItem>
-        <IonLabel position="floating">Email</IonLabel>
+        <IonLabel position="floating">{t('loginForm.email')}</IonLabel>
         <IonInput
           type="email"
-          value={email}
-          onIonChange={(e) => setEmail(e.detail.value!)}
+          value={user?.email}
+          onIonChange={(e) => setUser({ ...user, email: e.detail.value || '' })}
         />
       </IonItem>
       {emailError && (
@@ -82,11 +90,13 @@ export const LoginForm: React.FC = () => {
         </IonText>
       )}
       <IonItem>
-        <IonLabel position="floating">Senha</IonLabel>
+        <IonLabel position="floating">{t('loginForm.password')}</IonLabel>
         <IonInput
           type="password"
-          value={password}
-          onIonChange={(e) => setPassword(e.detail.value!)}
+          value={user.password}
+          onIonChange={(e) =>
+            setUser({ ...user, password: e.detail.value || '' })
+          }
         />
       </IonItem>
       {passwordError && (
@@ -94,9 +104,9 @@ export const LoginForm: React.FC = () => {
           <p>{passwordError}</p>
         </IonText>
       )}
-      <IonLoading isOpen={isLoading} message={'Entrando...'} />
+      <IonLoading isOpen={isLoading} message={t('loginForm.loggingIn')} />
       <IonButton expand="full" type="submit">
-        Entrar
+        {t('loginForm.login')}
       </IonButton>
       <GoogleLoginButton />
       <AppleLoginButton />

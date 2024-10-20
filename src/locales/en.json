@@ -1,0 +1,57 @@
+{
+  "common": {
+    "error": "Error",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "noData": "No data available.",
+    "add": "Add",
+    "save": "Save",
+    "submit": "Submit",
+    "loading": "Loading data",
+    "backToLogin": "Back to login"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Welcome to the dashboard.",
+    "description": "Here you can see the private content of the authenticated user."
+  },
+  "loginForm": {
+    "title": "Login form",
+    "logout": "Logout",
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "appleLogin": "Login with Apple",
+    "googleLogin": "Login with Google",
+    "loggingIn": "Logging in",
+    "appleError": "Error logging in with Apple."
+  },
+  "passwordForms": {
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "updatingPassword": "Updating password",
+    "confirmPassword": "Confirm password",
+    "passwordRecoveryForm": "Password recovery form",
+    "changePasswordForm": "Change password form",
+    "updatePassword": "Update password"
+  },
+  "validations": {
+    "required": "Field required.",
+    "email": "Invalid email.",
+    "password": "The password must be at least {{number}} characters long.",
+    "passwordNotMatch": "Passwords do not match."
+  },
+  "registrationForm": {
+    "title": "Registration form",
+    "name": "Name",
+    "confirmPassword": "Confirm password",
+    "register": "Register",
+    "registerSuccess": "User successfully registered.",
+    "registerError": "Error registering user.",
+    "registeringUser": "Registering user",
+    "existingUser": "Already have an account? Log in",
+    "authenticationVerification": "Authenticating"
+  }
+}
