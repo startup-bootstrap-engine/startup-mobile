@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  startup-mobile:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: startup-mobile
+    restart: always
+    env_file: .env
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '${APP_PORT}:${APP_PORT}'
+    network_mode: bridge
+    environment:
+      VIRTUAL_HOST: ${APP_DOMAIN}
+      LETSENCRYPT_HOST: ${APP_DOMAIN}
+      LETSENCRYPT_EMAIL: ${APP_ADMIN_EMAIL}
+      VIRTUAL_PORT: ${APP_PORT}
