@@ -7,12 +7,12 @@ import {
   IonText,
   IonLoading,
 } from '@ionic/react';
-import { useAuthStore } from '../../store/api/userApi/useAuthStore';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
 import { GoogleLoginButton } from './GoogleLoginButton';
 import AppleLoginButton from './AppleLoginButton';
-import { useLoginSchema } from '../../hooks/useLoginSchema';
-import { useTranslations } from '../../hooks/useTranslations';
+import { useLoginSchema } from '@hooks/useLoginSchema';
+import { useTranslations } from '@hooks/useTranslations';
 
 interface User {
   email: string;

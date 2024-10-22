@@ -6,33 +6,33 @@ import { checkAuth } from './checkAuth';
 import { changePassword } from './changePassword';
 import { forgotPassword } from './forgotPassword';
 import { getGoogleOAuthUrl } from './googleOAuth';
-import { appleLogin } from './appleLogin'; // Importa a função de login com Apple
+import { appleLogin } from './appleLogin';
 
 interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (_email: string, _password: string) => Promise<void>;
   signUp: (
-    email: string,
-    password: string,
-    passwordConfirmation: string,
-    name: string,
+    _email: string,
+    _password: string,
+    _passwordConfirmation: string,
+    _name: string,
   ) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
   changePassword: (
-    currentPassword: string,
-    newPassword: string,
+    _currentPassword: string,
+    _newPassword: string,
   ) => Promise<void>;
-  forgotPassword: (email: string) => Promise<void>;
+  forgotPassword: (_email: string) => Promise<void>;
   getGoogleOAuthUrl: () => Promise<void>;
   appleLogin: (
-    idToken: string,
-    email: string,
-    authorizationCode: string,
-  ) => Promise<void>; // Adiciona a função para login com Apple
+    _idToken: string,
+    _email: string,
+    _authorizationCode: string,
+  ) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -41,7 +41,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
   error: null,
 
-  // Função de login
   login: async (email: string, password: string) => {
     try {
       set({ isLoading: true, error: null });
@@ -50,12 +49,11 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (error: any) {
       set({
         isLoading: false,
-        error: error.message || 'Erro no login. Verifique suas credenciais.',
+        error: error.message,
       });
     }
   },
 
-  // Função de sign up
   signUp: async (
     email: string,
     password: string,
@@ -69,34 +67,36 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (error: any) {
       set({
         isLoading: false,
-        error: error.message || 'Erro no registro. Verifique suas informações.',
+        error: error.message,
       });
     }
   },
 
-  // Função de logout
   logout: async () => {
     try {
       set({ isLoading: true });
       await logout(set);
       set({ isLoading: false });
     } catch (error: any) {
-      set({ isLoading: false, error: error.message || 'Erro no logout.' });
+      set({ isLoading: false, error: error.message });
     }
   },
 
-  // Função de verificação de autenticação
   checkAuth: async () => {
     try {
       set({ isLoading: true });
       await checkAuth(set);
       set({ isLoading: false });
     } catch (error: any) {
-      set({ isLoading: false, token: null, isAuthenticated: false });
+      set({
+        isLoading: false,
+        token: null,
+        isAuthenticated: false,
+        error: error.message,
+      });
     }
   },
 
-  // Função de troca de senha
   changePassword: async (currentPassword: string, newPassword: string) => {
     try {
       set({ isLoading: true });
@@ -105,12 +105,11 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (error: any) {
       set({
         isLoading: false,
-        error: error.message || 'Erro ao alterar a senha.',
+        error: error.message,
       });
     }
   },
 
-  // Função de recuperação de senha (forgot password)
   forgotPassword: async (email: string) => {
     try {
       set({ isLoading: true });
@@ -119,27 +118,25 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (error: any) {
       set({
         isLoading: false,
-        error: error.message || 'Erro ao tentar recuperar a senha.',
+        error: error.message,
       });
     }
   },
 
-  // Função para obter a URL de OAuth do Google
   getGoogleOAuthUrl: async () => {
     try {
       set({ isLoading: true });
       const googleOAuthUrl = await getGoogleOAuthUrl();
-      window.location.href = googleOAuthUrl; // Redireciona para a URL do Google OAuth
+      window.location.href = googleOAuthUrl;
       set({ isLoading: false });
     } catch (error: any) {
       set({
         isLoading: false,
-        error: error.message || 'Erro ao gerar URL de autenticação do Google.',
+        error: error.message,
       });
     }
   },
 
-  // Função para login com Apple
   appleLogin: async (
     idToken: string,
     email: string,
@@ -147,12 +144,12 @@ export const useAuthStore = create<AuthState>((set) => ({
   ) => {
     try {
       set({ isLoading: true });
-      await appleLogin(idToken, email, authorizationCode, set); // Chama a função appleLogin
+      await appleLogin(idToken, email, authorizationCode, set);
       set({ isLoading: false });
     } catch (error: any) {
       set({
         isLoading: false,
-        error: error.message || 'Erro ao fazer login com Apple.',
+        error: error.message,
       });
     }
   },

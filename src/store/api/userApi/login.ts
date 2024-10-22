@@ -7,7 +7,7 @@ const apiURL = import.meta.env.VITE_API_URL;
 export const login = async (
   email: string,
   password: string,
-  set: (state: Partial<AuthState>) => void,
+  set: (_state: Partial<AuthState>) => void,
 ): Promise<void> => {
   set({ isLoading: true, error: null });
   try {
@@ -35,10 +35,10 @@ export const login = async (
       isLoading: false,
       error: null,
     });
-  } catch (error) {
+  } catch (error: any) {
     set({
       isLoading: false,
-      error: 'Erro no login. Verifique suas credenciais.',
+      error: error.message,
     });
   }
 };

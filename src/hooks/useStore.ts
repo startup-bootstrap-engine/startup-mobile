@@ -1,29 +1,27 @@
 import React, { useCallback, useRef } from 'react';
-import { useApiStore } from '../store/useApiStore';
+import { useApiStore } from '@store/useApiStore';
 
 interface StoreField<T> {
   value: T;
-  setValue: (newValue: T) => void;
+  setValue: (_newValue: T) => void;
   error: string | null;
   inputRef: React.RefObject<HTMLInputElement>;
 }
 
-// Hook para gerenciar campos de forma genérica dentro da store
 export const useStore = <T extends Record<string, any>>(
-  initialValue: T[keyof T], // Corrige para pegar o tipo correto do valor
-  fieldName: keyof T, // Corrige para aceitar chaves de string
-  rules: ((value: T[keyof T]) => string | null)[], // Regras aplicadas ao tipo correto
+  initialValue: T[keyof T],
+  fieldName: keyof T,
+  rules: ((_value: T[keyof T]) => string | null)[],
 ): StoreField<T[keyof T]> => {
-  const data = useApiStore((state) => state.data); // Usa um seletor para acessar data
-  const setData = useApiStore((state) => state.setData); // Usa um seletor para acessar setData
+  const data = useApiStore((state) => state.data);
+  const setData = useApiStore((state) => state.setData);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Função para validar o campo com base nas regras fornecidas
   const validateField = useCallback((): string | null => {
     const value = data?.[fieldName];
     for (const rule of rules) {
-      const errorMessage = rule(value as T[keyof T]); // Garantindo que o valor seja do tipo correto
+      const errorMessage = rule(value as T[keyof T]);
       if (errorMessage) return errorMessage;
     }
     return null;

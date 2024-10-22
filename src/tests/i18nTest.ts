@@ -1,7 +1,6 @@
-// i18nForTests.ts
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import enTranslations from '../locales/en.json'; // Adjust the path as necessary
+import enTranslations from '@locales/en.json';
 
 i18n.use(initReactI18next).init({
   lng: 'en',

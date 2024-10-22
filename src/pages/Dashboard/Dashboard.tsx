@@ -7,18 +7,18 @@ import {
   IonContent,
   IonButton,
 } from '@ionic/react';
-import { useAuthStore } from '../../store/api/userApi/useAuthStore';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
-import { useTranslations } from '../../hooks/useTranslations';
+import { useTranslations } from '@hooks/useTranslations';
 
 export const Dashboard: React.FC = () => {
-  const { logout } = useAuthStore(); // Hook para realizar o logout
+  const { logout } = useAuthStore();
   const history = useHistory();
   const { t } = useTranslations();
 
   const handleLogout = async () => {
-    await logout(); // Chama a função de logout da store
-    history.push('/login'); // Redireciona para a página de login após o logout
+    await logout();
+    history.push('/login');
   };
 
   return (
@@ -31,7 +31,12 @@ export const Dashboard: React.FC = () => {
       <IonContent className="ion-padding">
         <h2>{t('dashboard.subtitle')}</h2>
         <p>{t('dashboard.description')}</p>
-        <IonButton expand="full" color="danger" onClick={handleLogout}>
+        <IonButton
+          type="submit"
+          expand="full"
+          color="danger"
+          onClick={handleLogout}
+        >
           {t('loginForm.logout')}
         </IonButton>
       </IonContent>
