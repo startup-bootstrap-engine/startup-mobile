@@ -14,9 +14,9 @@ export const isTokenValid = (token: string | null): boolean => {
     return decoded.exp > currentTime;
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.error('Erro ao decodificar o token:', error.message);
+      console.error('Token decoding error:', error.message);
     } else {
-      console.error('Erro desconhecido ao decodificar o token');
+      console.error('Unknown error while decoding the token.');
     }
     return false;
   }

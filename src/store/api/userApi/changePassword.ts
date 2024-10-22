@@ -1,18 +1,18 @@
 import { getToken, removeToken } from '../../../utils/tokenStorage';
 import { AuthState } from './types/authTypes';
-import { logout } from './logout'; // Importa a função de logout para reutilizar
+import { logout } from './logout';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
 export const changePassword = async (
   currentPassword: string,
   newPassword: string,
-  set: (state: Partial<AuthState>) => void,
+  set: (_state: Partial<AuthState>) => void,
 ): Promise<void> => {
   try {
     set({ isLoading: true, error: null });
 
-    const token = await getToken(); // Recupera o token de autenticação
+    const token = await getToken();
     if (!token) {
       throw new Error('Usuário não autenticado');
     }
@@ -28,12 +28,11 @@ export const changePassword = async (
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Erro ao alterar a senha');
+      throw new Error(errorData.message);
     }
 
-    // Limpa os tokens e faz o logout após a troca de senha
-    await removeToken(); // Remove os tokens armazenados localmente
-    await logout(set); // Desloga o usuário (limpa o estado de autenticação)
+    await removeToken();
+    await logout(set);
 
     set({ isLoading: false, error: null });
   } catch (error: any) {

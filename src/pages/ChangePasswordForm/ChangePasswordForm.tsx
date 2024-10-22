@@ -7,11 +7,11 @@ import {
   IonText,
   IonLoading,
 } from '@ionic/react';
-import { useAuthStore } from '../../store/api/userApi/useAuthStore';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useChangePasswordSchema } from '../../hooks/useChangePasswordSchema';
-import { useTranslations } from '../../hooks/useTranslations';
+import { useChangePasswordSchema } from '@hooks/useChangePasswordSchema';
+import { useTranslations } from '@hooks/useTranslations';
 
 interface ChangePasswordFormData {
   currentPassword: string;

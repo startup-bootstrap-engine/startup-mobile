@@ -21,8 +21,8 @@ export default [
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
         console: 'readonly',
-        test: 'readonly',   // Para Jest
-        expect: 'readonly', // Para Jest
+        test: 'readonly',
+        expect: 'readonly',
       },
     },
     plugins: {
@@ -32,10 +32,21 @@ export default [
     },
     rules: {
       'prettier/prettier': 'error',
-      '@typescript-eslint/no-unused-vars': ['warn', { vars: 'all', args: 'none', ignoreRestSiblings: true }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { vars: 'all', args: 'none', ignoreRestSiblings: true },
+      ],
       'react/react-in-jsx-scope': 'off',
-      'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
+      'no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
+    ignores: ['vite.config.ts'],
   },
   prettierConfig,
 ];

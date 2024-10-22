@@ -2,8 +2,8 @@ import { create } from 'zustand';
 
 interface FieldState {
   fields: Record<string, string>;
-  setFieldValue: (field: string, value: string) => void;
-  getFieldValue: (field: string) => string;
+  setFieldValue: (_field: string, _value: string) => void;
+  getFieldValue: (_field: string) => string;
 }
 
 export const useFieldStore = create<FieldState>((set, get) => ({

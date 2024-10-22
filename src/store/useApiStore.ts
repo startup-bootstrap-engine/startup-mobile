@@ -4,11 +4,10 @@ interface ApiState<T> {
   data: T | null;
   isLoading: boolean;
   error: string | null;
-  setData: (data: Partial<T>) => void;
-  fetchData: (url: string) => Promise<void>;
+  setData: (_data: Partial<T>) => void;
+  fetchData: (_url: string) => Promise<void>;
 }
 
-// A função `create` já retorna o hook genérico que esperamos. Não é necessário chamar `useApiStore<T>()`.
 export const useApiStore = create<ApiState<any>>((set) => ({
   data: null,
   isLoading: false,

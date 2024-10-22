@@ -7,11 +7,11 @@ import {
   IonText,
   IonLoading,
 } from '@ionic/react';
-import { useAuthStore } from '../../store/api/userApi/useAuthStore';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from '../../hooks/useTranslations';
-import { useForgotPasswordForm } from '../../hooks/useForgotPasswordSchema';
+import { useTranslations } from '@hooks/useTranslations';
+import { useForgotPasswordForm } from '@hooks/useForgotPasswordSchema';
 
 interface ForgotPasswordFormData {
   email: string;

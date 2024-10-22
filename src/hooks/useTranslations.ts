@@ -1,5 +1,5 @@
 import { useTranslation as useI18NextTranslation } from 'react-i18next';
-import enTranslations from '../locales/en.json';
+import enTranslations from '@locales/en.json';
 
 type RecursiveKeyOf<TObj extends object> = {
   [TKey in keyof TObj & (string | number)]: TObj[TKey] extends object

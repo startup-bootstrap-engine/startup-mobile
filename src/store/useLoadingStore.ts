@@ -9,14 +9,14 @@ interface LoadingStore {
 
 export const useLoadingStore = create<LoadingStore>((set) => ({
   isLoading: false,
-  activeRequests: 0, // Inicializa sem requisições ativas
+  activeRequests: 0,
 
   startLoading: () =>
     set((state) => {
       const newActiveRequests = state.activeRequests + 1;
       return {
         activeRequests: newActiveRequests,
-        isLoading: true, // Define loading como true se houver ao menos uma requisição
+        isLoading: true,
       };
     }),
 
@@ -25,7 +25,7 @@ export const useLoadingStore = create<LoadingStore>((set) => ({
       const newActiveRequests = state.activeRequests - 1;
       return {
         activeRequests: newActiveRequests,
-        isLoading: newActiveRequests === 0 ? false : true, // Define loading como false se não houver mais requisições
+        isLoading: newActiveRequests === 0 ? false : true,
       };
     }),
 }));

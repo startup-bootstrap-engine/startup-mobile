@@ -30,7 +30,6 @@ export const appleLogin = async (
     const data = await response.json();
     const { accessToken, refreshToken } = data;
 
-    // Armazena o token e marca o usuário como autenticado
     await setToken(accessToken, refreshToken);
     set({ token: accessToken, isAuthenticated: true, isLoading: false });
   } catch (error: any) {
