@@ -41,6 +41,7 @@ import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordFor
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
 import { RegisterForm } from './pages/RegisterForm/Register';
+import { UserSettings } from './pages/UserSettings/UserSettings';
 
 setupIonicReact();
 
@@ -54,6 +55,7 @@ const App: React.FC = () => (
           <Route exact path="/register" component={RegisterForm} />
           <Route exact path="/login" component={LoginForm} />
           <Route exact path="/changePassoword" component={ForgotPasswordForm} />
+          <PrivateRoute path="/userSettings" component={UserSettings} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <Redirect exact from="/" to="/register" />
         </Suspense>

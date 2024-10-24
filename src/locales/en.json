@@ -53,5 +53,27 @@
     "registeringUser": "Registering user",
     "existingUser": "Already have an account? Log in",
     "authenticationVerification": "Authenticating"
+  },
+  "userSettings": {
+    "nameInput": {
+      "title": "Name",
+      "placeholder": "Enter your name"
+    },
+    "addressInput": {
+      "title": "Address",
+      "placeholder": "Enter your address"
+    },
+    "phoneInput": {
+      "title": "Phone",
+      "placeholder": "Enter your phone number"
+    },
+    "notification": "Notification",
+    "privacy": "Privacy",
+    "language": {
+      "title": "Language",
+      "placeholder": "Select the language",
+      "english": "English",
+      "portuguese": "Portuguese"
+    }
   }
 }

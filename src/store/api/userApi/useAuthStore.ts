@@ -7,6 +7,7 @@ import { changePassword } from './changePassword';
 import { forgotPassword } from './forgotPassword';
 import { getGoogleOAuthUrl } from './googleOAuth';
 import { appleLogin } from './appleLogin';
+import { updateUser } from './updateUser';
 
 interface AuthState {
   token: string | null;
@@ -29,10 +30,11 @@ interface AuthState {
   forgotPassword: (_email: string) => Promise<void>;
   getGoogleOAuthUrl: () => Promise<void>;
   appleLogin: (
-    _idToken: string,
-    _email: string,
-    _authorizationCode: string,
+    idToken: string,
+    email: string,
+    authorizationCode: string,
   ) => Promise<void>;
+  updateUser: (name: string, address: string, phone: string) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -150,6 +152,19 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({
         isLoading: false,
         error: error.message,
+      });
+    }
+  },
+
+  updateUser: async (name: string, address: string, phone: string) => {
+    try {
+      set({ isLoading: true, error: null });
+      await updateUser(name, address, phone, set);
+      set({ isLoading: false });
+    } catch (error: any) {
+      set({
+        isLoading: false,
+        error: error.message || 'Erro ao atualizar as informações do usuário.',
       });
     }
   },

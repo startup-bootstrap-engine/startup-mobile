@@ -52,5 +52,27 @@
     "registeringUser": "Registrando usuário",
     "existingUser": "Já tem uma conta? Faça login",
     "authenticationVerification": "Verificando autenticação"
+  },
+  "userSettings": {
+    "nameInput": {
+      "title": "Nome",
+      "placeholder": "Digite seu nome"
+    },
+    "addressInput": {
+      "title": "Endereço",
+      "placeholder": "Digite seu endereço"
+    },
+    "phoneInput": {
+      "title": "Telefone",
+      "placeholder": "Digite seu telefone"
+    },
+    "notification": "Notificação",
+    "privacy": "Privacidade",
+    "language": {
+      "title": "Idioma",
+      "placeholder": "Selecione o idioma",
+      "english": "Inglês",
+      "portuguese": "Português"
+    }
   }
 }

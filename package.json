@@ -1,10 +1,9 @@
 {
   "name": "startup-fe",
-  "private": true,
-  "version": "0.0.1",
+  "version": "1.0.3",
   "type": "module",
   "lint-staged": {
-    "**/*.(ts|tsx)": [
+    "**/*.{ts,tsx}": [
       "eslint --fix",
       "prettier --write",
       "git add"
@@ -42,6 +41,7 @@
     "@capacitor/keyboard": "6.0.2",
     "@capacitor/preferences": "^6.0.2",
     "@capacitor/status-bar": "6.0.1",
+    "@capacitor/storage": "^1.2.5",
     "@hookform/resolvers": "^3.9.0",
     "@ionic/react": "^8.0.0",
     "@ionic/react-router": "^8.0.0",
@@ -92,5 +92,6 @@
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^0.34.6"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "license": "MIT"
 }
