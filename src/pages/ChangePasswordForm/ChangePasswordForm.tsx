@@ -10,8 +10,7 @@ import {
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useChangePasswordSchema } from '@hooks/useChangePasswordSchema';
-import { useTranslations } from '@hooks/useTranslations';
+import { useChangePasswordSchema, useTranslations } from '@hooks';
 
 interface ChangePasswordFormData {
   currentPassword: string;

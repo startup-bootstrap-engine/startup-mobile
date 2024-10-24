@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonButton } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import { useTranslations } from '@hooks/useTranslations';
+import { useTranslations } from '@hooks';
 
 const AppleLoginButton: React.FC = () => {
   const { appleLogin } = useAuthStore();

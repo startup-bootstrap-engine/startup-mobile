@@ -9,7 +9,7 @@ import {
 } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
-import { useTranslations } from '@hooks/useTranslations';
+import { useTranslations } from '@hooks';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();

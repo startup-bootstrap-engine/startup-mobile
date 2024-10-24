@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { useTranslations } from './useTranslations';
 
-export const useForgotPasswordForm = () => {
+export const useForgotPasswordSchema = () => {
   const { t } = useTranslations();
 
   const forgotPasswordSchema = z.object({

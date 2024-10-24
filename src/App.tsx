@@ -41,6 +41,7 @@ import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordFor
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
 import { RegisterForm } from './pages/RegisterForm/Register';
+import ThemeProvider from './contexts/ThemeProvider';
 
 setupIonicReact();
 
@@ -48,15 +49,21 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Suspense
-          fallback={<IonLoading isOpen={true} message={'Loading...'} />}
-        >
-          <Route exact path="/register" component={RegisterForm} />
-          <Route exact path="/login" component={LoginForm} />
-          <Route exact path="/changePassoword" component={ForgotPasswordForm} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
-          <Redirect exact from="/" to="/register" />
-        </Suspense>
+        <ThemeProvider>
+          <Suspense
+            fallback={<IonLoading isOpen={true} message={'Loading...'} />}
+          >
+            <Route exact path="/register" component={RegisterForm} />
+            <Route exact path="/login" component={LoginForm} />
+            <Route
+              exact
+              path="/changePassoword"
+              component={ForgotPasswordForm}
+            />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <Redirect exact from="/" to="/register" />
+          </Suspense>
+        </ThemeProvider>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { IonLoading } from '@ionic/react';
-import { useTranslations } from '@hooks/useTranslations';
+import { useTranslations } from '@hooks';
 
 interface PrivateRouteProps {
   component: React.ComponentType<any>;

@@ -10,8 +10,7 @@ import {
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from '@hooks/useTranslations';
-import { useForgotPasswordForm } from '@hooks/useForgotPasswordSchema';
+import { useTranslations, useForgotPasswordSchema } from '@hooks';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -20,7 +19,7 @@ interface ForgotPasswordFormData {
 export const ForgotPasswordForm: React.FC = () => {
   const { forgotPassword, isLoading, error } = useAuthStore();
   const { t } = useTranslations();
-  const forgotPasswordSchema = useForgotPasswordForm();
+  const forgotPasswordSchema = useForgotPasswordSchema();
 
   const {
     register,
