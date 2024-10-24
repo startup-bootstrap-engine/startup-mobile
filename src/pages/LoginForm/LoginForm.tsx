@@ -11,8 +11,7 @@ import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useHistory } from 'react-router-dom';
 import { GoogleLoginButton } from './GoogleLoginButton';
 import AppleLoginButton from './AppleLoginButton';
-import { useLoginSchema } from '@hooks/useLoginSchema';
-import { useTranslations } from '@hooks/useTranslations';
+import { useLoginSchema, useTranslations } from '@hooks';
 
 interface User {
   email: string;
