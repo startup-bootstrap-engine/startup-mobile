@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useTranslations } from '@hooks/useTranslations';
 import { useUserSettingsStore } from '@store/userSettings/store';
+import React from 'react';
 
 export const UserSettings: React.FC = () => {
   const { t } = useTranslations();
