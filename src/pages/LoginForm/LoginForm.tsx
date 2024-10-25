@@ -67,7 +67,7 @@ export const LoginForm: React.FC = () => {
       <form onSubmit={handleSubmit} className="ion-padding">
         {error && (
           <IonText color="danger" className="ion-padding-bottom">
-            <p>{error}</p>
+            <p>{t('loginForm.errors.invalidCredentials')}</p>
           </IonText>
         )}
 
@@ -79,7 +79,7 @@ export const LoginForm: React.FC = () => {
           error={emailError}
           required
           clearInput
-          placeholder="example@email.com"
+          placeholder={t('loginForm.emailPlaceholder')}
         />
 
         <FormField
@@ -89,6 +89,7 @@ export const LoginForm: React.FC = () => {
           type="password"
           error={passwordError}
           required
+          placeholder={t('loginForm.passwordPlaceholder')}
         />
 
         <div className="ion-padding-top">
@@ -98,16 +99,12 @@ export const LoginForm: React.FC = () => {
 
           <div className="ion-text-center ion-padding-vertical">
             <IonText>
-              <p>or</p>
+              <p>{t('common.or')}</p>
             </IonText>
           </div>
 
-          <div className="ion-margin-bottom">
-            <GoogleLoginButton />
-          </div>
-          <div className="ion-margin-bottom">
-            <AppleLoginButton />
-          </div>
+          <GoogleLoginButton />
+          <AppleLoginButton />
 
           <div className="ion-text-center ion-padding-top">
             <IonButton
@@ -125,7 +122,7 @@ export const LoginForm: React.FC = () => {
               size="small"
               onClick={() => history.push('/register')}
             >
-              {t('registrationForm.register')}
+              {t('registrationForm.existingUser')}
             </IonButton>
           </div>
         </div>

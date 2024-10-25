@@ -22,16 +22,17 @@ export const ForgotPasswordForm: React.FC = () => {
     const validation = forgotPasswordSchema.safeParse({ email });
 
     if (!validation.success) {
-      setFormError(validation.error.errors[0]?.message || 'Invalid email');
+      setFormError(
+        validation.error.errors[0]?.message || t('validations.email'),
+      );
       return;
     }
 
     try {
       await forgotPassword(email);
-      // Redirect to login after successful password reset request
       history.push('/login');
     } catch (err) {
-      // Error is handled by the store
+      setFormError(t('passwordForms.error.reset'));
     }
   };
 
@@ -50,6 +51,8 @@ export const ForgotPasswordForm: React.FC = () => {
           onChange={setEmail}
           type="email"
           error={formError}
+          required
+          placeholder={t('loginForm.emailPlaceholder')}
         />
 
         <div className="ion-padding-top">

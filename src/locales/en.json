@@ -4,12 +4,13 @@
     "cancel": "Cancel",
     "edit": "Edit",
     "delete": "Delete",
-    "noData": "No data available.",
+    "noData": "No data available",
     "add": "Add",
     "save": "Save",
     "submit": "Submit",
-    "loading": "Loading data",
-    "backToLogin": "Back to login"
+    "loading": "Loading...",
+    "backToLogin": "Back to login",
+    "or": "or"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -17,25 +18,37 @@
     "description": "Here you can see the private content of the authenticated user."
   },
   "loginForm": {
-    "title": "Login form",
-    "logout": "Logout",
-    "login": "Login",
-    "email": "Email",
+    "title": "Sign In",
+    "logout": "Sign Out",
+    "login": "Sign In",
+    "email": "Email address",
     "password": "Password",
     "forgotPassword": "Forgot password?",
-    "appleLogin": "Login with Apple",
-    "googleLogin": "Login with Google",
-    "loggingIn": "Logging in",
-    "appleError": "Error logging in with Apple."
+    "loggingIn": "Signing in...",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "errors": {
+      "invalidCredentials": "Invalid email or password"
+    },
+    "socialLogin": {
+      "apple": "Continue with Apple",
+      "google": "Continue with Google",
+      "appleError": "Apple sign in failed",
+      "googleError": "Google sign in failed",
+      "loading": "Connecting..."
+    }
   },
   "passwordForms": {
     "currentPassword": "Current password",
     "newPassword": "New password",
     "updatingPassword": "Updating password",
     "confirmPassword": "Confirm password",
-    "passwordRecoveryForm": "Password recovery form",
-    "changePasswordForm": "Change password form",
-    "updatePassword": "Update password"
+    "passwordRecoveryForm": "Reset Password",
+    "changePasswordForm": "Change Password",
+    "updatePassword": "Update Password",
+    "error": {
+      "reset": "Failed to send reset email"
+    }
   },
   "validations": {
     "required": "Field required.",
@@ -44,14 +57,15 @@
     "passwordNotMatch": "Passwords do not match."
   },
   "registrationForm": {
-    "title": "Registration form",
-    "name": "Name",
+    "title": "Create Account",
+    "name": "Full name",
+    "namePlaceholder": "Enter your full name",
     "confirmPassword": "Confirm password",
-    "register": "Register",
-    "registerSuccess": "User successfully registered.",
-    "registerError": "Error registering user.",
-    "registeringUser": "Registering user",
-    "existingUser": "Already have an account? Log in",
-    "authenticationVerification": "Authenticating"
+    "register": "Create Account",
+    "registerSuccess": "Account created successfully",
+    "registerError": "Failed to create account",
+    "registeringUser": "Creating your account...",
+    "existingUser": "Already have an account? Sign in",
+    "authenticationVerification": "Verifying..."
   }
 }

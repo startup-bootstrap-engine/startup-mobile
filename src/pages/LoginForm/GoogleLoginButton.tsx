@@ -1,15 +1,19 @@
 import { useTranslations } from '@hooks/useTranslations';
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { logoGoogle } from 'ionicons/icons';
 import React from 'react';
 
 export const GoogleLoginButton: React.FC = () => {
-  const { getGoogleOAuthUrl } = useAuthStore();
+  const { getGoogleOAuthUrl, isLoading } = useAuthStore();
   const { t } = useTranslations();
 
   const handleGoogleLogin = async () => {
-    await getGoogleOAuthUrl();
+    try {
+      await getGoogleOAuthUrl();
+    } catch (error) {
+      console.error(t('loginForm.socialLogin.googleError'), error);
+    }
   };
 
   return (
@@ -18,9 +22,16 @@ export const GoogleLoginButton: React.FC = () => {
       color="light"
       className="ion-margin-bottom"
       onClick={handleGoogleLogin}
+      disabled={isLoading}
     >
-      <IonIcon slot="start" icon={logoGoogle} />
-      {t('loginForm.googleLogin')}
+      {isLoading ? (
+        <IonSpinner name="crescent" />
+      ) : (
+        <IonIcon slot="start" icon={logoGoogle} />
+      )}
+      {isLoading
+        ? t('loginForm.socialLogin.loading')
+        : t('loginForm.socialLogin.google')}
     </IonButton>
   );
 };

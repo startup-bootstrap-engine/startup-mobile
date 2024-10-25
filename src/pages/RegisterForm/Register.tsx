@@ -2,16 +2,16 @@ import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
 import { useRegistrationSchema } from '@hooks/useRegistrationSchema';
 import { useTranslations } from '@hooks/useTranslations';
-import { IonButton, IonText } from '@ionic/react';
+import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export const RegisterForm: React.FC = () => {
-  const { t } = useTranslations();
   const history = useHistory();
-  const registrationSchema = useRegistrationSchema();
   const { signUp, isLoading, error } = useAuthStore();
+  const { t } = useTranslations();
+  const registrationSchema = useRegistrationSchema();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -47,10 +47,10 @@ export const RegisterForm: React.FC = () => {
 
   return (
     <PageLayout title={t('registrationForm.title')}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="ion-padding">
         {error && (
-          <IonText color="danger">
-            <p>{error}</p>
+          <IonText color="danger" className="ion-padding-bottom">
+            <p>{t('registrationForm.registerError')}</p>
           </IonText>
         )}
 
@@ -59,6 +59,8 @@ export const RegisterForm: React.FC = () => {
           value={formData.name}
           onChange={(value) => handleInputChange('name', value)}
           error={formErrors.name}
+          required
+          placeholder={t('registrationForm.namePlaceholder')}
         />
 
         <FormField
@@ -67,6 +69,8 @@ export const RegisterForm: React.FC = () => {
           onChange={(value) => handleInputChange('email', value)}
           type="email"
           error={formErrors.email}
+          required
+          placeholder={t('loginForm.emailPlaceholder')}
         />
 
         <FormField
@@ -75,6 +79,8 @@ export const RegisterForm: React.FC = () => {
           onChange={(value) => handleInputChange('password', value)}
           type="password"
           error={formErrors.password}
+          required
+          placeholder={t('loginForm.passwordPlaceholder')}
         />
 
         <FormField
@@ -83,19 +89,30 @@ export const RegisterForm: React.FC = () => {
           onChange={(value) => handleInputChange('passwordConfirmation', value)}
           type="password"
           error={formErrors.passwordConfirmation}
+          required
+          placeholder={t('loginForm.passwordPlaceholder')}
         />
 
-        <IonButton expand="full" type="submit" disabled={isLoading}>
-          {t('registrationForm.register')}
-        </IonButton>
+        <div className="ion-padding-top">
+          <IonButton expand="block" type="submit" disabled={isLoading}>
+            {t('registrationForm.register')}
+          </IonButton>
 
-        <IonButton
-          expand="full"
-          fill="outline"
-          onClick={() => history.push('/login')}
-        >
-          {t('registrationForm.existingUser')}
-        </IonButton>
+          <div className="ion-text-center ion-padding-top">
+            <IonButton
+              fill="clear"
+              size="small"
+              onClick={() => history.push('/login')}
+            >
+              {t('registrationForm.existingUser')}
+            </IonButton>
+          </div>
+        </div>
+
+        <IonLoading
+          isOpen={isLoading}
+          message={t('registrationForm.registeringUser')}
+        />
       </form>
     </PageLayout>
   );
