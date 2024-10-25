@@ -1,7 +1,8 @@
-export { useChangePasswordSchema } from './useChangePasswordSchema';
-export { useDebounce } from './useDebounce/useDebounce';
-export { useForgotPasswordForm } from './useForgotPasswordSchema';
-export { useLoginSchema } from './useLoginSchema';
-export { useRegistrationSchema } from './useRegistrationSchema';
-export { useStore } from './useStore';
-export { useTranslations } from './useTranslations';
+export * from './useChangePasswordSchema';
+export * from './useDebounce/useDebounce';
+export * from './useForgotPasswordSchema';
+export * from './useLocalStorage';
+export * from './useLoginSchema';
+export * from './useRegistrationSchema';
+export * from './useStore';
+export * from './useTranslations';

@@ -1,23 +1,68 @@
-import { Theme } from '@utils/types';
-import React, { useEffect } from 'react';
-import config from '@config/themeconfig.json';
+import React, { createContext, useContext } from 'react';
+import config from '../config/themeconfig.json';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { Mode, Theme } from '../utils/types';
+
+interface ThemeContextType {
+  theme: Theme;
+  mode: Mode;
+  changeTheme: (newTheme: Theme) => void;
+  toggleMode: () => void;
+}
 
 interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-const theme = config.theme as Theme;
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const ThemeContext = React.createContext<Theme>(theme);
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};
 
-const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  useEffect(() => {
-    document.body.className = '';
-    document.body.classList.add(theme);
+const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+  const [theme, setTheme] = useLocalStorage<Theme>(
+    'theme',
+    config.theme as Theme,
+  );
+  const [mode, setMode] = useLocalStorage<Mode>('mode', 'dark');
+
+  const changeTheme = (newTheme: Theme) => {
+    setTheme(newTheme);
+    updateBodyClasses(newTheme, mode);
+  };
+
+  const toggleMode = () => {
+    const newMode = mode === 'dark' ? 'light' : 'dark';
+    setMode(newMode);
+    updateBodyClasses(theme, newMode);
+  };
+
+  const updateBodyClasses = (currentTheme: Theme, currentMode: Mode) => {
+    const allThemes: Theme[] = ['lara', 'sakai', 'vela', 'soho'];
+    const allModes: Mode[] = ['light', 'dark'];
+
+    // Remove all theme and mode classes
+    allThemes.forEach((t) => document.body.classList.remove(t));
+    allModes.forEach((m) => document.body.classList.remove(m));
+
+    // Add current theme and mode classes
+    document.body.classList.add(currentTheme, currentMode);
+  };
+
+  // Initial class setup
+  React.useEffect(() => {
+    updateBodyClasses(theme, mode);
   }, []);
 
   return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ theme, mode, changeTheme, toggleMode }}>
+      {children}
+    </ThemeContext.Provider>
   );
 };
 

@@ -1,3 +1,4 @@
+import { useTranslations } from '@hooks/useTranslations';
 import {
   IonButton,
   IonContent,
@@ -6,10 +7,9 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTranslations } from '../../hooks/useTranslations';
-import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();
@@ -31,11 +31,13 @@ export const Dashboard: React.FC = () => {
       <IonContent className="ion-padding">
         <h2>{t('dashboard.subtitle')}</h2>
         <p>{t('dashboard.description')}</p>
+
         <IonButton
           expand="full"
           color="danger"
           type="submit"
           onClick={handleLogout}
+          className="ion-margin-top"
         >
           {t('loginForm.logout')}
         </IonButton>
