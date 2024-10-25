@@ -1,10 +1,16 @@
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useDebounce } from './useDebounce';
-import { describe, it, expect, vi } from 'vitest';
-
-vi.useFakeTimers();
 
 describe('useDebounce', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should return the initial value immediately', () => {
     const { result } = renderHook(() => useDebounce('initial', 500));
     expect(result.current).toBe('initial');
@@ -18,10 +24,10 @@ describe('useDebounce', () => {
       },
     );
 
-    // Update the value
     rerender({ value: 'updated', delay: 500 });
 
-    // Fast-forward time
+    expect(result.current).toBe('initial');
+
     act(() => {
       vi.advanceTimersByTime(500);
     });
@@ -40,7 +46,7 @@ describe('useDebounce', () => {
     rerender({ value: 'updated', delay: 500 });
 
     act(() => {
-      vi.advanceTimersByTime(300);
+      vi.advanceTimersByTime(400);
     });
 
     expect(result.current).toBe('initial');
@@ -57,19 +63,19 @@ describe('useDebounce', () => {
     rerender({ value: 'updated1', delay: 500 });
 
     act(() => {
-      vi.advanceTimersByTime(300);
+      vi.advanceTimersByTime(400);
     });
 
     rerender({ value: 'updated2', delay: 500 });
 
     act(() => {
-      vi.advanceTimersByTime(300);
+      vi.advanceTimersByTime(400);
     });
 
     expect(result.current).toBe('initial');
 
     act(() => {
-      vi.advanceTimersByTime(200);
+      vi.advanceTimersByTime(100);
     });
 
     expect(result.current).toBe('updated2');
