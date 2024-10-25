@@ -8,9 +8,10 @@ import {
   IonMenuToggle,
 } from '@ionic/react';
 import { settingsOutline } from 'ionicons/icons';
+import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const MainMenu: React.FC = () => {
+export const MainMenu: FC = () => {
   const { t } = useTranslation();
 
   return (
