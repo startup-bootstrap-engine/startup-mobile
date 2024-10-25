@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { IonButton, IonInput, IonItem, IonLabel, IonText } from '@ionic/react';
-import { useHistory } from 'react-router-dom';
-import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import { useTranslations } from '@hooks/useTranslations';
 import { useRegistrationSchema } from '@hooks/useRegistrationSchema';
+import { useTranslations } from '@hooks/useTranslations';
+import { IonButton, IonInput, IonItem, IonLabel, IonText } from '@ionic/react';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export const RegisterForm: React.FC = () => {
   const history = useHistory();
