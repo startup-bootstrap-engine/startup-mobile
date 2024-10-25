@@ -6,6 +6,7 @@ import { Mode, Theme } from '../utils/types';
 interface ThemeContextType {
   theme: Theme;
   mode: Mode;
+  // eslint-disable-next-line no-unused-vars
   changeTheme: (newTheme: Theme) => void;
   toggleMode: () => void;
 }

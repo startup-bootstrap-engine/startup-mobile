@@ -4,6 +4,7 @@ import React from 'react';
 interface FormFieldProps {
   label: string;
   value: string;
+  // eslint-disable-next-line no-unused-vars
   onChange: (value: string) => void;
   type?: 'text' | 'email' | 'password';
   error?: string | null;
