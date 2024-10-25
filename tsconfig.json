@@ -17,18 +17,17 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
-      "@hooks": ["src/hooks/index.ts"],
-      "@utils/*": ["src/utils/*"],
-      "@styles/*": ["src/styles/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@pages/*": ["src/pages/*"],
       "@store/*": ["src/store/*"],
-      "@locales/*": ["src/locales/*"],
-      "@tests/*": ["src/tests/*"],
-      "@config/*": ["src/config/*"]
+      "@utils/*": ["src/utils/*"],
+      "@config/*": ["src/config/*"],
+      "@contexts/*": ["src/contexts/*"],
+      "@locales/*": ["src/locales/*"]
     }
   },
-  "include": ["src", "setupTests.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "exclude": ["node_modules", "dist"],
-  "types": ["vitest", "node"]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

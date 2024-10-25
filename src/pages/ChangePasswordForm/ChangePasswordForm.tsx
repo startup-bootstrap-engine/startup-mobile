@@ -1,18 +1,12 @@
-import React from 'react';
-import {
-  IonButton,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonText,
-  IonLoading,
-} from '@ionic/react';
+import { FormField } from '@components/forms/FormField';
+import { PageLayout } from '@components/layout/PageLayout';
+import { useChangePasswordSchema } from '@hooks/useChangePasswordSchema';
+import { useTranslations } from '@hooks/useTranslations';
+import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useChangePasswordSchema, useTranslations } from '@hooks';
+import React, { useState } from 'react';
 
-interface ChangePasswordFormData {
+interface PasswordData {
   currentPassword: string;
   newPassword: string;
   newPasswordConfirmation: string;
@@ -23,67 +17,82 @@ export const ChangePasswordForm: React.FC = () => {
   const { t } = useTranslations();
   const changePasswordSchema = useChangePasswordSchema();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ChangePasswordFormData>({
-    resolver: zodResolver(changePasswordSchema),
+  const [formData, setFormData] = useState<PasswordData>({
+    currentPassword: '',
+    newPassword: '',
+    newPasswordConfirmation: '',
   });
 
-  const onSubmit = async (data: ChangePasswordFormData) => {
-    const { currentPassword, newPassword } = data;
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const validation = changePasswordSchema.safeParse(formData);
+
+    if (!validation.success) {
+      const errors: Record<string, string> = {};
+      validation.error.errors.forEach((err) => {
+        errors[err.path[0]] = err.message;
+      });
+      setFormErrors(errors);
+      return;
+    }
+
+    const { currentPassword, newPassword } = formData;
     await changePassword(currentPassword, newPassword);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>{t('passwordForms.changePasswordForm')}</h2>
-      {error && (
-        <IonText color="danger">
-          <p>{error}</p>
-        </IonText>
-      )}
-      <IonItem>
-        <IonLabel position="floating">
-          {t('passwordForms.currentPassword')}
-        </IonLabel>
-        <IonInput type="password" {...register('currentPassword')} />
-      </IonItem>
-      {errors.currentPassword && (
-        <IonText color="danger">
-          <p>{errors.currentPassword.message}</p>
-        </IonText>
-      )}
-      <IonItem>
-        <IonLabel position="floating">
-          {t('passwordForms.newPassword')}
-        </IonLabel>
-        <IonInput type="password" {...register('newPassword')} />
-      </IonItem>
-      {errors.newPassword && (
-        <IonText color="danger">
-          <p>{errors.newPassword.message}</p>
-        </IonText>
-      )}
-      <IonItem>
-        <IonLabel position="floating">
-          {t('passwordForms.confirmPassword')}
-        </IonLabel>
-        <IonInput type="password" {...register('newPasswordConfirmation')} />
-      </IonItem>
-      {errors.newPasswordConfirmation && (
-        <IonText color="danger">
-          <p>{errors.newPasswordConfirmation.message}</p>
-        </IonText>
-      )}
-      <IonLoading
-        isOpen={isLoading}
-        message={t('passwordForms.updatingPassword')}
-      />
-      <IonButton expand="full" type="submit">
-        {t('passwordForms.updatePassword')}
-      </IonButton>
-    </form>
+    <PageLayout title={t('passwordForms.changePasswordForm')}>
+      <form onSubmit={handleSubmit}>
+        {error && (
+          <IonText color="danger">
+            <p>{error}</p>
+          </IonText>
+        )}
+
+        <FormField
+          label={t('passwordForms.currentPassword')}
+          value={formData.currentPassword}
+          onChange={(value) => handleInputChange('currentPassword', value)}
+          type="password"
+          error={formErrors.currentPassword}
+        />
+
+        <FormField
+          label={t('passwordForms.newPassword')}
+          value={formData.newPassword}
+          onChange={(value) => handleInputChange('newPassword', value)}
+          type="password"
+          error={formErrors.newPassword}
+        />
+
+        <FormField
+          label={t('passwordForms.confirmPassword')}
+          value={formData.newPasswordConfirmation}
+          onChange={(value) =>
+            handleInputChange('newPasswordConfirmation', value)
+          }
+          type="password"
+          error={formErrors.newPasswordConfirmation}
+        />
+
+        <IonLoading
+          isOpen={isLoading}
+          message={t('passwordForms.updatingPassword')}
+        />
+
+        <IonButton expand="full" type="submit" disabled={isLoading}>
+          {t('passwordForms.updatePassword')}
+        </IonButton>
+      </form>
+    </PageLayout>
   );
 };
+
+export default ChangePasswordForm;

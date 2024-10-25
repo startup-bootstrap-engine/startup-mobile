@@ -1,4 +1,3 @@
-import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
   IonLoading,
@@ -7,6 +6,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import React, { Suspense } from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -17,12 +17,12 @@ import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
 
 /* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
+import '@ionic/react/css/display.css';
+import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/float-elements.css';
+import '@ionic/react/css/padding.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
 
 /**
  * Ionic Dark Mode
@@ -31,42 +31,50 @@ import '@ionic/react/css/display.css';
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-import { LoginForm } from './pages/LoginForm/LoginForm';
-import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordForm';
-import { Dashboard } from './pages/Dashboard/Dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
-import { RegisterForm } from './pages/RegisterForm/Register';
 import ThemeProvider from './contexts/ThemeProvider';
+import { ChangePasswordForm } from './pages/ChangePasswordForm/ChangePasswordForm';
+import { Dashboard } from './pages/Dashboard/Dashboard';
+import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordForm';
+import { LoginForm } from './pages/LoginForm/LoginForm';
+import { RegisterForm } from './pages/RegisterForm/Register';
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <ThemeProvider>
-          <Suspense
-            fallback={<IonLoading isOpen={true} message={'Loading...'} />}
-          >
-            <Route exact path="/register" component={RegisterForm} />
-            <Route exact path="/login" component={LoginForm} />
-            <Route
-              exact
-              path="/changePassoword"
-              component={ForgotPasswordForm}
-            />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-            <Redirect exact from="/" to="/register" />
-          </Suspense>
-        </ThemeProvider>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <ThemeProvider>
+            <Suspense
+              fallback={<IonLoading isOpen={true} message="Loading..." />}
+            >
+              <Route path="/login" render={() => <LoginForm />} exact />
+              <Route path="/register" render={() => <RegisterForm />} exact />
+              <Route
+                path="/forgot-password"
+                render={() => <ForgotPasswordForm />}
+                exact
+              />
+              <Route
+                path="/change-password"
+                render={() => <ChangePasswordForm />}
+                exact
+              />
+              <PrivateRoute path="/dashboard" component={Dashboard} exact />
+              <Route exact path="/">
+                <Redirect to="/login" />
+              </Route>
+            </Suspense>
+          </ThemeProvider>
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

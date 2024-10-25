@@ -1,24 +1,41 @@
+import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
+import { logoApple } from 'ionicons/icons';
 import React from 'react';
-import { IonButton } from '@ionic/react';
-import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import { useTranslations } from '@hooks';
+import { useTranslations } from '../../hooks/useTranslations';
+import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
-const AppleLoginButton: React.FC = () => {
-  const { appleLogin } = useAuthStore();
+export const AppleLoginButton: React.FC = () => {
+  const { appleLogin, isLoading } = useAuthStore();
   const { t } = useTranslations();
 
-  const handleAppleLogin = async () => {
-    const idToken = 'apple_id_token';
-    const email = 'user@apple.com';
-    const authorizationCode = 'apple_authorization_code';
-    await appleLogin(idToken, email, authorizationCode);
+  const handleAppleLogin = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      await appleLogin(
+        'apple_id_token',
+        'user@apple.com',
+        'apple_authorization_code',
+      );
+    } catch (error) {
+      console.error(t('loginForm.socialLogin.appleError'), error);
+    }
   };
 
   return (
-    <IonButton expand="full" onClick={handleAppleLogin}>
-      {t('loginForm.appleLogin')}
+    <IonButton
+      expand="block"
+      color="light"
+      onClick={handleAppleLogin}
+      disabled={isLoading}
+    >
+      {isLoading ? (
+        <IonSpinner name="crescent" />
+      ) : (
+        <IonIcon slot="start" icon={logoApple} />
+      )}
+      {isLoading
+        ? t('loginForm.socialLogin.loading')
+        : t('loginForm.socialLogin.apple')}
     </IonButton>
   );
 };
-
-export default AppleLoginButton;

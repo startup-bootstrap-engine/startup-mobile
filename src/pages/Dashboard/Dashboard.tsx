@@ -1,15 +1,15 @@
-import React from 'react';
 import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
   IonButton,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/react';
-import { useAuthStore } from '@store/api/userApi/useAuthStore';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTranslations } from '@hooks';
+import { useTranslations } from '../../hooks/useTranslations';
+import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();
@@ -32,9 +32,9 @@ export const Dashboard: React.FC = () => {
         <h2>{t('dashboard.subtitle')}</h2>
         <p>{t('dashboard.description')}</p>
         <IonButton
-          type="submit"
           expand="full"
           color="danger"
+          type="submit"
           onClick={handleLogout}
         >
           {t('loginForm.logout')}
@@ -43,3 +43,5 @@ export const Dashboard: React.FC = () => {
     </IonPage>
   );
 };
+
+export default Dashboard;

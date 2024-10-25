@@ -1,8 +1,8 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { useAuthStore } from '@store/api/userApi/useAuthStore';
+import { useTranslations } from '@hooks/useTranslations';
 import { IonLoading } from '@ionic/react';
-import { useTranslations } from '@hooks';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 interface PrivateRouteProps {
   component: React.ComponentType<any>;
