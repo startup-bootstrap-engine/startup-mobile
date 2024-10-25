@@ -2,12 +2,11 @@ import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
 import { useLoginSchema } from '@hooks/useLoginSchema';
 import { useTranslations } from '@hooks/useTranslations';
-import { IonButton, IonIcon, IonLoading, IonText } from '@ionic/react';
+import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import { logoApple, logoGoogle } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import AppleLoginButton from './AppleLoginButton';
+import { AppleLoginButton } from './AppleLoginButton';
 import { GoogleLoginButton } from './GoogleLoginButton';
 
 interface User {
@@ -78,6 +77,9 @@ export const LoginForm: React.FC = () => {
           onChange={(value) => setUser({ ...user, email: value })}
           type="email"
           error={emailError}
+          required
+          clearInput
+          placeholder="example@email.com"
         />
 
         <FormField
@@ -86,6 +88,7 @@ export const LoginForm: React.FC = () => {
           onChange={(value) => setUser({ ...user, password: value })}
           type="password"
           error={passwordError}
+          required
         />
 
         <div className="ion-padding-top">
@@ -99,25 +102,12 @@ export const LoginForm: React.FC = () => {
             </IonText>
           </div>
 
-          <IonButton
-            expand="block"
-            color="light"
-            className="ion-margin-bottom"
-            onClick={() => GoogleLoginButton}
-          >
-            <IonIcon slot="start" icon={logoGoogle} />
-            {t('loginForm.googleLogin')}
-          </IonButton>
-
-          <IonButton
-            expand="block"
-            color="light"
-            className="ion-margin-bottom"
-            onClick={() => AppleLoginButton}
-          >
-            <IonIcon slot="start" icon={logoApple} />
-            {t('loginForm.appleLogin')}
-          </IonButton>
+          <div className="ion-margin-bottom">
+            <GoogleLoginButton />
+          </div>
+          <div className="ion-margin-bottom">
+            <AppleLoginButton />
+          </div>
 
           <div className="ion-text-center ion-padding-top">
             <IonButton

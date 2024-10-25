@@ -1,4 +1,3 @@
-import { useTranslations } from '../../../hooks/useTranslations';
 import { setToken } from '../../../utils/tokenStorage';
 import { AuthState } from './types/authTypes';
 
@@ -11,7 +10,6 @@ export const appleLogin = async (
   set: (_state: Partial<AuthState>) => void,
 ): Promise<void> => {
   try {
-    const { t } = useTranslations();
     set({ isLoading: true, error: null });
 
     const response = await fetch(`${apiURL}/auth/apple`, {
@@ -24,7 +22,7 @@ export const appleLogin = async (
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || t('loginForm.appleError'));
+      throw new Error(errorData.message || 'Apple login failed');
     }
 
     const data = await response.json();
@@ -34,5 +32,6 @@ export const appleLogin = async (
     set({ token: accessToken, isAuthenticated: true, isLoading: false });
   } catch (error: any) {
     set({ isLoading: false, error: error.message });
+    throw error;
   }
 };
