@@ -1,10 +1,18 @@
 import {
   IonApp,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
   IonLoading,
+  IonMenu,
+  IonMenuToggle,
   IonRouterOutlet,
   setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { settingsOutline } from 'ionicons/icons';
 import React, { Suspense } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
@@ -41,6 +49,8 @@ import { Dashboard } from './pages/Dashboard/Dashboard';
 import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordForm';
 import { LoginForm } from './pages/LoginForm/LoginForm';
 import { RegisterForm } from './pages/RegisterForm/Register';
+import { Settings } from './pages/Settings/Settings';
+import { Theme } from './pages/Settings/Theme';
 
 setupIonicReact();
 
@@ -48,7 +58,20 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonRouterOutlet>
+        <IonMenu contentId="main-content" type="overlay">
+          <IonContent>
+            <IonList>
+              <IonMenuToggle autoHide={false}>
+                <IonItem routerLink="/settings" routerDirection="forward">
+                  <IonIcon icon={settingsOutline} slot="start" />
+                  <IonLabel>Settings</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
+            </IonList>
+          </IonContent>
+        </IonMenu>
+
+        <IonRouterOutlet id="main-content">
           <ThemeProvider>
             <Suspense
               fallback={<IonLoading isOpen={true} message="Loading..." />}
@@ -66,6 +89,8 @@ const App: React.FC = () => {
                 exact
               />
               <PrivateRoute path="/dashboard" component={Dashboard} exact />
+              <Route path="/settings" render={() => <Settings />} exact />
+              <Route path="/settings/theme" render={() => <Theme />} exact />
               <Route exact path="/">
                 <Redirect to="/login" />
               </Route>

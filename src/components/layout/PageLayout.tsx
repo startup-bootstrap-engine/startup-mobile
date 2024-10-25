@@ -3,6 +3,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonMenuButton,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -30,6 +31,9 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
             </IonButtons>
           )}
           <IonTitle>{title}</IonTitle>
+          <IonButtons slot="end">
+            <IonMenuButton />
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">{children}</IonContent>
