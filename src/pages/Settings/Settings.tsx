@@ -17,13 +17,13 @@ export const Settings: React.FC = () => {
             <IonIcon icon={colorPaletteOutline} slot="start" />
             <IonLabel>Theme</IonLabel>
           </IonItem>
+          <IonItem routerLink="/settings/language">
+            <IonIcon icon={languageOutline} slot="start" />
+            <IonLabel>Language</IonLabel>
+          </IonItem>
           <IonItem>
             <IonIcon icon={notificationsOutline} slot="start" />
             <IonLabel>Notifications</IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonIcon icon={languageOutline} slot="start" />
-            <IonLabel>Language</IonLabel>
           </IonItem>
           <IonItem>
             <IonIcon icon={lockClosedOutline} slot="start" />

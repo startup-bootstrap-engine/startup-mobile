@@ -4,12 +4,13 @@
     "cancel": "Cancelar",
     "edit": "Editar",
     "delete": "Excluir",
-    "noData": "Nenhum dado disponível.",
+    "noData": "Nenhum dado disponível",
     "add": "Adicionar",
     "save": "Salvar",
     "submit": "Enviar",
-    "loading": "Carregando dados",
-    "backToLogin": "Voltar para o login"
+    "loading": "Carregando...",
+    "backToLogin": "Voltar ao login",
+    "or": "ou"
   },
   "dashboard": {
     "title": "Painel",
@@ -17,40 +18,54 @@
     "description": "Aqui você pode ver o conteúdo privado do usuário autenticado."
   },
   "loginForm": {
-    "title": "Formulário de login",
+    "title": "Entrar",
     "logout": "Sair",
     "login": "Entrar",
-    "email": "E-mail",
+    "email": "Endereço de email",
     "password": "Senha",
     "forgotPassword": "Esqueceu a senha?",
-    "appleLogin": "Entrar com Apple",
-    "googleLogin": "Entrar com Google",
-    "loggingIn": "Entrando"
+    "loggingIn": "Entrando...",
+    "emailPlaceholder": "Digite seu email",
+    "passwordPlaceholder": "Digite sua senha",
+    "errors": {
+      "invalidCredentials": "Email ou senha inválidos"
+    },
+    "socialLogin": {
+      "apple": "Continuar com Apple",
+      "google": "Continuar com Google",
+      "appleError": "Falha no login com Apple",
+      "googleError": "Falha no login com Google",
+      "loading": "Conectando..."
+    }
   },
   "passwordForms": {
     "currentPassword": "Senha atual",
     "newPassword": "Nova senha",
     "updatingPassword": "Atualizando senha",
     "confirmPassword": "Confirmar senha",
-    "passwordRecoveryForm": "Formulário de recuperação de senha",
-    "changePasswordForm": "Formulário de alteração de senha",
-    "updatePassword": "Altere a senha"
+    "passwordRecoveryForm": "Redefinir Senha",
+    "changePasswordForm": "Alterar Senha",
+    "updatePassword": "Atualizar Senha",
+    "error": {
+      "reset": "Falha ao enviar email de redefinição"
+    }
   },
   "validations": {
     "required": "Campo obrigatório.",
-    "email": "E-mail inválido.",
+    "email": "Email inválido.",
     "password": "A senha deve ter pelo menos {{number}} caracteres.",
     "passwordNotMatch": "As senhas não coincidem."
   },
   "registrationForm": {
-    "title": "Formulário de registro",
-    "name": "Nome",
+    "title": "Criar Conta",
+    "name": "Nome completo",
+    "namePlaceholder": "Digite seu nome completo",
     "confirmPassword": "Confirmar senha",
-    "register": "Registrar",
-    "registerSuccess": "Usuário registrado com sucesso.",
-    "registerError": "Erro ao registrar o usuário.",
-    "registeringUser": "Registrando usuário",
-    "existingUser": "Já tem uma conta? Faça login",
-    "authenticationVerification": "Verificando autenticação"
+    "register": "Criar Conta",
+    "registerSuccess": "Conta criada com sucesso",
+    "registerError": "Falha ao criar conta",
+    "registeringUser": "Criando sua conta...",
+    "existingUser": "Já tem uma conta? Entre",
+    "authenticationVerification": "Verificando..."
   }
 }

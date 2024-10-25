@@ -1,22 +1,30 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import Backend from 'i18next-http-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import enTranslations from './locales/en.json';
+import ptBrTranslations from './locales/pt-br.json';
 
-i18n
-  .use(initReactI18next)
-  .use(LanguageDetector)
-  .use(Backend)
-  .init({
-    debug: true,
-    fallbackLng: 'en',
-    lng: 'en',
-    interpolation: {
-      escapeValue: false,
+const getDefaultLanguage = () => {
+  if (typeof window !== 'undefined') {
+    const storedLang = window.localStorage.getItem('i18nextLng');
+    return storedLang || 'en';
+  }
+  return 'en';
+};
+
+i18n.use(initReactI18next).init({
+  resources: {
+    en: {
+      translation: enTranslations,
     },
-    backend: {
-      loadPath: 'src/locales/{{lng}}.json',
+    'pt-BR': {
+      translation: ptBrTranslations,
     },
-  });
+  },
+  lng: getDefaultLanguage(),
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 export default i18n;
