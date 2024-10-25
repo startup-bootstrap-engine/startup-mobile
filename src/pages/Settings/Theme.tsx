@@ -1,10 +1,13 @@
 import React from 'react';
 import { PageLayout } from '../../components/layout/PageLayout';
 import { ThemeSelector } from '../../components/layout/ThemeSelector';
+import { useTranslations } from '../../hooks/useTranslations';
 
 export const Theme: React.FC = () => {
+  const { t } = useTranslations();
+
   return (
-    <PageLayout title="Theme Settings" showBackButton={true}>
+    <PageLayout title={t('settings.themeSettings')} showBackButton={true}>
       <ThemeSelector />
     </PageLayout>
   );

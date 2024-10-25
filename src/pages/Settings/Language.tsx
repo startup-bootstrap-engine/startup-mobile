@@ -9,15 +9,15 @@ import {
 import React from 'react';
 import { PageLayout } from '../../components/layout/PageLayout';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { useTranslations } from '../../hooks/useTranslations';
+import { TranslationKeys, useTranslations } from '../../hooks/useTranslations';
 
-const languages = [
-  { code: 'en', name: 'English' },
-  { code: 'pt-BR', name: 'Português (Brasil)' },
+const languages: Array<{ code: string; name: TranslationKeys }> = [
+  { code: 'en', name: 'settings.languages.en' },
+  { code: 'pt-BR', name: 'settings.languages.pt-BR' },
 ];
 
 export const Language: React.FC = () => {
-  const { i18n } = useTranslations();
+  const { i18n, t } = useTranslations();
   const [language, setLanguage] = useLocalStorage('i18nextLng', 'en');
 
   const handleLanguageChange = (newLanguage: string) => {
@@ -26,7 +26,7 @@ export const Language: React.FC = () => {
   };
 
   return (
-    <PageLayout title="Language" showBackButton={true}>
+    <PageLayout title={t('settings.language')} showBackButton={true}>
       <IonContent>
         <IonList>
           <IonRadioGroup
@@ -35,7 +35,7 @@ export const Language: React.FC = () => {
           >
             {languages.map((lang) => (
               <IonItem key={lang.code}>
-                <IonLabel>{lang.name}</IonLabel>
+                <IonLabel>{t(lang.name)}</IonLabel>
                 <IonRadio slot="start" value={lang.code} />
               </IonItem>
             ))}

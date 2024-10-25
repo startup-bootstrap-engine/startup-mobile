@@ -67,5 +67,24 @@
     "registeringUser": "Criando sua conta...",
     "existingUser": "Já tem uma conta? Entre",
     "authenticationVerification": "Verificando..."
+  },
+  "settings": {
+    "title": "Configurações",
+    "themeSettings": "Configurações de Tema",
+    "theme": "Tema",
+    "language": "Idioma",
+    "notifications": "Notificações",
+    "privacy": "Privacidade",
+    "mode": "Modo",
+    "themes": {
+      "lara": "Lara",
+      "sakai": "Sakai",
+      "vela": "Vela",
+      "soho": "Soho"
+    },
+    "languages": {
+      "en": "Inglês",
+      "pt-BR": "Português (Brasil)"
+    }
   }
 }

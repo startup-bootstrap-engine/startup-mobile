@@ -7,27 +7,30 @@ import {
 } from 'ionicons/icons';
 import React from 'react';
 import { PageLayout } from '../../components/layout/PageLayout';
+import { useTranslations } from '../../hooks/useTranslations';
 
 export const Settings: React.FC = () => {
+  const { t } = useTranslations();
+
   return (
-    <PageLayout title="Settings" showBackButton={true}>
+    <PageLayout title={t('settings.title')} showBackButton={true}>
       <IonContent>
         <IonList>
           <IonItem routerLink="/settings/theme">
             <IonIcon icon={colorPaletteOutline} slot="start" />
-            <IonLabel>Theme</IonLabel>
+            <IonLabel>{t('settings.theme')}</IonLabel>
           </IonItem>
           <IonItem routerLink="/settings/language">
             <IonIcon icon={languageOutline} slot="start" />
-            <IonLabel>Language</IonLabel>
+            <IonLabel>{t('settings.language')}</IonLabel>
           </IonItem>
           <IonItem>
             <IonIcon icon={notificationsOutline} slot="start" />
-            <IonLabel>Notifications</IonLabel>
+            <IonLabel>{t('settings.notifications')}</IonLabel>
           </IonItem>
           <IonItem>
             <IonIcon icon={lockClosedOutline} slot="start" />
-            <IonLabel>Privacy</IonLabel>
+            <IonLabel>{t('settings.privacy')}</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>
