@@ -1,18 +1,10 @@
 import {
   IonApp,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
   IonLoading,
-  IonMenu,
-  IonMenuToggle,
   IonRouterOutlet,
   setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { settingsOutline } from 'ionicons/icons';
 import React, { Suspense } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
@@ -43,6 +35,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import { PrivateRoute } from './components/PrivateRoute';
+import { MainMenu } from './components/layout/MainMenu';
 import { LanguageProvider } from './contexts/LanguageProvider';
 import ThemeProvider from './contexts/ThemeProvider';
 import { ChangePasswordForm } from './pages/ChangePasswordForm/ChangePasswordForm';
@@ -60,19 +53,7 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonMenu contentId="main-content" type="overlay">
-          <IonContent>
-            <IonList>
-              <IonMenuToggle autoHide={false}>
-                <IonItem routerLink="/settings" routerDirection="forward">
-                  <IonIcon icon={settingsOutline} slot="start" />
-                  <IonLabel>Settings</IonLabel>
-                </IonItem>
-              </IonMenuToggle>
-            </IonList>
-          </IonContent>
-        </IonMenu>
-
+        <MainMenu />
         <IonRouterOutlet id="main-content">
           <ThemeProvider>
             <LanguageProvider>
