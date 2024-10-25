@@ -1,15 +1,17 @@
+import { FormField } from '@components/forms/FormField';
+import { PageLayout } from '@components/layout/PageLayout';
 import { useRegistrationSchema } from '@hooks/useRegistrationSchema';
 import { useTranslations } from '@hooks/useTranslations';
-import { IonButton, IonInput, IonItem, IonLabel, IonText } from '@ionic/react';
+import { IonButton, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export const RegisterForm: React.FC = () => {
-  const history = useHistory();
-  const { signUp, isLoading, error } = useAuthStore();
   const { t } = useTranslations();
+  const history = useHistory();
   const registrationSchema = useRegistrationSchema();
+  const { signUp, isLoading, error } = useAuthStore();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -37,92 +39,66 @@ export const RegisterForm: React.FC = () => {
       setFormErrors(errors);
       return;
     }
+
     const { name, email, password, passwordConfirmation } = formData;
     await signUp(email, password, passwordConfirmation, name);
     history.push('/login');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{t('registrationForm.title')}</h2>
+    <PageLayout title={t('registrationForm.title')}>
+      <form onSubmit={handleSubmit}>
+        {error && (
+          <IonText color="danger">
+            <p>{error}</p>
+          </IonText>
+        )}
 
-      {error && (
-        <IonText color="danger">
-          <p>{error}</p>
-        </IonText>
-      )}
-
-      <IonItem>
-        <IonLabel position="floating">{t('registrationForm.name')}</IonLabel>
-        <IonInput
-          type="text"
+        <FormField
+          label={t('registrationForm.name')}
           value={formData.name}
-          onIonChange={(e) => handleInputChange('name', e.detail.value!)}
+          onChange={(value) => handleInputChange('name', value)}
+          error={formErrors.name}
         />
-      </IonItem>
-      {formErrors.name && (
-        <IonText color="danger">
-          <p>{formErrors.name}</p>
-        </IonText>
-      )}
 
-      <IonItem>
-        <IonLabel position="floating">{t('loginForm.email')}</IonLabel>
-        <IonInput
-          type="email"
+        <FormField
+          label={t('loginForm.email')}
           value={formData.email}
-          onIonChange={(e) => handleInputChange('email', e.detail.value!)}
+          onChange={(value) => handleInputChange('email', value)}
+          type="email"
+          error={formErrors.email}
         />
-      </IonItem>
-      {formErrors.email && (
-        <IonText color="danger">
-          <p>{formErrors.email}</p>
-        </IonText>
-      )}
 
-      <IonItem>
-        <IonLabel position="floating">{t('loginForm.password')}</IonLabel>
-        <IonInput
-          type="password"
+        <FormField
+          label={t('loginForm.password')}
           value={formData.password}
-          onIonChange={(e) => handleInputChange('password', e.detail.value!)}
-        />
-      </IonItem>
-      {formErrors.password && (
-        <IonText color="danger">
-          <p>{formErrors.password}</p>
-        </IonText>
-      )}
-
-      <IonItem>
-        <IonLabel position="floating">
-          {t('registrationForm.confirmPassword')}
-        </IonLabel>
-        <IonInput
+          onChange={(value) => handleInputChange('password', value)}
           type="password"
-          value={formData.passwordConfirmation}
-          onIonChange={(e) =>
-            handleInputChange('passwordConfirmation', e.detail.value!)
-          }
+          error={formErrors.password}
         />
-      </IonItem>
-      {formErrors.passwordConfirmation && (
-        <IonText color="danger">
-          <p>{formErrors.passwordConfirmation}</p>
-        </IonText>
-      )}
 
-      <IonButton expand="full" type="submit" disabled={isLoading}>
-        {t('registrationForm.register')}
-      </IonButton>
+        <FormField
+          label={t('registrationForm.confirmPassword')}
+          value={formData.passwordConfirmation}
+          onChange={(value) => handleInputChange('passwordConfirmation', value)}
+          type="password"
+          error={formErrors.passwordConfirmation}
+        />
 
-      <IonButton
-        expand="full"
-        fill="outline"
-        onClick={() => history.push('/login')}
-      >
-        {t('registrationForm.existingUser')}
-      </IonButton>
-    </form>
+        <IonButton expand="full" type="submit" disabled={isLoading}>
+          {t('registrationForm.register')}
+        </IonButton>
+
+        <IonButton
+          expand="full"
+          fill="outline"
+          onClick={() => history.push('/login')}
+        >
+          {t('registrationForm.existingUser')}
+        </IonButton>
+      </form>
+    </PageLayout>
   );
 };
+
+export default RegisterForm;

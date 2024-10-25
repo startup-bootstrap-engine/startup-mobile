@@ -1,17 +1,12 @@
-import React from 'react';
-import {
-  IonButton,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonText,
-  IonLoading,
-} from '@ionic/react';
-import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import { useForm } from 'react-hook-form';
+import { FormField } from '@components/forms/FormField';
+import { PageLayout } from '@components/layout/PageLayout';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from '@hooks/useTranslations';
 import { useForgotPasswordForm } from '@hooks/useForgotPasswordSchema';
+import { useTranslations } from '@hooks/useTranslations';
+import { IonButton, IonLoading, IonText } from '@ionic/react';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 interface ForgotPasswordFormData {
   email: string;
@@ -23,41 +18,51 @@ export const ForgotPasswordForm: React.FC = () => {
   const forgotPasswordSchema = useForgotPasswordForm();
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: '',
+    },
   });
+
+  const email = watch('email');
 
   const onSubmit = async (data: ForgotPasswordFormData) => {
     await forgotPassword(data.email);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>{t('passwordForms.passwordRecoveryForm')}</h2>
-      {error && (
-        <IonText color="danger">
-          <p>{error}</p>
-        </IonText>
-      )}
-      <IonItem>
-        <IonLabel position="floating">{t('loginForm.email')}</IonLabel>
-        <IonInput type="email" {...register('email')} />
-      </IonItem>
-      {errors.email && (
-        <IonText color="danger">
-          <p>{errors.email.message}</p>
-        </IonText>
-      )}
-      <IonLoading
-        isOpen={isLoading}
-        message={t('passwordForms.updatingPassword')}
-      />
-      <IonButton expand="full" type="submit">
-        {t('common.submit')}
-      </IonButton>
-    </form>
+    <PageLayout title={t('passwordForms.passwordRecoveryForm')}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {error && (
+          <IonText color="danger">
+            <p>{error}</p>
+          </IonText>
+        )}
+
+        <FormField
+          label={t('loginForm.email')}
+          value={email}
+          onChange={(value) => setValue('email', value)}
+          type="email"
+          error={errors.email?.message}
+        />
+
+        <IonLoading
+          isOpen={isLoading}
+          message={t('passwordForms.updatingPassword')}
+        />
+
+        <IonButton expand="full" type="submit">
+          {t('common.submit')}
+        </IonButton>
+      </form>
+    </PageLayout>
   );
 };
+
+export default ForgotPasswordForm;

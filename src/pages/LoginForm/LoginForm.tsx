@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import {
-  IonButton,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonText,
-  IonLoading,
-} from '@ionic/react';
-import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import { useHistory } from 'react-router-dom';
-import { GoogleLoginButton } from './GoogleLoginButton';
-import AppleLoginButton from './AppleLoginButton';
+import { FormField } from '@components/forms/FormField';
+import { PageLayout } from '@components/layout/PageLayout';
 import { useLoginSchema } from '@hooks/useLoginSchema';
 import { useTranslations } from '@hooks/useTranslations';
+import { IonButton, IonIcon, IonLoading, IonText } from '@ionic/react';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
+import { logoApple, logoGoogle } from 'ionicons/icons';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import AppleLoginButton from './AppleLoginButton';
+import { GoogleLoginButton } from './GoogleLoginButton';
 
 interface User {
   email: string;
@@ -58,7 +54,6 @@ export const LoginForm: React.FC = () => {
     if (!validateForm()) return;
 
     await login(user.email, user.password);
-
     checkAuth();
   };
 
@@ -69,47 +64,86 @@ export const LoginForm: React.FC = () => {
   }, [isAuthenticated, history]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{t('loginForm.login')}</h2>
-      {error && (
-        <IonText color="danger">
-          <p>{error}</p>
-        </IonText>
-      )}
-      <IonItem>
-        <IonLabel position="floating">{t('loginForm.email')}</IonLabel>
-        <IonInput
+    <PageLayout title={t('loginForm.title')} showBackButton={false}>
+      <form onSubmit={handleSubmit} className="ion-padding">
+        {error && (
+          <IonText color="danger" className="ion-padding-bottom">
+            <p>{error}</p>
+          </IonText>
+        )}
+
+        <FormField
+          label={t('loginForm.email')}
+          value={user.email}
+          onChange={(value) => setUser({ ...user, email: value })}
           type="email"
-          value={user?.email}
-          onIonChange={(e) => setUser({ ...user, email: e.detail.value || '' })}
+          error={emailError}
         />
-      </IonItem>
-      {emailError && (
-        <IonText color="danger">
-          <p>{emailError}</p>
-        </IonText>
-      )}
-      <IonItem>
-        <IonLabel position="floating">{t('loginForm.password')}</IonLabel>
-        <IonInput
-          type="password"
+
+        <FormField
+          label={t('loginForm.password')}
           value={user.password}
-          onIonChange={(e) =>
-            setUser({ ...user, password: e.detail.value || '' })
-          }
+          onChange={(value) => setUser({ ...user, password: value })}
+          type="password"
+          error={passwordError}
         />
-      </IonItem>
-      {passwordError && (
-        <IonText color="danger">
-          <p>{passwordError}</p>
-        </IonText>
-      )}
-      <IonLoading isOpen={isLoading} message={t('loginForm.loggingIn')} />
-      <IonButton expand="full" type="submit">
-        {t('loginForm.login')}
-      </IonButton>
-      <GoogleLoginButton />
-      <AppleLoginButton />
-    </form>
+
+        <div className="ion-padding-top">
+          <IonButton expand="block" type="submit" disabled={isLoading}>
+            {t('loginForm.login')}
+          </IonButton>
+
+          <div className="ion-text-center ion-padding-vertical">
+            <IonText>
+              <p>or</p>
+            </IonText>
+          </div>
+
+          <IonButton
+            expand="block"
+            color="light"
+            className="ion-margin-bottom"
+            onClick={() => GoogleLoginButton}
+          >
+            <IonIcon slot="start" icon={logoGoogle} />
+            {t('loginForm.googleLogin')}
+          </IonButton>
+
+          <IonButton
+            expand="block"
+            color="light"
+            className="ion-margin-bottom"
+            onClick={() => AppleLoginButton}
+          >
+            <IonIcon slot="start" icon={logoApple} />
+            {t('loginForm.appleLogin')}
+          </IonButton>
+
+          <div className="ion-text-center ion-padding-top">
+            <IonButton
+              fill="clear"
+              size="small"
+              onClick={() => history.push('/forgot-password')}
+            >
+              {t('loginForm.forgotPassword')}
+            </IonButton>
+          </div>
+
+          <div className="ion-text-center">
+            <IonButton
+              fill="clear"
+              size="small"
+              onClick={() => history.push('/register')}
+            >
+              {t('registrationForm.register')}
+            </IonButton>
+          </div>
+        </div>
+
+        <IonLoading isOpen={isLoading} message={t('loginForm.loggingIn')} />
+      </form>
+    </PageLayout>
   );
 };
+
+export default LoginForm;

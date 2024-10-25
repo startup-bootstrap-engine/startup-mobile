@@ -16,6 +16,26 @@
   --ion-color-secondary-shade: #36abe0;
   --ion-color-secondary-tint: #50c8ff;
 
+  /* Light colors for social buttons */
+  --ion-color-light: #ffffff;
+  --ion-color-light-rgb: 255, 255, 255;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+  /* Dark theme */
+  --ion-background-color: #121212;
+  --ion-background-color-rgb: 18, 18, 18;
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
+  --ion-border-color: #222222;
+
+  --ion-item-background: #1e1e1e;
+  --ion-toolbar-background: #1e1e1e;
+  --ion-tab-bar-background: #1e1e1e;
+  --ion-card-background: #1e1e1e;
+
   /* Font customization */
   --ion-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -23,38 +43,48 @@
 
 /* Global styles */
 ion-content {
-  --background: #f8f9fa;
-}
-
-ion-header {
-  padding-left: 16px;
+  --background: var(--ion-background-color);
 }
 
 ion-item {
+  --background: var(--ion-item-background);
   --padding-start: 16px;
   --padding-end: 16px;
   --inner-padding-end: 16px;
+  --border-color: var(--ion-border-color);
 }
 
 ion-button {
   --box-shadow: none;
   text-transform: none;
+  margin: 4px 0;
 }
 
 /* Form styles */
 ion-input,
 ion-textarea {
-  --background: #ffffff;
+  --background: var(--ion-item-background);
   --padding-start: 16px;
   --padding-end: 16px;
   margin: 8px 0;
   border-radius: 8px;
+  --color: var(--ion-text-color);
+}
+
+/* Social login buttons */
+ion-button[color='light'] {
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-light-contrast);
+  --border-color: var(--ion-border-color);
+  --border-style: solid;
+  --border-width: 1px;
 }
 
 /* Card styles */
 ion-card {
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background: var(--ion-card-background);
 }
 
 /* List styles */
