@@ -1,25 +1,18 @@
-import React from 'react';
+import { useTranslations } from '@hooks/useTranslations';
 import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
   IonButton,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import { useHistory } from 'react-router-dom';
-import { useTranslations } from '@hooks/useTranslations';
+import React from 'react';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();
-  const history = useHistory();
   const { t } = useTranslations();
-
-  const handleLogout = async () => {
-    await logout();
-    history.push('/login');
-  };
 
   return (
     <IonPage>
@@ -31,15 +24,12 @@ export const Dashboard: React.FC = () => {
       <IonContent className="ion-padding">
         <h2>{t('dashboard.subtitle')}</h2>
         <p>{t('dashboard.description')}</p>
-        <IonButton
-          type="submit"
-          expand="full"
-          color="danger"
-          onClick={handleLogout}
-        >
+        <IonButton expand="full" color="danger" type="submit" onClick={logout}>
           {t('loginForm.logout')}
         </IonButton>
       </IonContent>
     </IonPage>
   );
 };
+
+export default Dashboard;

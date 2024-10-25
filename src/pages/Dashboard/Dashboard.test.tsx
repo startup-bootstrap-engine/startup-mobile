@@ -1,24 +1,25 @@
-import '@tests/i18nTest';
+import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Dashboard } from './Dashboard';
-import '@testing-library/jest-dom';
+import '@tests/i18nTest';
 import { MemoryRouter } from 'react-router-dom';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { Dashboard } from './Dashboard';
 
 const mockLogoutSpy = vi.fn();
 
 vi.mock('@store/api/userApi/useAuthStore', () => ({
-  useAuthStore: vi.fn(() => ({
-    logout: mockLogoutSpy, // Make sure this is used correctly
+  useAuthStore: () => ({
+    logout: mockLogoutSpy,
     isAuthenticated: true,
-  })),
+  }),
 }));
 
 describe('Dashboard Component', () => {
   beforeEach(() => {
     mockLogoutSpy.mockClear();
   });
+
   it('should render the Dashboard and handle logout', async () => {
     render(
       <MemoryRouter>
@@ -31,7 +32,7 @@ describe('Dashboard Component', () => {
       screen.getByRole('heading', { name: 'Welcome to the dashboard.' }),
     ).toBeInTheDocument();
 
-    await userEvent.click(screen.getByText('Logout'));
+    await userEvent.click(screen.getByText('Sign Out'));
 
     await waitFor(() => expect(mockLogoutSpy).toHaveBeenCalled());
   });
