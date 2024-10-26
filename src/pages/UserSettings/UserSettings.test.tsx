@@ -1,11 +1,10 @@
-import React, { act } from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, beforeEach, vi } from 'vitest';
 import { UserSettings } from './UserSettings';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import { useUserSettingsStore } from '@store/userSettings/store';
 import '@tests/i18nTest';
-import userEvent from '@testing-library/user-event';
 
 // Mock das stores e hooks
 vi.mock('@store/api/userApi/useAuthStore');
