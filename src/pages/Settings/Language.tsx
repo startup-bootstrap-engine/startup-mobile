@@ -14,6 +14,7 @@ import { TranslationKeys, useTranslations } from '../../hooks/useTranslations';
 const languages: Array<{ code: string; name: TranslationKeys }> = [
   { code: 'en', name: 'settings.languages.en' },
   { code: 'pt-BR', name: 'settings.languages.pt-BR' },
+  { code: 'ja', name: 'settings.languages.ja' },
 ];
 
 export const Language: React.FC = () => {
