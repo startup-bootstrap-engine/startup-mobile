@@ -42,7 +42,7 @@ import { ChangePasswordForm } from './pages/ChangePasswordForm/ChangePasswordFor
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordForm';
 import { LoginForm } from './pages/LoginForm/LoginForm';
-import { RegisterForm } from './pages/RegisterForm/Register';
+import { RegisterForm } from './pages/RegisterForm/RegisterForm';
 import { Language } from './pages/Settings/Language';
 import { Settings } from './pages/Settings/Settings';
 import { Theme } from './pages/Settings/Theme';
