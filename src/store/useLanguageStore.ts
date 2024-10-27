@@ -4,6 +4,7 @@ import i18n from '../i18n';
 
 interface LanguageState {
   language: string;
+  // eslint-disable-next-line no-unused-vars
   setLanguage: (lang: string) => void;
 }
 
