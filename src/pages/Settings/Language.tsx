@@ -6,9 +6,8 @@ import {
   IonRadio,
   IonRadioGroup,
 } from '@ionic/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { PageLayout } from '../../components/layout/PageLayout';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { TranslationKeys, useTranslations } from '../../hooks/useTranslations';
 
 const languages: Array<{ code: string; name: TranslationKeys }> = [
@@ -19,11 +18,11 @@ const languages: Array<{ code: string; name: TranslationKeys }> = [
 
 export const Language: React.FC = () => {
   const { i18n, t } = useTranslations();
-  const [language, setLanguage] = useLocalStorage('i18nextLng', 'en');
+  const [language, setLanguage] = useState(i18n.language || 'en');
 
   const handleLanguageChange = (newLanguage: string) => {
-    setLanguage(newLanguage);
     i18n.changeLanguage(newLanguage);
+    setLanguage(newLanguage);
   };
 
   return (
