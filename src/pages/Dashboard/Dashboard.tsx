@@ -29,7 +29,7 @@ export const Dashboard: React.FC = () => {
         <IonToolbar>
           <IonTitle>{t('dashboard.title')}</IonTitle>
           <IonButton slot="end" onClick={handleChangePassword}>
-            {t('dashboard.changePassword')}
+            Change Password
           </IonButton>
         </IonToolbar>
       </IonHeader>
