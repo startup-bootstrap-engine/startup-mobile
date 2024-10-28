@@ -34,7 +34,7 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-import { PrivateRoute } from './components/PrivateRoute';
+// import { PrivateRoute } from './components/PrivateRoute';
 import { MainMenu } from './components/layout/MainMenu';
 import { LanguageProvider } from './contexts/LanguageProvider';
 import ThemeProvider from './contexts/ThemeProvider';
