@@ -20,12 +20,17 @@ export const Dashboard: React.FC = () => {
     await logout();
     history.push('/login');
   };
-
+  const handleChangePassword = () => {
+    history.push('/change-password');
+  };
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>{t('dashboard.title')}</IonTitle>
+          <IonButton slot="end" onClick={handleChangePassword}>
+            {t('dashboard.changePassword')}
+          </IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">

@@ -20,7 +20,7 @@ export const changePassword = async (
     const response = await fetch(`${apiURL}/auth/change-password`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token.accessToken}`,
         'content-Type': 'application/json',
       },
       body: JSON.stringify({ currentPassword, newPassword }),
