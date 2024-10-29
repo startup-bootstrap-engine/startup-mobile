@@ -7,7 +7,7 @@ import {
   IonMenu,
   IonMenuToggle,
 } from '@ionic/react';
-import { settingsOutline } from 'ionicons/icons';
+import { lockClosedOutline, settingsOutline } from 'ionicons/icons';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -22,6 +22,12 @@ export const MainMenu: FC = () => {
             <IonItem routerLink="/settings" routerDirection="forward">
               <IonIcon icon={settingsOutline} slot="start" />
               <IonLabel>{t('settings.title')}</IonLabel>
+            </IonItem>
+          </IonMenuToggle>
+          <IonMenuToggle autoHide={false}>
+            <IonItem routerLink="/change-password" routerDirection="forward">
+              <IonIcon icon={lockClosedOutline} slot="start" />
+              <IonLabel>{t('passwordForms.changePasswordForm')}</IonLabel>
             </IonItem>
           </IonMenuToggle>
         </IonList>

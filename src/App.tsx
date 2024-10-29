@@ -70,7 +70,7 @@ const App: React.FC = () => {
                 render={() => <ChangePasswordForm />}
                 exact
               />
-              <PrivateRoute path="/dashboard" component={Dashboard} exact />
+              <Route path="/dashboard" component={Dashboard} exact />
               <Route path="/settings" render={() => <Settings />} exact />
               <Route path="/settings/theme" render={() => <Theme />} exact />
               <Route
