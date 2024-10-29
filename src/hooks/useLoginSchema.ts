@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { useTranslations } from './useTranslations';
-import { MIN_PASSWORD_CHARACTERS_NUMBER } from '@utils/constants';
+import { MIN_PASSWORD_CHARACTERS_NUMBER } from '@constants';
 
 export const useLoginSchema = () => {
   const { t } = useTranslations();

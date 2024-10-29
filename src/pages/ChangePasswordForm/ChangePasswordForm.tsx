@@ -1,10 +1,10 @@
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
-import { useChangePasswordSchema } from '@hooks/useChangePasswordSchema';
-import { useTranslations } from '@hooks/useTranslations';
+import { useChangePasswordSchema, useTranslations } from '@hooks';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React, { useState } from 'react';
+import { ZodIssue } from 'zod';
 
 interface PasswordData {
   currentPassword: string;
@@ -36,7 +36,7 @@ export const ChangePasswordForm: React.FC = () => {
 
     if (!validation.success) {
       const errors: Record<string, string> = {};
-      validation.error.errors.forEach((err) => {
+      validation.error.errors.forEach((err: ZodIssue) => {
         errors[err.path[0]] = err.message;
       });
       setFormErrors(errors);

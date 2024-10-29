@@ -1,7 +1,6 @@
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
-import { useForgotPasswordForm } from '@hooks/useForgotPasswordSchema';
-import { useTranslations } from '@hooks/useTranslations';
+import { useForgotPasswordForm, useTranslations } from '@hooks';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React, { useState } from 'react';

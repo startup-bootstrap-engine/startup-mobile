@@ -1,11 +1,11 @@
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
-import { useRegistrationSchema } from '@hooks/useRegistrationSchema';
-import { useTranslations } from '@hooks/useTranslations';
+import { useRegistrationSchema, useTranslations } from '@hooks';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { ZodIssue } from 'zod';
 
 export const RegisterForm: React.FC = () => {
   const history = useHistory();
@@ -33,7 +33,7 @@ export const RegisterForm: React.FC = () => {
 
     if (!validation.success) {
       const errors: Record<string, string> = {};
-      validation.error.errors.forEach((err) => {
+      validation.error.errors.forEach((err: ZodIssue) => {
         errors[err.path[0]] = err.message;
       });
       setFormErrors(errors);

@@ -1,4 +1,4 @@
-import { useTranslations } from '@hooks/useTranslations';
+import { useTranslations } from '@hooks';
 import { IonLoading } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
