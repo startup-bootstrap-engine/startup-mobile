@@ -11,7 +11,7 @@ export const logout = async (
     await fetch(`${apiURL}/auth/logout`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token.accessToken}`,
         'content-Type': 'application/json',
       },
       referrerPolicy: 'strict-origin-when-cross-origin',

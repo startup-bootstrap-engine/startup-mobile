@@ -1,5 +1,5 @@
 import { useTranslations } from '@hooks';
-import { IonLoading } from '@ionic/react';
+// import { IonLoading } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
@@ -14,17 +14,17 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const { isAuthenticated, isLoading } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
   const { t } = useTranslations();
 
-  if (isLoading) {
-    return (
-      <IonLoading
-        isOpen={true}
-        message={t('registrationForm.authenticationVerification')}
-      />
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <IonLoading
+  //       isOpen={true}
+  //       message={t('registrationForm.authenticationVerification')}
+  //     />
+  //   );
+  // }
 
   return (
     <Route

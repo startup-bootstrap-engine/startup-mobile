@@ -4,6 +4,7 @@ import { useChangePasswordSchema, useTranslations } from '@hooks';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ZodIssue } from 'zod';
 
 interface PasswordData {
@@ -13,6 +14,7 @@ interface PasswordData {
 }
 
 export const ChangePasswordForm: React.FC = () => {
+  const history = useHistory();
   const { changePassword, isLoading, error } = useAuthStore();
   const { t } = useTranslations();
   const changePasswordSchema = useChangePasswordSchema();
@@ -45,6 +47,8 @@ export const ChangePasswordForm: React.FC = () => {
 
     const { currentPassword, newPassword } = formData;
     await changePassword(currentPassword, newPassword);
+
+    history.push('/login');
   };
 
   return (
