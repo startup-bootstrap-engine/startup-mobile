@@ -17,16 +17,16 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@hooks": ["src/hooks"],
-      "@hooks/*": ["src/hooks/*"],
-      "@utils/*": ["src/utils/*"],
-      "@styles/*": ["src/styles/*"],
-      "@store/*": ["src/store/*"],
-      "@locales/*": ["src/locales/*"],
-      "@tests/*": ["src/tests/*"],
+      "@constants": ["src/constants"],
       "@config/*": ["src/config/*"],
-      "@contexts/*": ["src/contexts/*"]
+      "@contexts/*": ["src/contexts/*"],
+      "@store/*": ["src/store/*"],
+      "@hooks": ["src/hooks"],
+      "@utils/*": ["src/utils/*"],
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "@locales/*": ["src/locales/*"],
+      "@tests/*": ["src/tests/*"]
     }
   },
   "include": ["src", "setupTests.ts", "vitest.config.ts"],

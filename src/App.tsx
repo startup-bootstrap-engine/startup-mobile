@@ -34,9 +34,8 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-// import { PrivateRoute } from './components/PrivateRoute';
+import { PrivateRoute } from './components/PrivateRoute';
 import { MainMenu } from './components/layout/MainMenu';
-import { LanguageProvider } from './contexts/LanguageProvider';
 import ThemeProvider from './contexts/ThemeProvider';
 import { ChangePasswordForm } from './pages/ChangePasswordForm/ChangePasswordForm';
 import { Dashboard } from './pages/Dashboard/Dashboard';
@@ -56,35 +55,33 @@ const App: React.FC = () => {
         <MainMenu />
         <IonRouterOutlet id="main-content">
           <ThemeProvider>
-            <LanguageProvider>
-              <Suspense
-                fallback={<IonLoading isOpen={true} message="Loading..." />}
-              >
-                <Route path="/login" render={() => <LoginForm />} exact />
-                <Route path="/register" render={() => <RegisterForm />} exact />
-                <Route
-                  path="/forgot-password"
-                  render={() => <ForgotPasswordForm />}
-                  exact
-                />
-                <Route
-                  path="/change-password"
-                  render={() => <ChangePasswordForm />}
-                  exact
-                />
-                <Route path="/dashboard" component={Dashboard} exact />
-                <Route path="/settings" render={() => <Settings />} exact />
-                <Route path="/settings/theme" render={() => <Theme />} exact />
-                <Route
-                  path="/settings/language"
-                  render={() => <Language />}
-                  exact
-                />
-                <Route exact path="/">
-                  <Redirect to="/login" />
-                </Route>
-              </Suspense>
-            </LanguageProvider>
+            <Suspense
+              fallback={<IonLoading isOpen={true} message="Loading..." />}
+            >
+              <Route path="/login" render={() => <LoginForm />} exact />
+              <Route path="/register" render={() => <RegisterForm />} exact />
+              <Route
+                path="/forgot-password"
+                render={() => <ForgotPasswordForm />}
+                exact
+              />
+              <Route
+                path="/change-password"
+                render={() => <ChangePasswordForm />}
+                exact
+              />
+              <PrivateRoute path="/dashboard" component={Dashboard} exact />
+              <Route path="/settings" render={() => <Settings />} exact />
+              <Route path="/settings/theme" render={() => <Theme />} exact />
+              <Route
+                path="/settings/language"
+                render={() => <Language />}
+                exact
+              />
+              <Route exact path="/">
+                <Redirect to="/login" />
+              </Route>
+            </Suspense>
           </ThemeProvider>
         </IonRouterOutlet>
       </IonReactRouter>

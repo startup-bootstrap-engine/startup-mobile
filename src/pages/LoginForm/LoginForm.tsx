@@ -1,13 +1,13 @@
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
-import { useLoginSchema } from '@hooks/useLoginSchema';
-import { useTranslations } from '@hooks/useTranslations';
+import { useLoginSchema, useTranslations } from '@hooks';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppleLoginButton } from './AppleLoginButton';
 import { GoogleLoginButton } from './GoogleLoginButton';
+import { ZodIssue } from 'zod';
 
 interface User {
   email: string;
@@ -35,7 +35,7 @@ export const LoginForm: React.FC = () => {
     setPasswordError(null);
 
     if (!validation.success) {
-      validation.error.errors.forEach((err) => {
+      validation.error.errors.forEach((err: ZodIssue) => {
         if (err.path[0] === 'email') {
           setEmailError(err.message);
         } else if (err.path[0] === 'password') {

@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
-import config from '../config/themeconfig.json';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { Mode, Theme } from '../utils/types';
+import { useLocalStorage } from '@hooks';
+import { Mode, Theme } from '@utils/types';
+import { DEFAULT_THEME } from '@constants';
 
 interface ThemeContextType {
   theme: Theme;
@@ -28,7 +28,7 @@ export const useTheme = () => {
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useLocalStorage<Theme>(
     'theme',
-    config.theme as Theme,
+    DEFAULT_THEME as Theme,
   );
   const [mode, setMode] = useLocalStorage<Mode>('mode', 'dark');
 
