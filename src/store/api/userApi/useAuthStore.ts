@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { login } from './login';
 import { signUp } from './signUp';
 import { logout } from './logout';
@@ -35,122 +36,129 @@ interface AuthState {
   ) => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  token: null,
-  isAuthenticated: false,
-  isLoading: false,
-  error: null,
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      token: null,
+      isAuthenticated: false,
+      isLoading: false,
+      error: null,
 
-  login: async (email: string, password: string) => {
-    try {
-      set({ isLoading: true, error: null });
-      await login(email, password, set);
-      set({ isLoading: false });
-    } catch (error: any) {
-      set({
-        isLoading: false,
-        error: error.message,
-      });
-    }
-  },
+      login: async (email: string, password: string) => {
+        try {
+          set({ isLoading: true, error: null });
+          await login(email, password, set);
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.message,
+          });
+        }
+      },
 
-  signUp: async (
-    email: string,
-    password: string,
-    passwordConfirmation: string,
-    name: string,
-  ) => {
-    try {
-      set({ isLoading: true, error: null });
-      await signUp(email, password, passwordConfirmation, name, set);
-      set({ isLoading: false });
-    } catch (error: any) {
-      set({
-        isLoading: false,
-        error: error.message,
-      });
-    }
-  },
+      signUp: async (
+        email: string,
+        password: string,
+        passwordConfirmation: string,
+        name: string,
+      ) => {
+        try {
+          set({ isLoading: true, error: null });
+          await signUp(email, password, passwordConfirmation, name, set);
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.message,
+          });
+        }
+      },
 
-  logout: async () => {
-    try {
-      set({ isLoading: true });
-      await logout(set);
-      set({ isLoading: false });
-    } catch (error: any) {
-      set({ isLoading: false, error: error.message });
-    }
-  },
+      logout: async () => {
+        try {
+          set({ isLoading: true });
+          await logout(set);
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({ isLoading: false, error: error.message });
+        }
+      },
 
-  checkAuth: async () => {
-    try {
-      set({ isLoading: true });
-      await checkAuth(set);
-      set({ isLoading: false });
-    } catch (error: any) {
-      set({
-        isLoading: false,
-        token: null,
-        isAuthenticated: false,
-        error: error.message,
-      });
-    }
-  },
+      checkAuth: async () => {
+        try {
+          set({ isLoading: true });
+          await checkAuth(set);
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            token: null,
+            isAuthenticated: false,
+            error: error.message,
+          });
+        }
+      },
 
-  changePassword: async (currentPassword: string, newPassword: string) => {
-    try {
-      set({ isLoading: true });
-      await changePassword(currentPassword, newPassword, set);
-      set({ isLoading: false });
-    } catch (error: any) {
-      set({
-        isLoading: false,
-        error: error.message,
-      });
-    }
-  },
+      changePassword: async (currentPassword: string, newPassword: string) => {
+        try {
+          set({ isLoading: true });
+          await changePassword(currentPassword, newPassword, set);
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.message,
+          });
+        }
+      },
 
-  forgotPassword: async (email: string) => {
-    try {
-      set({ isLoading: true });
-      await forgotPassword(email, set);
-      set({ isLoading: false });
-    } catch (error: any) {
-      set({
-        isLoading: false,
-        error: error.message,
-      });
-    }
-  },
+      forgotPassword: async (email: string) => {
+        try {
+          set({ isLoading: true });
+          await forgotPassword(email, set);
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.message,
+          });
+        }
+      },
 
-  getGoogleOAuthUrl: async () => {
-    try {
-      set({ isLoading: true });
-      const googleOAuthUrl = await getGoogleOAuthUrl();
-      window.location.href = googleOAuthUrl;
-      set({ isLoading: false });
-    } catch (error: any) {
-      set({
-        isLoading: false,
-        error: error.message,
-      });
-    }
-  },
+      getGoogleOAuthUrl: async () => {
+        try {
+          set({ isLoading: true });
+          const googleOAuthUrl = await getGoogleOAuthUrl();
+          window.location.href = googleOAuthUrl;
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.message,
+          });
+        }
+      },
 
-  appleLogin: async (
-    idToken: string,
-    email: string,
-    authorizationCode: string,
-  ) => {
-    try {
-      set({ isLoading: true });
-      await appleLogin(idToken, email, authorizationCode, set);
-      set({ isLoading: false });
-    } catch (error: any) {
-      set({
-        isLoading: false,
-        error: error.message,
-      });
-    }
-  },
-}));
+      appleLogin: async (
+        idToken: string,
+        email: string,
+        authorizationCode: string,
+      ) => {
+        try {
+          set({ isLoading: true });
+          await appleLogin(idToken, email, authorizationCode, set);
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.message,
+          });
+        }
+      },
+    }),
+    {
+      name: 'auth-store',
+    },
+  ),
+);
