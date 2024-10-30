@@ -38,7 +38,8 @@
     "clean": "rm -rf node_modules && rm -rf dist && yarn install",
     "env:switch:dev": "./environment/env-switch.sh dev",
     "env:switch:prod": "./environment/env-switch.sh prod",
-    "translate": "node translate.js"
+    "translate": "node translate.js",
+    "docs": "cd docs && yarn install && yarn dev"
   },
   "dependencies": {
     "@capacitor/app": "6.0.1",

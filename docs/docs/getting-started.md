@@ -8,15 +8,15 @@ sidebar_position: 0
 
 **OS setup**
 
-- Make sure you've followed our [OS setup](../os/os-setup.md) and everything is working fine.
+- Make sure you've followed our OS setup and everything is working fine.
 
 **Docker:** The `startup-client` does not require Docker to run.
 
-**API Running:** Make sure you have the [API](../api/getting-started.md) running properly.
+**API Running:** Make sure you have the API running properly.
 
 ## Initial configuration
 
-- Clone [startup-mobile](https://github.com/startup-bootstrap-engine/startup-mobile) inside of your `~/startup-engine` folder, as suggested in our [general overview](../general-overview/getting-started.md).
+- Clone [startup-mobile](https://github.com/startup-bootstrap-engine/startup-mobile) inside of your `~/startup-engine` folder.
 
 - Run `yarn install` to install the dependencies.
 

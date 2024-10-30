@@ -2,7 +2,9 @@
 
 [Capacitor Android Troubleshooting](https://capacitorjs.com/docs/android/troubleshooting)
 
-## ERR_UNSUPPORTED_API_LEVEL: Unsupported API level: 32
+## Common Errors
+
+### ERR_UNSUPPORTED_API_LEVEL: Unsupported API level: 32
 
 ![alt text](./img/android-sdk.png)
 
@@ -22,7 +24,7 @@ For more info, refer to [this issue comment](https://github.com/ionic-team/nativ
 
 ---
 
-## Error: SDK location not found. Define location with `sdk.dir` in the `local.properties` file or with an `ANDROID_HOME` environment variable.
+### Error: SDK location not found. Define location with `sdk.dir` in the `local.properties` file or with an `ANDROID_HOME` environment variable.
 
 1. Go to **File > Invalidate Caches… > Invalidate and restart**.
 
