@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
+import { translate } from '@vitalets/google-translate-api';
 import fs from 'fs-extra';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import simpleGit from 'simple-git';
-import { translate } from '@vitalets/google-translate-api';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,7 +41,6 @@ const mergeAndTranslate = async (englishObj, targetObj, targetLang) => {
 const getStagedLocaleFiles = async () => {
   const git = simpleGit();
   const status = await git.status();
-  console.log('Staged files:', status.staged);
   return status.staged.filter(
     (file) => file.endsWith('.json') && file.includes('locales/'),
   );
@@ -49,11 +48,12 @@ const getStagedLocaleFiles = async () => {
 
 const syncTranslations = async () => {
   const stagedFiles = await getStagedLocaleFiles();
-  console.log('Staged locale files:', stagedFiles);
+
+  console.log('📚 Translating staged locale files...');
 
   const englishFile = stagedFiles.find((file) => file.includes('en.json'));
   if (!englishFile) {
-    console.log('No changes detected in en.json. Aborting.');
+    console.log('No changes detected in en.json. Skipping...');
     return;
   }
 
@@ -74,7 +74,7 @@ const syncTranslations = async () => {
       console.log('Error:', error);
     }
 
-    console.log(`Translating missing keys to: ${targetLang}`);
+    console.log(`✅ Translating missing keys to: ${targetLang}`);
 
     await mergeAndTranslate(englishContent, targetContent, targetLang);
 
