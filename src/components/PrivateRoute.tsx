@@ -1,4 +1,3 @@
-import { useTranslations } from '@hooks';
 // import { IonLoading } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
@@ -15,7 +14,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   ...rest
 }) => {
   const { isAuthenticated } = useAuthStore();
-  const { t } = useTranslations();
+  // const { t } = useTranslations();
 
   // if (isLoading) {
   //   return (
