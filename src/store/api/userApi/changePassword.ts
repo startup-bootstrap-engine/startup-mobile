@@ -1,13 +1,13 @@
 import { getToken, removeToken } from '../../../utils/tokenStorage';
-import { AuthState } from './types/authTypes';
 import { logout } from './logout';
+import { IAuthState } from './types/authTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
 export const changePassword = async (
   currentPassword: string,
   newPassword: string,
-  set: (_state: Partial<AuthState>) => void,
+  set: (_state: Partial<IAuthState>) => void,
 ): Promise<void> => {
   try {
     set({ isLoading: true, error: null });

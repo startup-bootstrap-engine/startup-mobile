@@ -1,10 +1,10 @@
 import { IonInput, IonItem, IonText } from '@ionic/react';
 import React from 'react';
 
-interface FormFieldProps {
+interface IProps {
   label: string;
   value: string;
-  // eslint-disable-next-line no-unused-vars
+
   onChange: (value: string) => void;
   type?: 'text' | 'email' | 'password';
   error?: string | null;
@@ -16,7 +16,7 @@ interface FormFieldProps {
   className?: string;
 }
 
-export const FormField: React.FC<FormFieldProps> = ({
+export const FormField: React.FC<IProps> = ({
   label,
   value,
   onChange,

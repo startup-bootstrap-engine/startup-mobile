@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-interface LoadingStore {
+interface ILoadingStore {
   isLoading: boolean;
   activeRequests: number;
   startLoading: () => void;
   stopLoading: () => void;
 }
 
-export const useLoadingStore = create<LoadingStore>((set) => ({
+export const useLoadingStore = create<ILoadingStore>((set) => ({
   isLoading: false,
   activeRequests: 0,
 

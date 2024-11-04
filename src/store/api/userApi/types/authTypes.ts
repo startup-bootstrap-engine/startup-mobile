@@ -1,4 +1,4 @@
-export interface AuthState {
+export interface IAuthState {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;

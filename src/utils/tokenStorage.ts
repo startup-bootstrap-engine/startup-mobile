@@ -1,5 +1,5 @@
 import { Preferences } from '@capacitor/preferences';
-import { TokenResponse } from '../store/api/userApi/types/tokenTypes';
+import { ITokenResponse } from '../store/api/userApi/types/tokenTypes';
 
 export const setToken = async (
   accessToken: string,
@@ -10,7 +10,7 @@ export const setToken = async (
 };
 
 // Função para obter os tokens
-export const getToken = async (): Promise<TokenResponse | null> => {
+export const getToken = async (): Promise<ITokenResponse | null> => {
   const accessToken = await Preferences.get({ key: 'accessToken' });
   const refreshToken = await Preferences.get({ key: 'refreshToken' });
 

@@ -10,13 +10,13 @@ import {
 } from '@ionic/react';
 import React from 'react';
 
-interface PageLayoutProps {
+interface IProps {
   children: React.ReactNode;
   title: string;
   showBackButton?: boolean;
 }
 
-export const PageLayout: React.FC<PageLayoutProps> = ({
+export const PageLayout: React.FC<IProps> = ({
   children,
   title,
   showBackButton = true,

@@ -2,13 +2,13 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import i18n from '../i18n';
 
-interface LanguageState {
+interface ILanguageState {
   language: string;
-  // eslint-disable-next-line no-unused-vars
+
   setLanguage: (lang: string) => void;
 }
 
-export const useLanguageStore = create<LanguageState>()(
+export const useLanguageStore = create<ILanguageState>()(
   persist(
     (set) => ({
       language: 'en',

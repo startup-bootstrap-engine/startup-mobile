@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ZodIssue } from 'zod';
 
-interface PasswordData {
+interface IPasswordData {
   currentPassword: string;
   newPassword: string;
   newPasswordConfirmation: string;
@@ -19,7 +19,7 @@ export const ChangePasswordForm: React.FC = () => {
   const { t } = useTranslations();
   const changePasswordSchema = useChangePasswordSchema();
 
-  const [formData, setFormData] = useState<PasswordData>({
+  const [formData, setFormData] = useState<IPasswordData>({
     currentPassword: '',
     newPassword: '',
     newPasswordConfirmation: '',

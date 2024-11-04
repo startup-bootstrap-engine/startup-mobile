@@ -2,20 +2,19 @@ import { create } from 'zustand';
 
 type ToastType = 'success' | 'error' | 'warning' | 'info';
 
-interface ToastState {
+interface IToastState {
   isVisible: boolean;
   message: string;
   type: ToastType;
   duration: number;
   position: 'top' | 'middle' | 'bottom';
   showToast: (
-    // eslint-disable-next-line no-unused-vars
-    options: Omit<ToastState, 'isVisible' | 'showToast' | 'hideToast'>,
+    options: Omit<IToastState, 'isVisible' | 'showToast' | 'hideToast'>,
   ) => void;
   hideToast: () => void;
 }
 
-export const useToastStore = create<ToastState>((set: any) => ({
+export const useToastStore = create<IToastState>((set: any) => ({
   isVisible: false,
   message: '',
   type: 'info',

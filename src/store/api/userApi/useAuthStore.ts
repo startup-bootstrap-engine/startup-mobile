@@ -1,15 +1,15 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { login } from './login';
-import { signUp } from './signUp';
-import { logout } from './logout';
-import { checkAuth } from './checkAuth';
+import { appleLogin } from './appleLogin';
 import { changePassword } from './changePassword';
+import { checkAuth } from './checkAuth';
 import { forgotPassword } from './forgotPassword';
 import { getGoogleOAuthUrl } from './googleOAuth';
-import { appleLogin } from './appleLogin';
+import { login } from './login';
+import { logout } from './logout';
+import { signUp } from './signUp';
 
-interface AuthState {
+interface IUseStoreAuth {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -36,7 +36,7 @@ interface AuthState {
   ) => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>()(
+export const useAuthStore = create<IUseStoreAuth>()(
   persist(
     (set) => ({
       token: null,

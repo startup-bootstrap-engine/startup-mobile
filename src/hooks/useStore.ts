@@ -1,7 +1,7 @@
-import React, { useCallback, useRef } from 'react';
 import { useApiStore } from '@store/useApiStore';
+import React, { useCallback, useRef } from 'react';
 
-interface StoreField<T> {
+interface IStoreField<T> {
   value: T;
   setValue: (_newValue: T) => void;
   error: string | null;
@@ -12,7 +12,7 @@ export const useStore = <T extends Record<string, any>>(
   initialValue: T[keyof T],
   fieldName: keyof T,
   rules: ((_value: T[keyof T]) => string | null)[],
-): StoreField<T[keyof T]> => {
+): IStoreField<T[keyof T]> => {
   const data = useApiStore((state) => state.data);
   const setData = useApiStore((state) => state.setData);
 

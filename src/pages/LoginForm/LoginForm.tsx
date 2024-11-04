@@ -5,11 +5,11 @@ import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { ZodIssue } from 'zod';
 import { AppleLoginButton } from './AppleLoginButton';
 import { GoogleLoginButton } from './GoogleLoginButton';
-import { ZodIssue } from 'zod';
 
-interface User {
+interface IUserState {
   email: string;
   password: string;
 }
@@ -21,7 +21,7 @@ export const LoginForm: React.FC = () => {
   const { t } = useTranslations();
   const loginSchema = useLoginSchema();
 
-  const [user, setUser] = useState<User>({ email: '', password: '' });
+  const [user, setUser] = useState<IUserState>({ email: '', password: '' });
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 

@@ -1,15 +1,12 @@
 import { IonButton } from '@ionic/react';
 import React from 'react';
 
-interface SubmitButtonProps {
+interface IProps {
   loading?: boolean;
   text: string;
 }
 
-export const SubmitButton: React.FC<SubmitButtonProps> = ({
-  loading = false,
-  text,
-}) => {
+export const SubmitButton: React.FC<IProps> = ({ loading = false, text }) => {
   return (
     <IonButton
       expand="block"

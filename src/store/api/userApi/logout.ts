@@ -1,10 +1,10 @@
-import { AuthState } from './types/authTypes';
 import { getToken, removeToken } from '../../../utils/tokenStorage';
+import { IAuthState } from './types/authTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
 export const logout = async (
-  set: (_state: Partial<AuthState>) => void,
+  set: (_state: Partial<IAuthState>) => void,
 ): Promise<void> => {
   const token = await getToken();
   if (token) {

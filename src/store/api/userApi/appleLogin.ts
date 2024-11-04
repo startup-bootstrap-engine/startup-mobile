@@ -1,5 +1,5 @@
 import { setToken } from '../../../utils/tokenStorage';
-import { AuthState } from './types/authTypes';
+import { IAuthState } from './types/authTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -7,7 +7,7 @@ export const appleLogin = async (
   idToken: string,
   email: string,
   authorizationCode: string,
-  set: (_state: Partial<AuthState>) => void,
+  set: (_state: Partial<IAuthState>) => void,
 ): Promise<void> => {
   try {
     set({ isLoading: true, error: null });

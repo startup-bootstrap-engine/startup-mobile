@@ -1,9 +1,9 @@
 import js from '@eslint/js';
-import react from 'eslint-plugin-react';
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
-import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import prettier from 'eslint-plugin-prettier';
+import react from 'eslint-plugin-react';
 
 export default [
   js.configs.recommended,
@@ -35,6 +35,14 @@ export default [
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { vars: 'all', args: 'none', ignoreRestSiblings: true },
+      ],
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: 'interface',
+          format: ['PascalCase'],
+          prefix: ['I'],
+        },
       ],
       'react/react-in-jsx-scope': 'off',
       'no-unused-vars': [

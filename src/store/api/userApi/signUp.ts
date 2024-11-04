@@ -1,6 +1,6 @@
-import { AuthState } from './types/authTypes';
 import { setToken } from '../../../utils/tokenStorage';
-import { TokenResponse } from './types/tokenTypes';
+import { IAuthState } from './types/authTypes';
+import { ITokenResponse } from './types/tokenTypes';
 import { IUser } from './types/userTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
@@ -10,7 +10,7 @@ export const signUp = async (
   password: string,
   passwordConfirmation: string,
   name: string,
-  set: (_state: Partial<AuthState>) => void,
+  set: (_state: Partial<IAuthState>) => void,
 ): Promise<IUser> => {
   set({ isLoading: true, error: null });
   try {
@@ -30,7 +30,7 @@ export const signUp = async (
 
     const newUser: IUser = await response.json();
 
-    const { accessToken, refreshToken }: TokenResponse = {
+    const { accessToken, refreshToken }: ITokenResponse = {
       accessToken: newUser.refreshTokens[0]?.token,
       refreshToken: newUser.refreshTokens[0]?.token,
     };

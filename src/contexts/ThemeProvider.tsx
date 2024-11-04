@@ -1,21 +1,21 @@
-import React, { createContext, useContext } from 'react';
+import { DEFAULT_THEME } from '@constants';
 import { useLocalStorage } from '@hooks';
 import { Mode, Theme } from '@utils/types';
-import { DEFAULT_THEME } from '@constants';
+import React, { createContext, useContext } from 'react';
 
-interface ThemeContextType {
+interface IThemeContext {
   theme: Theme;
   mode: Mode;
-  // eslint-disable-next-line no-unused-vars
+
   changeTheme: (newTheme: Theme) => void;
   toggleMode: () => void;
 }
 
-interface ThemeProviderProps {
+interface IThemeProvider {
   children: React.ReactNode;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const ThemeContext = createContext<IThemeContext | undefined>(undefined);
 
 export const useTheme = () => {
   const context = useContext(ThemeContext);
@@ -25,7 +25,7 @@ export const useTheme = () => {
   return context;
 };
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
   const [theme, setTheme] = useLocalStorage<Theme>(
     'theme',
     DEFAULT_THEME as Theme,

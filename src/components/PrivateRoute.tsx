@@ -3,13 +3,13 @@ import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-interface PrivateRouteProps {
+interface IProps {
   component: React.ComponentType<any>;
   path: string;
   exact?: boolean;
 }
 
-export const PrivateRoute: React.FC<PrivateRouteProps> = ({
+export const PrivateRoute: React.FC<IProps> = ({
   component: Component,
   ...rest
 }) => {

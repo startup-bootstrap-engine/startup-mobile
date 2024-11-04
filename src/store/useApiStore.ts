@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface ApiState<T> {
+interface IApiState<T> {
   data: T | null;
   isLoading: boolean;
   error: string | null;
@@ -8,7 +8,7 @@ interface ApiState<T> {
   fetchData: (_url: string) => Promise<void>;
 }
 
-export const useApiStore = create<ApiState<any>>((set) => ({
+export const useApiStore = create<IApiState<any>>((set) => ({
   data: null,
   isLoading: false,
   error: null,

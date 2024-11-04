@@ -1,13 +1,13 @@
 import { setToken } from '../../../utils/tokenStorage';
-import { AuthState } from './types/authTypes';
-import { TokenResponse } from './types/tokenTypes';
+import { IAuthState } from './types/authTypes';
+import { ITokenResponse } from './types/tokenTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
 export const login = async (
   email: string,
   password: string,
-  set: (_state: Partial<AuthState>) => void,
+  set: (_state: Partial<IAuthState>) => void,
 ): Promise<void> => {
   set({ isLoading: true, error: null });
   try {
@@ -25,7 +25,7 @@ export const login = async (
       throw new Error(errorData.message || 'Falha no login');
     }
 
-    const { accessToken, refreshToken }: TokenResponse = await response.json();
+    const { accessToken, refreshToken }: ITokenResponse = await response.json();
 
     await setToken(accessToken, refreshToken);
 
