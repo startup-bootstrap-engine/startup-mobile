@@ -1,5 +1,6 @@
 import { Preferences } from '@capacitor/preferences';
-import { ITokenResponse } from '../store/api/userApi/types/tokenTypes';
+
+import type { ITokenResponse } from '../store/api/userApi/types/tokenTypes';
 
 export const setToken = async (
   accessToken: string,
@@ -24,7 +25,7 @@ export const getToken = async (): Promise<ITokenResponse | null> => {
   return null;
 };
 
-export const removeToken = async () => {
+export const removeToken = async (): Promise<void> => {
   await Preferences.remove({ key: 'authToken' });
   await Preferences.remove({ key: 'refreshToken' });
 };

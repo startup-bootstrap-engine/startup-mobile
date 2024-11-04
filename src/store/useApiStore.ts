@@ -8,6 +8,7 @@ interface IApiState<T> {
   fetchData: (_url: string) => Promise<void>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useApiStore = create<IApiState<any>>((set) => ({
   data: null,
   isLoading: false,
@@ -22,7 +23,7 @@ export const useApiStore = create<IApiState<any>>((set) => ({
       const response = await fetch(url);
       const data = await response.json();
       set({ data, isLoading: false });
-    } catch (error: any) {
+    } catch (error) {
       set({ isLoading: false, error: error.message });
     }
   },

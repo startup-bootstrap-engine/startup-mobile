@@ -1,6 +1,7 @@
-import { setToken } from '../../../utils/tokenStorage';
-import { IAuthState } from './types/authTypes';
-import { ITokenResponse } from './types/tokenTypes';
+import { setToken } from '@utils/tokenStorage';
+
+import type { IAuthState } from './types/authTypes';
+import type { ITokenResponse } from './types/tokenTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -35,7 +36,7 @@ export const login = async (
       isLoading: false,
       error: null,
     });
-  } catch (error: any) {
+  } catch (error) {
     set({
       isLoading: false,
       error: error.message,

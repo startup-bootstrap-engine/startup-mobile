@@ -1,4 +1,4 @@
-import { IAuthState } from './types/authTypes';
+import type { IAuthState } from './types/authTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -23,7 +23,7 @@ export const forgotPassword = async (
     }
 
     set({ isLoading: false, error: null });
-  } catch (error: any) {
+  } catch (error) {
     set({ isLoading: false, error: error.message });
   }
 };

@@ -1,4 +1,3 @@
-import { useTranslations } from '@hooks';
 import {
   IonButton,
   IonContent,
@@ -7,20 +6,22 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { useTranslations } from '@hooks';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();
   const history = useHistory();
   const { t } = useTranslations();
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     await logout();
     history.push('/login');
   };
-  const handleChangePassword = () => {
+  const handleChangePassword = (): void => {
     history.push('/change-password');
   };
   return (

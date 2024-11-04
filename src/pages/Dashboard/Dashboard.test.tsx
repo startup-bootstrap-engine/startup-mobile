@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@tests/i18nTest';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { Dashboard } from './Dashboard';
 
 const mockLogoutSpy = vi.fn();

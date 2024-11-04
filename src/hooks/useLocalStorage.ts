@@ -26,7 +26,7 @@ export function useLocalStorage<T>(
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
-  const setValue = (newValue: T) => {
+  const setValue = (newValue: T): void => {
     try {
       // Allow value to be a function so we have same API as useState
       const valueToStore =
@@ -46,6 +46,7 @@ export function useLocalStorage<T>(
 
   useEffect(() => {
     setStoredValue(readValue());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return [storedValue, setValue];

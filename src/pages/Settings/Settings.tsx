@@ -6,6 +6,7 @@ import {
   notificationsOutline,
 } from 'ionicons/icons';
 import React from 'react';
+
 import { PageLayout } from '../../components/layout/PageLayout';
 import { useTranslations } from '../../hooks/useTranslations';
 

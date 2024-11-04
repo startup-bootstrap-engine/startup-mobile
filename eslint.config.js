@@ -5,6 +5,7 @@ import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
   js.configs.recommended,
@@ -31,11 +32,15 @@ export default [
       '@typescript-eslint': typescriptEslintPlugin,
       prettier,
       import: importPlugin,
+      'react-hooks': reactHooks,
     },
     settings: {
       'import/resolver': {
         typescript: true,
         node: true,
+      },
+      react: {
+        version: 'detect', // Added React version detection
       },
     },
     rules: {
@@ -69,6 +74,72 @@ export default [
         {
           ts: 'never',
           tsx: 'never',
+        },
+      ],
+      // Ionic specific rules
+      'react/prop-types': 'off', // Ionic components don't need prop-types
+      'react/require-default-props': 'off', // Not needed with TypeScript
+      '@typescript-eslint/explicit-function-return-type': [
+        'error',
+        {
+          allowExpressions: true,
+          allowTypedFunctionExpressions: true,
+        },
+      ],
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn', // Important for Ionic lifecycle hooks
+      'react/jsx-no-bind': [
+        'error',
+        {
+          allowArrowFunctions: true,
+        },
+      ],
+      // Enforce proper Ionic imports
+      'import/order': [
+        'error',
+        {
+          groups: [
+            ['builtin', 'external'],
+            'internal',
+            ['parent', 'sibling', 'index'],
+          ],
+          pathGroups: [
+            {
+              pattern: '@ionic/**',
+              group: 'external',
+              position: 'before',
+            },
+          ],
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+      // Enforce proper component structure
+      'react/function-component-definition': [
+        'error',
+        {
+          namedComponents: 'arrow-function',
+          unnamedComponents: 'arrow-function',
+        },
+      ],
+      // Enforce proper event handling
+      '@typescript-eslint/no-explicit-any': [
+        'error',
+        {
+          ignoreRestArgs: true,
+        },
+      ],
+      // Enforce proper async/await usage
+      '@typescript-eslint/await-thenable': 'error',
+      '@typescript-eslint/no-floating-promises': 'error',
+      // Enforce proper type imports
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
         },
       ],
     },

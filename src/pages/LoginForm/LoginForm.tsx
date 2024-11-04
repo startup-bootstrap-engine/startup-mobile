@@ -1,11 +1,13 @@
+import { IonButton, IonLoading, IonText } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import type { ZodIssue } from 'zod';
+
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
 import { useLoginSchema, useTranslations } from '@hooks';
-import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { ZodIssue } from 'zod';
+
 import { AppleLoginButton } from './AppleLoginButton';
 import { GoogleLoginButton } from './GoogleLoginButton';
 
@@ -25,7 +27,7 @@ export const LoginForm: React.FC = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  const validateForm = () => {
+  const validateForm = (): boolean => {
     const validation = loginSchema.safeParse({
       email: user.email,
       password: user.password,
@@ -47,13 +49,13 @@ export const LoginForm: React.FC = () => {
     return true;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
     await login(user.email, user.password);
-    checkAuth();
+    await checkAuth();
   };
 
   useEffect(() => {

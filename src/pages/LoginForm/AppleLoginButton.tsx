@@ -1,6 +1,7 @@
 import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
 import { logoApple } from 'ionicons/icons';
 import React from 'react';
+
 import { useTranslations } from '../../hooks/useTranslations';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
@@ -8,7 +9,7 @@ export const AppleLoginButton: React.FC = () => {
   const { appleLogin, isLoading } = useAuthStore();
   const { t } = useTranslations();
 
-  const handleAppleLogin = async (e: React.MouseEvent) => {
+  const handleAppleLogin = async (e: React.MouseEvent): Promise<void> => {
     e.preventDefault();
     try {
       await appleLogin(

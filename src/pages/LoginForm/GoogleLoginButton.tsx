@@ -1,6 +1,7 @@
 import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
 import { logoGoogle } from 'ionicons/icons';
 import React from 'react';
+
 import { useTranslations } from '../../hooks/useTranslations';
 import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
@@ -8,7 +9,7 @@ export const GoogleLoginButton: React.FC = () => {
   const { getGoogleOAuthUrl, isLoading } = useAuthStore();
   const { t } = useTranslations();
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = async (): Promise<void> => {
     try {
       await getGoogleOAuthUrl();
     } catch (error) {

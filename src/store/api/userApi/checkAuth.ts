@@ -1,7 +1,7 @@
+import type { IAuthState } from './types/authTypes';
+import type { ITokenResponse } from './types/tokenTypes';
 import { isTokenValid } from '../../../utils/jwtUtils';
 import { getToken } from '../../../utils/tokenStorage';
-import { IAuthState } from './types/authTypes';
-import { ITokenResponse } from './types/tokenTypes';
 
 export const checkAuth = async (
   set: (_state: Partial<IAuthState>) => void,

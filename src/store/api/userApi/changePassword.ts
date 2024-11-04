@@ -1,6 +1,6 @@
-import { getToken, removeToken } from '../../../utils/tokenStorage';
 import { logout } from './logout';
-import { IAuthState } from './types/authTypes';
+import type { IAuthState } from './types/authTypes';
+import { getToken, removeToken } from '../../../utils/tokenStorage';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -35,7 +35,7 @@ export const changePassword = async (
     await logout(set);
 
     set({ isLoading: false, error: null });
-  } catch (error: any) {
+  } catch (error) {
     set({ isLoading: false, error: error.message });
   }
 };

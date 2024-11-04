@@ -1,5 +1,7 @@
+import type React from 'react';
+import { useCallback, useRef } from 'react';
+
 import { useApiStore } from '@store/useApiStore';
-import React, { useCallback, useRef } from 'react';
 
 interface IStoreField<T> {
   value: T;
@@ -8,6 +10,7 @@ interface IStoreField<T> {
   inputRef: React.RefObject<HTMLInputElement>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useStore = <T extends Record<string, any>>(
   initialValue: T[keyof T],
   fieldName: keyof T,
@@ -29,6 +32,7 @@ export const useStore = <T extends Record<string, any>>(
 
   const setValue = useCallback(
     (newValue: T[keyof T]) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setData((prevData: any) => ({
         ...prevData,
         [fieldName]: newValue,

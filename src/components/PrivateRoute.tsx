@@ -1,9 +1,11 @@
 // import { IonLoading } from '@ionic/react';
-import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
+
 interface IProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: React.ComponentType<any>;
   path: string;
   exact?: boolean;

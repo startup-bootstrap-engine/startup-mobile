@@ -1,7 +1,8 @@
+import React, { createContext, useContext } from 'react';
+
 import { DEFAULT_THEME } from '@constants';
 import { useLocalStorage } from '@hooks';
-import { Mode, Theme } from '@utils/types';
-import React, { createContext, useContext } from 'react';
+import type { Mode, Theme } from '@utils/types';
 
 interface IThemeContext {
   theme: Theme;
@@ -17,7 +18,7 @@ interface IThemeProvider {
 
 const ThemeContext = createContext<IThemeContext | undefined>(undefined);
 
-export const useTheme = () => {
+export const useTheme = (): IThemeContext => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
     throw new Error('useTheme must be used within a ThemeProvider');
@@ -32,18 +33,18 @@ export const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
   );
   const [mode, setMode] = useLocalStorage<Mode>('mode', 'dark');
 
-  const changeTheme = (newTheme: Theme) => {
+  const changeTheme = (newTheme: Theme): void => {
     setTheme(newTheme);
     updateBodyClasses(newTheme, mode);
   };
 
-  const toggleMode = () => {
+  const toggleMode = (): void => {
     const newMode = mode === 'dark' ? 'light' : 'dark';
     setMode(newMode);
     updateBodyClasses(theme, newMode);
   };
 
-  const updateBodyClasses = (currentTheme: Theme, currentMode: Mode) => {
+  const updateBodyClasses = (currentTheme: Theme, currentMode: Mode): void => {
     const allThemes: Theme[] = ['lara', 'sakai', 'vela', 'soho'];
     const allModes: Mode[] = ['light', 'dark'];
 
@@ -58,6 +59,7 @@ export const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
   // Initial class setup
   React.useEffect(() => {
     updateBodyClasses(theme, mode);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

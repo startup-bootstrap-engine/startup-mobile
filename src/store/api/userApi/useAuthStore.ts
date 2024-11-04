@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+
 import { appleLogin } from './appleLogin';
 import { changePassword } from './changePassword';
 import { checkAuth } from './checkAuth';
@@ -49,7 +50,7 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true, error: null });
           await login(email, password, set);
           set({ isLoading: false });
-        } catch (error: any) {
+        } catch (error) {
           set({
             isLoading: false,
             error: error.message,
@@ -67,10 +68,10 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true, error: null });
           await signUp(email, password, passwordConfirmation, name, set);
           set({ isLoading: false });
-        } catch (error: any) {
+        } catch (error: unknown) {
           set({
             isLoading: false,
-            error: error.message,
+            error: (error as Error).message,
           });
         }
       },
@@ -80,8 +81,8 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true });
           await logout(set);
           set({ isLoading: false });
-        } catch (error: any) {
-          set({ isLoading: false, error: error.message });
+        } catch (error: unknown) {
+          set({ isLoading: false, error: (error as Error).message });
         }
       },
 
@@ -90,12 +91,12 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true });
           await checkAuth(set);
           set({ isLoading: false });
-        } catch (error: any) {
+        } catch (error: unknown) {
           set({
             isLoading: false,
             token: null,
             isAuthenticated: false,
-            error: error.message,
+            error: (error as Error).message,
           });
         }
       },
@@ -105,10 +106,10 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true });
           await changePassword(currentPassword, newPassword, set);
           set({ isLoading: false });
-        } catch (error: any) {
+        } catch (error: unknown) {
           set({
             isLoading: false,
-            error: error.message,
+            error: (error as Error).message,
           });
         }
       },
@@ -118,10 +119,10 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true });
           await forgotPassword(email, set);
           set({ isLoading: false });
-        } catch (error: any) {
+        } catch (error: unknown) {
           set({
             isLoading: false,
-            error: error.message,
+            error: (error as Error).message,
           });
         }
       },
@@ -132,10 +133,10 @@ export const useAuthStore = create<IUseStoreAuth>()(
           const googleOAuthUrl = await getGoogleOAuthUrl();
           window.location.href = googleOAuthUrl;
           set({ isLoading: false });
-        } catch (error: any) {
+        } catch (error: unknown) {
           set({
             isLoading: false,
-            error: error.message,
+            error: (error as Error).message,
           });
         }
       },
@@ -149,10 +150,10 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true });
           await appleLogin(idToken, email, authorizationCode, set);
           set({ isLoading: false });
-        } catch (error: any) {
+        } catch (error: unknown) {
           set({
             isLoading: false,
-            error: error.message,
+            error: (error as Error).message,
           });
         }
       },

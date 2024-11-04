@@ -7,8 +7,10 @@ import {
   IonRadioGroup,
 } from '@ionic/react';
 import React, { useState } from 'react';
+
 import { PageLayout } from '../../components/layout/PageLayout';
-import { TranslationKeys, useTranslations } from '../../hooks/useTranslations';
+import type { TranslationKeys } from '../../hooks/useTranslations';
+import { useTranslations } from '../../hooks/useTranslations';
 
 const languages: Array<{ code: string; name: TranslationKeys }> = [
   { code: 'en', name: 'settings.languages.en' },
@@ -20,7 +22,7 @@ export const Language: React.FC = () => {
   const { i18n, t } = useTranslations();
   const [language, setLanguage] = useState(i18n.language || 'en');
 
-  const handleLanguageChange = (newLanguage: string) => {
+  const handleLanguageChange = (newLanguage: string): void => {
     i18n.changeLanguage(newLanguage);
     setLanguage(newLanguage);
   };

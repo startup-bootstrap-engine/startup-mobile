@@ -1,5 +1,5 @@
+import type { IAuthState } from './types/authTypes';
 import { setToken } from '../../../utils/tokenStorage';
-import { IAuthState } from './types/authTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -30,7 +30,7 @@ export const appleLogin = async (
 
     await setToken(accessToken, refreshToken);
     set({ token: accessToken, isAuthenticated: true, isLoading: false });
-  } catch (error: any) {
+  } catch (error) {
     set({ isLoading: false, error: error.message });
     throw error;
   }

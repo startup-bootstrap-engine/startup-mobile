@@ -1,5 +1,5 @@
+import type { IAuthState } from './types/authTypes';
 import { getToken, removeToken } from '../../../utils/tokenStorage';
-import { IAuthState } from './types/authTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 

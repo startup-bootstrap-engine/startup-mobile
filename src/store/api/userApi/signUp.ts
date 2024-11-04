@@ -1,7 +1,8 @@
-import { setToken } from '../../../utils/tokenStorage';
-import { IAuthState } from './types/authTypes';
-import { ITokenResponse } from './types/tokenTypes';
-import { IUser } from './types/userTypes';
+import { setToken } from '@utils/tokenStorage';
+
+import type { IAuthState } from './types/authTypes';
+import type { ITokenResponse } from './types/tokenTypes';
+import type { IUser } from './types/userTypes';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -45,7 +46,7 @@ export const signUp = async (
     });
 
     return newUser;
-  } catch (error: any) {
+  } catch (error) {
     set({
       isLoading: false,
       error: error.message,

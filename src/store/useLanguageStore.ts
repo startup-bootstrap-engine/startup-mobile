@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+
 import { i18n } from '../i18n';
 
 interface ILanguageState {
@@ -12,8 +13,8 @@ export const useLanguageStore = create<ILanguageState>()(
   persist(
     (set) => ({
       language: 'en',
-      setLanguage: (lang: string) => {
-        i18n.changeLanguage(lang);
+      setLanguage: async (lang: string) => {
+        await i18n.changeLanguage(lang);
         set({ language: lang });
       },
     }),

@@ -1,21 +1,22 @@
-import { FormField } from '@components/forms/FormField';
-import { PageLayout } from '@components/layout/PageLayout';
-import { useForgotPasswordForm, useTranslations } from '@hooks';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
-import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { FormField } from '@components/forms/FormField';
+import { PageLayout } from '@components/layout/PageLayout';
+import { useForgotPasswordSchema, useTranslations } from '@hooks';
+import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
 export const ForgotPasswordForm: React.FC = () => {
   const { forgotPassword, isLoading, error } = useAuthStore();
   const { t } = useTranslations();
-  const schema = useForgotPasswordForm();
+  const schema = useForgotPasswordSchema();
   const history = useHistory();
 
   const [email, setEmail] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     const validation = schema.safeParse({ email });

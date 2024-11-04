@@ -1,5 +1,6 @@
 import { IonToast } from '@ionic/react';
 import React from 'react';
+
 import { useToastStore } from 'src/hooks/useToastStore';
 
 export const Toast: React.FC = () => {

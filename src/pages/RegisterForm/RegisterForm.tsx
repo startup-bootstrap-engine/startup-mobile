@@ -1,11 +1,12 @@
+import { IonButton, IonLoading, IonText } from '@ionic/react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import type { ZodIssue } from 'zod';
+
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
 import { useRegistrationSchema, useTranslations } from '@hooks';
-import { IonButton, IonLoading, IonText } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { ZodIssue } from 'zod';
 
 export const RegisterForm: React.FC = () => {
   const history = useHistory();
@@ -22,11 +23,11 @@ export const RegisterForm: React.FC = () => {
 
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: string): void => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     const validation = registrationSchema.safeParse(formData);

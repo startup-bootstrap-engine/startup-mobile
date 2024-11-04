@@ -1,8 +1,9 @@
-import { useTheme } from '@contexts/ThemeProvider';
 import { IonButton, IonIcon, IonItem, IonLabel, IonList } from '@ionic/react';
-import { Theme } from '@utils/types';
 import { moonOutline, sunnyOutline } from 'ionicons/icons';
 import React from 'react';
+
+import { useTheme } from '@contexts/ThemeProvider';
+import type { Theme } from '@utils/types';
 
 export const ThemeSelector: React.FC = () => {
   const { theme, mode, changeTheme, toggleMode } = useTheme();

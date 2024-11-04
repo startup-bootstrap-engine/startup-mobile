@@ -1,8 +1,14 @@
 import { z } from 'zod';
-import { useTranslations } from './useTranslations';
+
 import { MIN_PASSWORD_CHARACTERS_NUMBER } from '@constants';
 
-export const useChangePasswordSchema = () => {
+import { useTranslations } from './useTranslations';
+
+export const useChangePasswordSchema = (): z.Schema<{
+  currentPassword: string;
+  newPassword: string;
+  newPasswordConfirmation: string;
+}> => {
   const { t } = useTranslations();
 
   const changePasswordSchema = z
