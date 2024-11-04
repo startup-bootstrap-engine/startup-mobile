@@ -117,5 +117,3 @@ export const RegisterForm: React.FC = () => {
     </PageLayout>
   );
 };
-
-export default RegisterForm;

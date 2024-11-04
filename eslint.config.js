@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import prettierConfig from 'eslint-config-prettier';
+import importPlugin from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 
@@ -26,9 +27,16 @@ export default [
       },
     },
     plugins: {
-      react: react,
+      react,
       '@typescript-eslint': typescriptEslintPlugin,
-      prettier: prettier,
+      prettier,
+      import: importPlugin,
+    },
+    settings: {
+      'import/resolver': {
+        typescript: true,
+        node: true,
+      },
     },
     rules: {
       'prettier/prettier': 'error',
@@ -51,6 +59,16 @@ export default [
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
           caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+      'import/no-default-export': 'error',
+      'import/prefer-default-export': 'off',
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        {
+          ts: 'never',
+          tsx: 'never',
         },
       ],
     },

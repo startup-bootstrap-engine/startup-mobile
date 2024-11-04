@@ -50,5 +50,3 @@ export const Dashboard: React.FC = () => {
     </IonPage>
   );
 };
-
-export default Dashboard;

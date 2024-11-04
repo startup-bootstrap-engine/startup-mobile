@@ -78,5 +78,3 @@ export const ForgotPasswordForm: React.FC = () => {
     </PageLayout>
   );
 };
-
-export default ForgotPasswordForm;

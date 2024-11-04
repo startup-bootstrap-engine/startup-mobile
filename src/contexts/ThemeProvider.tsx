@@ -25,7 +25,7 @@ export const useTheme = () => {
   return context;
 };
 
-const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
+export const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
   const [theme, setTheme] = useLocalStorage<Theme>(
     'theme',
     DEFAULT_THEME as Theme,
@@ -66,5 +66,3 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
-
-export default ThemeProvider;

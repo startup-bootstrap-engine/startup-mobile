@@ -132,5 +132,3 @@ export const LoginForm: React.FC = () => {
     </PageLayout>
   );
 };
-
-export default LoginForm;

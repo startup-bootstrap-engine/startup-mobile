@@ -98,5 +98,3 @@ export const ChangePasswordForm: React.FC = () => {
     </PageLayout>
   );
 };
-
-export default ChangePasswordForm;

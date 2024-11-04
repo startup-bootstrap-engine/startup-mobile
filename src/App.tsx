@@ -36,7 +36,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import { PrivateRoute } from './components/PrivateRoute';
 import { MainMenu } from './components/layout/MainMenu';
-import ThemeProvider from './contexts/ThemeProvider';
+import { ThemeProvider } from './contexts/ThemeProvider';
 import { ChangePasswordForm } from './pages/ChangePasswordForm/ChangePasswordForm';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordForm';
@@ -48,7 +48,7 @@ import { Theme } from './pages/Settings/Theme';
 
 setupIonicReact();
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
@@ -88,5 +88,3 @@ const App: React.FC = () => {
     </IonApp>
   );
 };
-
-export default App;

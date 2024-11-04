@@ -1,8 +1,8 @@
 import { IonToast } from '@ionic/react';
-import { useToastStore } from 'src/hooks/useToastStore';
 import React from 'react';
+import { useToastStore } from 'src/hooks/useToastStore';
 
-const Toast: React.FC = () => {
+export const Toast: React.FC = () => {
   const { isVisible, message, type, duration, position, hideToast } =
     useToastStore();
 
@@ -24,5 +24,3 @@ const Toast: React.FC = () => {
     />
   );
 };
-
-export default Toast;

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import i18n from '../i18n';
+import { i18n } from '../i18n';
 
 interface ILanguageState {
   language: string;
