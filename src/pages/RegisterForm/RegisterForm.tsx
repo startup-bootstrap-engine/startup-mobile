@@ -60,7 +60,7 @@ export const RegisterForm: React.FC = () => {
           value={formData.name}
           onChange={(value) => handleInputChange('name', value)}
           error={formErrors.name}
-          required
+          required={true}
           placeholder={t('registrationForm.namePlaceholder')}
         />
 
@@ -70,7 +70,7 @@ export const RegisterForm: React.FC = () => {
           onChange={(value) => handleInputChange('email', value)}
           type="email"
           error={formErrors.email}
-          required
+          required={true}
           placeholder={t('loginForm.emailPlaceholder')}
         />
 
@@ -80,7 +80,7 @@ export const RegisterForm: React.FC = () => {
           onChange={(value) => handleInputChange('password', value)}
           type="password"
           error={formErrors.password}
-          required
+          required={true}
           placeholder={t('loginForm.passwordPlaceholder')}
         />
 
@@ -90,7 +90,7 @@ export const RegisterForm: React.FC = () => {
           onChange={(value) => handleInputChange('passwordConfirmation', value)}
           type="password"
           error={formErrors.passwordConfirmation}
-          required
+          required={true}
           placeholder={t('loginForm.passwordPlaceholder')}
         />
 

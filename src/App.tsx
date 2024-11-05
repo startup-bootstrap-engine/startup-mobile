@@ -58,27 +58,43 @@ export const App: React.FC = () => {
             <Suspense
               fallback={<IonLoading isOpen={true} message="Loading..." />}
             >
-              <Route path="/login" render={() => <LoginForm />} exact />
-              <Route path="/register" render={() => <RegisterForm />} exact />
+              <Route path="/login" render={() => <LoginForm />} exact={true} />
+              <Route
+                path="/register"
+                render={() => <RegisterForm />}
+                exact={true}
+              />
               <Route
                 path="/forgot-password"
                 render={() => <ForgotPasswordForm />}
-                exact
+                exact={true}
               />
               <Route
                 path="/change-password"
                 render={() => <ChangePasswordForm />}
-                exact
+                exact={true}
               />
-              <PrivateRoute path="/dashboard" component={Dashboard} exact />
-              <Route path="/settings" render={() => <Settings />} exact />
-              <Route path="/settings/theme" render={() => <Theme />} exact />
+              <PrivateRoute
+                path="/dashboard"
+                component={Dashboard}
+                exact={true}
+              />
+              <Route
+                path="/settings"
+                render={() => <Settings />}
+                exact={true}
+              />
+              <Route
+                path="/settings/theme"
+                render={() => <Theme />}
+                exact={true}
+              />
               <Route
                 path="/settings/language"
                 render={() => <Language />}
-                exact
+                exact={true}
               />
-              <Route exact path="/">
+              <Route exact={true} path="/">
                 <Redirect to="/login" />
               </Route>
             </Suspense>

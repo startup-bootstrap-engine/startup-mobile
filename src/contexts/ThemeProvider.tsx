@@ -59,7 +59,6 @@ export const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
   // Initial class setup
   React.useEffect(() => {
     updateBodyClasses(theme, mode);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

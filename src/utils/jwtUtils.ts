@@ -5,8 +5,10 @@ interface IDecodedToken {
   // Adicione outras propriedades conforme necessário
 }
 
-export const isTokenValid = (token: string | null): boolean => {
-  if (!token) return false;
+export const IsTokenValid = (token: string | null): boolean => {
+  if (!token) {
+    return false;
+  }
 
   try {
     const decoded: IDecodedToken = jwtDecode(token);
