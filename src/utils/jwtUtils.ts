@@ -5,7 +5,7 @@ interface IDecodedToken {
   // Adicione outras propriedades conforme necessário
 }
 
-export const IsTokenValid = (token: string | null): boolean => {
+export const isTokenValid = (token: string | null): boolean => {
   if (!token) {
     return false;
   }
