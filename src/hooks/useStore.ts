@@ -25,7 +25,9 @@ export const useStore = <T extends Record<string, any>>(
     const value = data?.[fieldName];
     for (const rule of rules) {
       const errorMessage = rule(value as T[keyof T]);
-      if (errorMessage) return errorMessage;
+      if (errorMessage) {
+        return errorMessage;
+      }
     }
     return null;
   }, [data, fieldName, rules]);

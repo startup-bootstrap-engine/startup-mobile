@@ -1,54 +1,72 @@
 import js from '@eslint/js';
-import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
+import typescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
-import prettierConfig from 'eslint-config-prettier';
-import importPlugin from 'eslint-plugin-import';
-import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
+import prettier from 'eslint-plugin-prettier';
 
 export default [
   js.configs.recommended,
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'coverage/**',
+      'vite.config.ts',
+      'src/setupTests.ts',
+    ],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
+        ecmaVersion: 2023,
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
         project: './tsconfig.json',
+        tsconfigRootDir: '.',
       },
       globals: {
-        window: 'readonly',
-        document: 'readonly',
-        fetch: 'readonly',
-        setTimeout: 'readonly',
-        clearTimeout: 'readonly',
-        console: 'readonly',
-        test: 'readonly',
-        expect: 'readonly',
+        console: true,
+        process: true,
+        window: true,
+        document: true,
+        setTimeout: true,
+        fetch: true,
+        clearTimeout: true,
+        addEventListener: true,
+        removeEventListener: true,
       },
     },
     plugins: {
-      react,
-      '@typescript-eslint': typescriptEslintPlugin,
-      prettier,
-      import: importPlugin,
+      '@typescript-eslint': typescript,
+      react: react,
       'react-hooks': reactHooks,
+      prettier: prettier,
     },
     settings: {
-      'import/resolver': {
-        typescript: true,
-        node: true,
-      },
       react: {
-        version: 'detect', // Added React version detection
+        version: 'detect',
       },
     },
     rules: {
-      'prettier/prettier': 'error',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        { vars: 'all', args: 'none', ignoreRestSiblings: true },
+      // Core ESLint rules
+      '@typescript-eslint/strict-boolean-expressions': 'error',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/prefer-for-of': 'error',
+      eqeqeq: ['error', 'always'],
+      curly: ['error', 'all'],
+      'no-console': ['warn', { allow: ['error', 'warn'] }],
+      'no-var': 'error',
+      'prefer-const': 'error',
+      'no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+
+      // TypeScript-specific rules
+      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       '@typescript-eslint/naming-convention': [
         'error',
         {
@@ -56,68 +74,46 @@ export default [
           format: ['PascalCase'],
           prefix: ['I'],
         },
-      ],
-      'react/react-in-jsx-scope': 'off',
-      'no-unused-vars': [
-        'warn',
         {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_',
+          selector: 'typeAlias',
+          format: ['PascalCase'],
+        },
+        {
+          selector: 'function',
+          format: ['camelCase', 'PascalCase'],
         },
       ],
-      'import/no-default-export': 'error',
-      'import/prefer-default-export': 'off',
-      'import/extensions': [
-        'error',
-        'ignorePackages',
-        {
-          ts: 'never',
-          tsx: 'never',
-        },
-      ],
-      // Ionic specific rules
-      'react/prop-types': 'off', // Ionic components don't need prop-types
-      'react/require-default-props': 'off', // Not needed with TypeScript
+      '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-function-return-type': [
         'error',
-        {
-          allowExpressions: true,
-          allowTypedFunctionExpressions: true,
-        },
+        { allowExpressions: true, allowTypedFunctionExpressions: true },
       ],
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn', // Important for Ionic lifecycle hooks
-      'react/jsx-no-bind': [
+      '@typescript-eslint/explicit-module-boundary-types': [
+        'warn',
+        { allowHigherOrderFunctions: true },
+      ],
+      '@typescript-eslint/consistent-type-imports': [
         'error',
-        {
-          allowArrowFunctions: true,
-        },
+        { prefer: 'type-imports' },
       ],
-      // Enforce proper Ionic imports
-      'import/order': [
-        'error',
-        {
-          groups: [
-            ['builtin', 'external'],
-            'internal',
-            ['parent', 'sibling', 'index'],
-          ],
-          pathGroups: [
-            {
-              pattern: '@ionic/**',
-              group: 'external',
-              position: 'before',
-            },
-          ],
-          'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
-        },
-      ],
-      // Enforce proper component structure
+      //'@typescript-eslint/noImplicitAny': 'error',
+      '@typescript-eslint/strict-boolean-expressions': 'warn',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/prefer-for-of': 'error',
+
+      // Code quality rules
+      'no-shadow': 'error',
+      '@typescript-eslint/array-type': ['error', { default: 'array' }],
+      '@typescript-eslint/no-empty-function': 'error',
+      '@typescript-eslint/prefer-readonly': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+
+      // React-specific rules
+      'react/prop-types': 'off',
+      'react/jsx-boolean-value': ['error', 'always'],
+      'react/self-closing-comp': 'error',
+      'react/jsx-no-duplicate-props': 'error',
+      'react/jsx-no-useless-fragment': 'error',
       'react/function-component-definition': [
         'error',
         {
@@ -125,25 +121,22 @@ export default [
           unnamedComponents: 'arrow-function',
         },
       ],
-      // Enforce proper event handling
-      '@typescript-eslint/no-explicit-any': [
+
+      // Prettier integration
+      'prettier/prettier': [
         'error',
         {
-          ignoreRestArgs: true,
-        },
-      ],
-      // Enforce proper async/await usage
-      '@typescript-eslint/await-thenable': 'error',
-      '@typescript-eslint/no-floating-promises': 'error',
-      // Enforce proper type imports
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
-        {
-          prefer: 'type-imports',
+          endOfLine: 'auto',
+          singleQuote: true,
+          trailingComma: 'all',
+          arrowParens: 'always',
         },
       ],
     },
-    ignores: ['vite.config.ts'],
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
   },
-  prettierConfig,
 ];

@@ -51,7 +51,7 @@ export const ForgotPasswordForm: React.FC = () => {
           onChange={setEmail}
           type="email"
           error={formError}
-          required
+          required={true}
           placeholder={t('loginForm.emailPlaceholder')}
         />
 

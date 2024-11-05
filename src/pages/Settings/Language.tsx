@@ -12,7 +12,7 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import type { TranslationKeys } from '../../hooks/useTranslations';
 import { useTranslations } from '../../hooks/useTranslations';
 
-const languages: Array<{ code: string; name: TranslationKeys }> = [
+const languages: { code: string; name: TranslationKeys }[] = [
   { code: 'en', name: 'settings.languages.en' },
   { code: 'pt-BR', name: 'settings.languages.pt-BR' },
   { code: 'ja', name: 'settings.languages.ja' },

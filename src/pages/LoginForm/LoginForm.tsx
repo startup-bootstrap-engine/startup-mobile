@@ -52,7 +52,9 @@ export const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      return;
+    }
 
     await login(user.email, user.password);
     await checkAuth();
@@ -79,8 +81,8 @@ export const LoginForm: React.FC = () => {
           onChange={(value) => setUser({ ...user, email: value })}
           type="email"
           error={emailError}
-          required
-          clearInput
+          required={true}
+          clearInput={true}
           placeholder={t('loginForm.emailPlaceholder')}
         />
 
@@ -90,7 +92,7 @@ export const LoginForm: React.FC = () => {
           onChange={(value) => setUser({ ...user, password: value })}
           type="password"
           error={passwordError}
-          required
+          required={true}
           placeholder={t('loginForm.passwordPlaceholder')}
         />
 
