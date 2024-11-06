@@ -34,6 +34,7 @@ export const ForgotPasswordForm: React.FC = () => {
       await forgotPassword(data.email);
       history.push('/login');
     } catch (err) {
+      console.error(err);
       setFormError(t('passwordForms.error.reset'));
     }
   };
