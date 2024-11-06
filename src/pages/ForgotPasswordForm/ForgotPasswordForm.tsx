@@ -1,11 +1,17 @@
 import { IonButton, IonLoading, IonText } from '@ionic/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
 import { useForgotPasswordSchema, useTranslations } from '@hooks';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
+
+interface IForgotPasswordData {
+  email: string;
+}
 
 export const ForgotPasswordForm: React.FC = () => {
   const { forgotPassword, isLoading, error } = useAuthStore();
@@ -13,46 +19,54 @@ export const ForgotPasswordForm: React.FC = () => {
   const schema = useForgotPasswordSchema();
   const history = useHistory();
 
-  const [email, setEmail] = useState('');
-  const [formError, setFormError] = useState<string | null>(null);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForgotPasswordData>({
+    resolver: zodResolver(schema),
+  });
 
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
+  const [formError, setFormError] = React.useState<string | null>(null);
 
-    const validation = schema.safeParse({ email });
-
-    if (!validation.success) {
-      setFormError(
-        validation.error.errors[0]?.message || t('validations.email'),
-      );
-      return;
-    }
-
+  const onSubmit = async (data: IForgotPasswordData): Promise<void> => {
     try {
-      await forgotPassword(email);
+      await forgotPassword(data.email);
       history.push('/login');
-    } catch {
+    } catch (err) {
       setFormError(t('passwordForms.error.reset'));
     }
   };
 
   return (
     <PageLayout title={t('passwordForms.passwordRecoveryForm')}>
-      <form onSubmit={handleSubmit} className="ion-padding">
+      <form onSubmit={handleSubmit(onSubmit)} className="ion-padding">
+        {formError && (
+          <IonText color="danger" className="ion-padding-bottom">
+            <p>{formError}</p>
+          </IonText>
+        )}
+
         {error && (
           <IonText color="danger" className="ion-padding-bottom">
             <p>{error}</p>
           </IonText>
         )}
 
-        <FormField
-          label={t('loginForm.email')}
-          value={email}
-          onChange={setEmail}
-          type="email"
-          error={formError}
-          required={true}
-          placeholder={t('loginForm.emailPlaceholder')}
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <FormField
+              label={t('loginForm.email')}
+              value={field.value || ''}
+              onChange={field.onChange}
+              type="email"
+              error={errors.email?.message || null}
+              required={true}
+              placeholder={t('loginForm.emailPlaceholder')}
+            />
+          )}
         />
 
         <div className="ion-padding-top">

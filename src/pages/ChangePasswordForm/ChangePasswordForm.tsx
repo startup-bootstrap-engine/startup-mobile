@@ -1,7 +1,8 @@
 import { IonButton, IonLoading, IonText } from '@ionic/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import type { ZodIssue } from 'zod';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
@@ -20,71 +21,69 @@ export const ChangePasswordForm: React.FC = () => {
   const { t } = useTranslations();
   const changePasswordSchema = useChangePasswordSchema();
 
-  const [formData, setFormData] = useState<IPasswordData>({
-    currentPassword: '',
-    newPassword: '',
-    newPasswordConfirmation: '',
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IPasswordData>({
+    resolver: zodResolver(changePasswordSchema),
   });
 
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-
-  const handleInputChange = (field: string, value: string): void => {
-    setFormData({ ...formData, [field]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
-
-    const validation = changePasswordSchema.safeParse(formData);
-
-    if (!validation.success) {
-      const errors: Record<string, string> = {};
-      validation.error.errors.forEach((err: ZodIssue) => {
-        errors[err.path[0]] = err.message;
-      });
-      setFormErrors(errors);
-      return;
-    }
-
-    const { currentPassword, newPassword } = formData;
+  const onSubmit = async (data: IPasswordData): Promise<void> => {
+    const { currentPassword, newPassword } = data;
     await changePassword(currentPassword, newPassword);
-
     history.push('/login');
   };
 
   return (
     <PageLayout title={t('passwordForms.changePasswordForm')}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {error && (
           <IonText color="danger">
             <p>{error}</p>
           </IonText>
         )}
 
-        <FormField
-          label={t('passwordForms.currentPassword')}
-          value={formData.currentPassword}
-          onChange={(value) => handleInputChange('currentPassword', value)}
-          type="password"
-          error={formErrors.currentPassword}
+        <Controller
+          name="currentPassword"
+          control={control}
+          render={({ field }) => (
+            <FormField
+              label={t('passwordForms.currentPassword')}
+              value={field.value || ''}
+              onChange={field.onChange}
+              type="password"
+              error={errors.currentPassword?.message || null}
+            />
+          )}
         />
 
-        <FormField
-          label={t('passwordForms.newPassword')}
-          value={formData.newPassword}
-          onChange={(value) => handleInputChange('newPassword', value)}
-          type="password"
-          error={formErrors.newPassword}
+        <Controller
+          name="newPassword"
+          control={control}
+          render={({ field }) => (
+            <FormField
+              label={t('passwordForms.newPassword')}
+              value={field.value || ''}
+              onChange={field.onChange}
+              type="password"
+              error={errors.newPassword?.message || null}
+            />
+          )}
         />
 
-        <FormField
-          label={t('passwordForms.confirmPassword')}
-          value={formData.newPasswordConfirmation}
-          onChange={(value) =>
-            handleInputChange('newPasswordConfirmation', value)
-          }
-          type="password"
-          error={formErrors.newPasswordConfirmation}
+        <Controller
+          name="newPasswordConfirmation"
+          control={control}
+          render={({ field }) => (
+            <FormField
+              label={t('passwordForms.confirmPassword')}
+              value={field.value || ''}
+              onChange={field.onChange}
+              type="password"
+              error={errors.newPasswordConfirmation?.message || null}
+            />
+          )}
         />
 
         <IonLoading
