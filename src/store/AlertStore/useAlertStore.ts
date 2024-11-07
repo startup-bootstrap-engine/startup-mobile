@@ -1,19 +1,19 @@
 import { create } from 'zustand';
-import { IAlertInput } from './types';
+import type { IAlertInput } from './types';
 
 interface IAlertState {
   isOpen: boolean;
   header: string;
   subHeader?: string;
   message: string;
-  buttons: Array<string | { text: string; handler: () => void }>;
+  buttons: (string | { text: string; handler: () => void })[];
   inputs?: IAlertInput[];
   showAlert: (
     header: string,
     message: string,
     options?: {
       subHeader?: string;
-      buttons?: Array<string | { text: string; handler: () => void }>;
+      buttons?: (string | { text: string; handler: () => void })[];
       inputs?: IAlertInput[];
     },
   ) => void;
