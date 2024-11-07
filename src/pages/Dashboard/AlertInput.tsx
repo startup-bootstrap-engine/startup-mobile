@@ -5,7 +5,7 @@ import { useAlertStore } from '@store/AlertStore/useAlertStore';
 export const AlertInput: React.FC = () => {
   const showAlert = useAlertStore((state) => state.showAlert);
 
-  const handleShowAlert = () => {
+  const handleShowAlert = (): void => {
     showAlert('Input Alert', 'Please provide your information', {
       inputs: [
         { type: 'text', placeholder: 'Name' }, // Specify type for clarity

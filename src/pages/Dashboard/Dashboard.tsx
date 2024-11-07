@@ -11,7 +11,6 @@ import { useHistory } from 'react-router-dom';
 
 import { useTranslations } from '@hooks';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
-import { useAlertStore } from '@store/AlertStore/useAlertStore';
 import { AlertInput } from './AlertInput';
 import { AlertSimple } from './AlertSimple';
 import { AlertRadio } from './AlertRadio';

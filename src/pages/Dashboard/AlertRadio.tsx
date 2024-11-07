@@ -5,7 +5,7 @@ import { useAlertStore } from '@store/AlertStore/useAlertStore';
 export const AlertRadio: React.FC = () => {
   const showAlert = useAlertStore((state) => state.showAlert);
 
-  const handleShowRadioAlert = () => {
+  const handleShowRadioAlert = (): void => {
     showAlert('Choose a Color', 'Please select your favorite color:', {
       inputs: [
         { label: 'Red', type: 'radio', value: 'red' },
