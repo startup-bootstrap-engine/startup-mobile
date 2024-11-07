@@ -24,6 +24,7 @@ export const Dashboard: React.FC = () => {
       { text: 'Cancel', handler: () => console.log('Cancel clicked') },
       { text: 'OK', handler: () => console.log('OK clicked') },
     ]);
+    return;
   };
   const handleLogout = async (): Promise<void> => {
     await logout();

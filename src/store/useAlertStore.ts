@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface AlertState {
+interface IAlertState {
   isOpen: boolean;
   header: string;
   subHeader?: string;
@@ -15,7 +15,7 @@ interface AlertState {
   closeAlert: () => void;
 }
 
-export const useAlertStore = create<AlertState>((set) => ({
+export const useAlertStore = create<IAlertState>((set) => ({
   isOpen: false,
   header: '',
   subHeader: undefined,
