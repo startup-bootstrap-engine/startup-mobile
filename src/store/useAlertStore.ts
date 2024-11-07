@@ -5,12 +5,12 @@ interface AlertState {
   header: string;
   subHeader?: string;
   message: string;
-  buttons: Array<string | { text: string; handler: () => void }>;
+  buttons: (string | { text: string; handler: () => void })[];
   showAlert: (
     header: string,
     message: string,
     subHeader?: string,
-    buttons?: Array<string | { text: string; handler: () => void }>,
+    buttons?: (string | { text: string; handler: () => void })[],
   ) => void;
   closeAlert: () => void;
 }
