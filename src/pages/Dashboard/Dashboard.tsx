@@ -19,12 +19,11 @@ export const Dashboard: React.FC = () => {
   const { t } = useTranslations();
   const showAlert = useAlertStore((state) => state.showAlert);
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (): void => {
     showAlert('Alert Title', 'This is an alert message', 'Optional SubHeader', [
       { text: 'Cancel', handler: () => console.log('Cancel clicked') },
       { text: 'OK', handler: () => console.log('OK clicked') },
     ]);
-    return;
   };
   const handleLogout = async (): Promise<void> => {
     await logout();
