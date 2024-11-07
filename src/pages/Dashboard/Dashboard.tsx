@@ -11,12 +11,20 @@ import { useHistory } from 'react-router-dom';
 
 import { useTranslations } from '@hooks';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
+import { useAlertStore } from '@store/useAlertStore';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();
   const history = useHistory();
   const { t } = useTranslations();
+  const showAlert = useAlertStore((state) => state.showAlert);
 
+  const handleButtonClick = () => {
+    showAlert('Alert Title', 'This is an alert message', 'Optional SubHeader', [
+      { text: 'Cancel', handler: () => console.log('Cancel clicked') },
+      { text: 'OK', handler: () => console.log('OK clicked') },
+    ]);
+  };
   const handleLogout = async (): Promise<void> => {
     await logout();
     history.push('/login');
@@ -37,7 +45,7 @@ export const Dashboard: React.FC = () => {
       <IonContent className="ion-padding">
         <h2>{t('dashboard.subtitle')}</h2>
         <p>{t('dashboard.description')}</p>
-
+        <IonButton onClick={handleButtonClick}>Show Alert</IonButton>;
         <IonButton
           expand="full"
           color="danger"
