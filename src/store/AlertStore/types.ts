@@ -3,7 +3,7 @@ interface IBaseInput {
   label?: string;
   type: 'text' | 'number' | 'textarea' | 'password' | 'radio';
   value?: string;
-  attributes?: { [key: string]: any };
+  attributes?: { [key: string]: string | number };
 }
 
 interface ITextInput extends IBaseInput {
