@@ -1,9 +1,7 @@
 import { setToken } from '@utils/tokenStorage';
-
+import { fetchWithAuth } from '@utils/apiUtils';
 import type { IAuthState } from './types/authTypes';
 import type { ITokenResponse } from './types/tokenTypes';
-
-const apiURL = import.meta.env.VITE_API_URL;
 
 export const login = async (
   email: string,
@@ -12,18 +10,22 @@ export const login = async (
 ): Promise<void> => {
   set({ isLoading: true, error: null });
   try {
-    const response = await fetch(`${apiURL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'content-Type': 'application/json',
+    const response = await fetchWithAuth(
+      '/auth/login',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+        requiresAuth: false,
       },
-      body: JSON.stringify({ email, password }),
-      referrerPolicy: 'strict-origin-when-cross-origin',
-    });
+      set,
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Falha no login');
+      throw new Error(errorData.message || 'Login failed');
     }
 
     const { accessToken, refreshToken }: ITokenResponse = await response.json();
