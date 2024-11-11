@@ -1,8 +1,7 @@
 import { IonButton, IonLoading, IonText } from '@ionic/react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import type { ZodIssue } from 'zod';
 
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
@@ -24,16 +23,40 @@ export const LoginForm: React.FC = () => {
   const { t } = useTranslations();
   const loginSchema = useLoginSchema();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IUserState>({
-    resolver: zodResolver(loginSchema),
-  });
+  const [user, setUser] = useState<IUserState>({ email: '', password: '' });
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  const onSubmit = async (data: IUserState): Promise<void> => {
-    await login(data.email, data.password);
+  const validateForm = (): boolean => {
+    const validation = loginSchema.safeParse({
+      email: user.email,
+      password: user.password,
+    });
+
+    setEmailError(null);
+    setPasswordError(null);
+
+    if (!validation.success) {
+      validation.error.errors.forEach((err: ZodIssue) => {
+        if (err.path[0] === 'email') {
+          setEmailError(err.message);
+        } else if (err.path[0] === 'password') {
+          setPasswordError(err.message);
+        }
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    await login(user.email, user.password);
     await checkAuth();
   };
 
@@ -45,44 +68,32 @@ export const LoginForm: React.FC = () => {
 
   return (
     <PageLayout title={t('loginForm.title')} showBackButton={false}>
-      <form onSubmit={handleSubmit(onSubmit)} className="ion-padding">
+      <form onSubmit={handleSubmit} className="ion-padding">
         {error && (
           <IonText color="danger" className="ion-padding-bottom">
             <p>{t('loginForm.errors.invalidCredentials')}</p>
           </IonText>
         )}
 
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <FormField
-              label={t('loginForm.email')}
-              value={field.value || ''}
-              onChange={field.onChange}
-              type="email"
-              error={errors.email?.message || null}
-              required={true}
-              clearInput={true}
-              placeholder={t('loginForm.emailPlaceholder')}
-            />
-          )}
+        <FormField
+          label={t('loginForm.email')}
+          value={user.email}
+          onChange={(value) => setUser({ ...user, email: value })}
+          type="email"
+          error={emailError}
+          required={true}
+          clearInput={true}
+          placeholder={t('loginForm.emailPlaceholder')}
         />
 
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <FormField
-              label={t('loginForm.password')}
-              value={field.value || ''}
-              onChange={field.onChange}
-              type="password"
-              error={errors.password?.message || null}
-              required={true}
-              placeholder={t('loginForm.passwordPlaceholder')}
-            />
-          )}
+        <FormField
+          label={t('loginForm.password')}
+          value={user.password}
+          onChange={(value) => setUser({ ...user, password: value })}
+          type="password"
+          error={passwordError}
+          required={true}
+          placeholder={t('loginForm.passwordPlaceholder')}
         />
 
         <div className="ion-padding-top">
