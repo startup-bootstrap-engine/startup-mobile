@@ -1,8 +1,15 @@
 import { create } from 'zustand';
 import { alertController } from '@ionic/core/components';
-import { IAlertOptions, IAlertState } from './types';
+import type { IAlertOptions, IAlertState } from './types';
 
-export const useAlertStore = create<IAlertState>((set) => {
+declare global {
+  interface HTMLIonAlertElement extends HTMLElement {
+    present: () => Promise<void>;
+    dismiss: () => Promise<boolean>;
+  }
+}
+
+export const useAlertStore = create<IAlertState>(() => {
   let currentAlert: HTMLIonAlertElement | null = null;
 
   return {

@@ -2,7 +2,7 @@ import React from 'react';
 import { AlertComponent } from '@components/layout/AlertComponent';
 
 export const AlertRadio: React.FC = () => {
-  const handleOk = (data: { [key: string]: any }) => {
+  const handleOk = (data: { [key: string]: any }): void => {
     console.log('Selected color:', data);
   };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonButton } from '@ionic/react';
 import { useAlertStore } from '@store/AlertStore/useAlertStore';
-import { IAlertButton, IAlertInput } from '@store/AlertStore/types';
+import type { IAlertButton, IAlertInput } from '@store/AlertStore/types';
 
 interface AlertComponentProps {
   header: string;
