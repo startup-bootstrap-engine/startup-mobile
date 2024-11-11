@@ -2,14 +2,8 @@ import { create } from 'zustand';
 import { alertController } from '@ionic/core/components';
 import type { IAlertOptions, IAlertState } from './types';
 
-declare global {
-  interface HTMLIonAlertElement extends HTMLElement {
-    present: () => Promise<void>;
-    dismiss: () => Promise<boolean>;
-  }
-}
-
 export const useAlertStore = create<IAlertState>(() => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let currentAlert: HTMLIonAlertElement | null = null;
 
   return {
