@@ -1,25 +1,38 @@
 import React from 'react';
-import { IonButton } from '@ionic/react';
-import { useAlertStore } from '@store/AlertStore/useAlertStore';
+import { AlertComponent } from '@components/layout/AlertComponent';
 
 export const AlertInput: React.FC = () => {
-  const showAlert = useAlertStore((state) => state.showAlert);
+  const handleOk = (data: { [key: string]: any }) => {
+    console.log('Form data:', data);
+  };
 
-  const handleShowAlert = (): void => {
-    showAlert('Input Alert', 'Please provide your information', {
-      inputs: [
-        { type: 'text', placeholder: 'Name' }, // Specify type for clarity
+  return (
+    <AlertComponent
+      header="Input Alert"
+      message="Please provide your information"
+      inputs={[
+        { name: 'name', type: 'text', placeholder: 'Name' },
         {
-          type: 'text', // Specify type
+          name: 'nickname',
+          type: 'text',
           placeholder: 'Nickname (max 8 characters)',
           attributes: { maxlength: 8 },
         },
-        { type: 'number', placeholder: 'Age', min: 1, max: 100 },
-        { type: 'textarea', placeholder: 'A little about yourself' },
-      ],
-      buttons: ['Cancel', 'OK'],
-    });
-  };
-
-  return <IonButton onClick={handleShowAlert}>Show Input Alert</IonButton>;
+        { name: 'age', type: 'number', placeholder: 'Age', min: 1, max: 100 },
+        {
+          name: 'about',
+          type: 'textarea',
+          placeholder: 'A little about yourself',
+        },
+      ]}
+      buttons={[
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ]}
+      buttonText="Show Input Alert"
+      onOk={handleOk}
+    />
+  );
 };

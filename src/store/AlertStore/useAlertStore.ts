@@ -1,36 +1,6 @@
 import { create } from 'zustand';
 import { alertController } from '@ionic/core/components';
-
-interface IAlertInput {
-  name?: string;
-  type: 'text' | 'number' | 'email' | 'password' | 'textarea';
-  placeholder?: string;
-  value?: string | number;
-  min?: number;
-  max?: number;
-  attributes?: { [key: string]: any };
-}
-
-interface IAlertButton {
-  text: string;
-  role?: 'cancel' | 'destructive';
-  handler?: () => void;
-}
-
-interface IAlertOptions {
-  subHeader?: string;
-  buttons?: (string | IAlertButton)[];
-  inputs?: IAlertInput[];
-}
-
-interface IAlertState {
-  showAlert: (
-    header: string,
-    message: string,
-    options?: IAlertOptions,
-  ) => Promise<void>;
-  closeAlert: () => Promise<void>;
-}
+import { IAlertOptions, IAlertState } from './types';
 
 export const useAlertStore = create<IAlertState>((set) => {
   let currentAlert: HTMLIonAlertElement | null = null;

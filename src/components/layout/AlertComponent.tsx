@@ -1,35 +1,50 @@
 import React from 'react';
-import { IonAlert } from '@ionic/react';
+import { IonButton } from '@ionic/react';
 import { useAlertStore } from '@store/AlertStore/useAlertStore';
+import { IAlertButton, IAlertInput } from '@store/AlertStore/types';
 
-export const AlertComponent: React.FC = () => {
-  const { isOpen, header, subHeader, message, buttons, inputs, closeAlert } =
-    useAlertStore();
+interface AlertComponentProps {
+  header: string;
+  message: string;
+  inputs?: IAlertInput[];
+  buttons?: (string | IAlertButton)[];
+  subHeader?: string;
+  buttonText: string;
+  onOk?: (data: { [key: string]: any }) => void; // Callback for OK button
+}
 
-  return (
-    <IonAlert
-      isOpen={isOpen}
-      header={header}
-      subHeader={subHeader}
-      message={message}
-      buttons={buttons}
-      inputs={inputs?.map((input) => {
-        if (input.type === 'radio') {
-          return {
-            type: input.type,
-            label: input.label,
-            value: input.value,
-          };
-        }
-        return {
-          type: input.type,
-          placeholder: input.placeholder,
-          attributes: input.attributes,
-          min: input.min,
-          max: input.max,
-        };
-      })}
-      onDidDismiss={closeAlert}
-    />
-  );
+export const AlertComponent: React.FC<AlertComponentProps> = ({
+  header,
+  message,
+  inputs = [],
+  buttons = ['OK'],
+  subHeader,
+  buttonText,
+  onOk,
+}) => {
+  const showAlert = useAlertStore((state) => state.showAlert);
+
+  const handleShowAlert = async (): Promise<void> => {
+    try {
+      await showAlert(header, message, {
+        subHeader,
+        inputs,
+        buttons: [
+          ...buttons,
+          {
+            text: 'OK',
+            handler: (data) => {
+              if (onOk) {
+                onOk(data);
+              }
+            },
+          },
+        ],
+      });
+    } catch (error) {
+      console.error('Error showing alert:', error);
+    }
+  };
+
+  return <IonButton onClick={handleShowAlert}>{buttonText}</IonButton>;
 };
