@@ -4,6 +4,9 @@ import { IonButton, IonContent, IonPage } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { AlertSimple } from './AlertSimple';
+import { AlertInput } from './AlertInput';
+import { AlertRadio } from './AlertRadio';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();
@@ -20,7 +23,9 @@ export const Dashboard: React.FC = () => {
         <IonContent className="ion-padding">
           <h2>{t('dashboard.subtitle')}</h2>
           <p>{t('dashboard.description')}</p>
-
+          <AlertSimple />
+          <AlertInput />
+          <AlertRadio />
           <IonButton
             expand="full"
             color="danger"
