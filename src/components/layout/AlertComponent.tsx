@@ -3,7 +3,7 @@ import { IonButton } from '@ionic/react';
 import { useAlertStore } from '@store/AlertStore/useAlertStore';
 import type { IAlertButton, IAlertInput } from '@store/AlertStore/types';
 
-interface AlertComponentProps {
+interface IAlertComponentProps {
   header: string;
   message: string;
   inputs?: IAlertInput[];
@@ -13,7 +13,7 @@ interface AlertComponentProps {
   onOk?: (data: { [key: string]: any }) => void; // Callback for OK button
 }
 
-export const AlertComponent: React.FC<AlertComponentProps> = ({
+export const AlertComponent: React.FC<IAlertComponentProps> = ({
   header,
   message,
   inputs = [],
