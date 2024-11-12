@@ -1,17 +1,8 @@
 import React from 'react';
 import { IonButton } from '@ionic/react';
 import { useAlertStore } from '@store/AlertStore/useAlertStore';
-import type { IAlertButton, IAlertInput } from '@store/AlertStore/types';
-
-interface IAlertComponentProps {
-  header: string;
-  message: string;
-  inputs?: IAlertInput[];
-  buttons?: (string | IAlertButton)[];
-  subHeader?: string;
-  buttonText: string;
-  onOk?: (data: { [key: string]: any }) => void; // Callback for OK button
-}
+import { IAlertButton } from '@store/AlertStore/IAlertButton';
+import { IAlertComponentProps } from './IAlertProps';
 
 export const AlertComponent: React.FC<IAlertComponentProps> = ({
   header,
@@ -26,20 +17,25 @@ export const AlertComponent: React.FC<IAlertComponentProps> = ({
 
   const handleShowAlert = async (): Promise<void> => {
     try {
+      const okButton: IAlertButton = {
+        text: 'OK',
+        handler: (data) => {
+          if (onOk) {
+            onOk(data);
+          }
+        },
+      };
+
+      const finalButtons = buttons.some(
+        (button) => typeof button === 'object' && button.text === 'OK',
+      )
+        ? buttons
+        : [...buttons, okButton];
+
       await showAlert(header, message, {
         subHeader,
         inputs,
-        buttons: [
-          ...buttons,
-          {
-            text: 'OK',
-            handler: (data) => {
-              if (onOk) {
-                onOk(data);
-              }
-            },
-          },
-        ],
+        buttons: finalButtons,
       });
     } catch (error) {
       console.error('Error showing alert:', error);
