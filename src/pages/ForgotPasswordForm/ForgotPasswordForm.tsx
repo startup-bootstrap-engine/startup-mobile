@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
-import { useForgotPasswordSchema, useTranslations } from '@hooks/index';
+import { useForgotPasswordSchema } from '@hooks/useForgotPasswordSchema';
+import { useTranslations } from '@hooks/useTranslations';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
 export const ForgotPasswordForm: React.FC = () => {

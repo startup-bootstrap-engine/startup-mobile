@@ -5,7 +5,8 @@ import type { ZodIssue } from 'zod';
 
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
-import { useRegistrationSchema, useTranslations } from '@hooks/index';
+import { useTranslations } from '@hooks/index';
+import { useRegistrationSchema } from '@hooks/useRegistrationSchema';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
 export const RegisterForm: React.FC = () => {

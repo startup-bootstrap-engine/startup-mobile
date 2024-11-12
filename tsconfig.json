@@ -28,7 +28,8 @@
       "@components/*": ["src/components/*"],
       "@styles/*": ["src/styles/*"],
       "@locales/*": ["src/locales/*"],
-      "@tests/*": ["src/tests/*"]
+      "@tests/*": ["src/tests/*"],
+      "@schemas/*": ["src/schemas/*"]
     }
   },
   "include": ["src", "setupTests.ts", "vitest.config.ts"],

@@ -1,62 +1,43 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import type { ZodIssue } from 'zod';
 
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
-import { useLoginSchema, useTranslations } from '@hooks';
+import { useTranslatedSchema, useTranslations } from '@hooks/index';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
+import type { LoginSchema } from '@schemas/authSchema';
+import { loginSchema } from '@schemas/authSchema';
 import { AppleLoginButton } from './AppleLoginButton';
 import { GoogleLoginButton } from './GoogleLoginButton';
-
-interface IUserState {
-  email: string;
-  password: string;
-}
 
 export const LoginForm: React.FC = () => {
   const history = useHistory();
   const { login, isLoading, error, isAuthenticated, checkAuth } =
     useAuthStore();
   const { t } = useTranslations();
-  const loginSchema = useLoginSchema();
+  const schema = useTranslatedSchema(loginSchema);
 
-  const [user, setUser] = useState<IUserState>({ email: '', password: '' });
-  const [emailError, setEmailError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const {
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const validateForm = (): boolean => {
-    const validation = loginSchema.safeParse({
-      email: user.email,
-      password: user.password,
-    });
+  const formValues = watch();
 
-    setEmailError(null);
-    setPasswordError(null);
-
-    if (!validation.success) {
-      validation.error.errors.forEach((err: ZodIssue) => {
-        if (err.path[0] === 'email') {
-          setEmailError(err.message);
-        } else if (err.path[0] === 'password') {
-          setPasswordError(err.message);
-        }
-      });
-      return false;
-    }
-    return true;
-  };
-
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    await login(user.email, user.password);
+  const onSubmit = async (data: LoginSchema): Promise<void> => {
+    await login(data.email, data.password);
     await checkAuth();
   };
 
@@ -68,7 +49,7 @@ export const LoginForm: React.FC = () => {
 
   return (
     <PageLayout title={t('loginForm.title')} showBackButton={false}>
-      <form onSubmit={handleSubmit} className="ion-padding">
+      <form onSubmit={handleSubmit(onSubmit)} className="ion-padding">
         {error && (
           <IonText color="danger" className="ion-padding-bottom">
             <p>{t('loginForm.errors.invalidCredentials')}</p>
@@ -77,10 +58,12 @@ export const LoginForm: React.FC = () => {
 
         <FormField
           label={t('loginForm.email')}
-          value={user.email}
-          onChange={(value) => setUser({ ...user, email: value })}
+          value={formValues.email}
+          onChange={(value) =>
+            setValue('email', value, { shouldValidate: true })
+          }
           type="email"
-          error={emailError}
+          error={errors.email?.message}
           required={true}
           clearInput={true}
           placeholder={t('loginForm.emailPlaceholder')}
@@ -88,10 +71,12 @@ export const LoginForm: React.FC = () => {
 
         <FormField
           label={t('loginForm.password')}
-          value={user.password}
-          onChange={(value) => setUser({ ...user, password: value })}
+          value={formValues.password}
+          onChange={(value) =>
+            setValue('password', value, { shouldValidate: true })
+          }
           type="password"
-          error={passwordError}
+          error={errors.password?.message}
           required={true}
           placeholder={t('loginForm.passwordPlaceholder')}
         />
