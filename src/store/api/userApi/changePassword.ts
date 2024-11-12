@@ -1,6 +1,6 @@
+import { getToken, removeToken } from '../../../utils/tokenStorage';
 import { logout } from './logout';
 import type { IAuthState } from './types/authTypes';
-import { getToken, removeToken } from '../../../utils/tokenStorage';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -14,7 +14,7 @@ export const changePassword = async (
 
     const token = await getToken();
     if (!token) {
-      throw new Error('Usuário não autenticado');
+      throw new Error(`You're not logged in. Please log in and try again.`);
     }
 
     const response = await fetch(`${apiURL}/auth/change-password`, {
