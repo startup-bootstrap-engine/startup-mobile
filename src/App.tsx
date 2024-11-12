@@ -36,6 +36,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import { MainMenu } from './components/layout/MainMenu';
 import { PrivateRoute } from './components/PrivateRoute';
+import { Toast } from './components/Toast';
 import { ThemeProvider } from './contexts/ThemeProvider';
 import { ChangePasswordForm } from './pages/ChangePasswordForm/ChangePasswordForm';
 import { Dashboard } from './pages/Dashboard/Dashboard';
@@ -53,6 +54,7 @@ export const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <MainMenu />
+        <Toast />
         <IonRouterOutlet id="main-content">
           <ThemeProvider>
             <Suspense

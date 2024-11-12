@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IonButton, IonLoading, IonText } from '@ionic/react';
+import { IonButton, IonLoading } from '@ionic/react';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
 import { useTranslatedSchema, useTranslations } from '@hooks/index';
+import { useToastStore } from '@hooks/useToastStore';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
 import type { LoginSchema } from '@schemas/authSchema';
@@ -18,6 +19,7 @@ export const LoginForm: React.FC = () => {
   const history = useHistory();
   const { login, isLoading, error, isAuthenticated, checkAuth } =
     useAuthStore();
+  const { showToast } = useToastStore();
   const { t } = useTranslations();
   const schema = useTranslatedSchema(loginSchema);
 
@@ -36,6 +38,15 @@ export const LoginForm: React.FC = () => {
 
   const formValues = watch();
 
+  useEffect(() => {
+    if (error) {
+      showToast({
+        message: error,
+        type: 'error',
+      });
+    }
+  }, [error, showToast]);
+
   const onSubmit = async (data: LoginSchema): Promise<void> => {
     await login(data.email, data.password);
     await checkAuth();
@@ -50,12 +61,6 @@ export const LoginForm: React.FC = () => {
   return (
     <PageLayout title={t('loginForm.title')} showBackButton={false}>
       <form onSubmit={handleSubmit(onSubmit)} className="ion-padding">
-        {error && (
-          <IonText color="danger" className="ion-padding-bottom">
-            <p>{t('loginForm.errors.invalidCredentials')}</p>
-          </IonText>
-        )}
-
         <FormField
           label={t('loginForm.email')}
           value={formValues.email}
@@ -87,9 +92,7 @@ export const LoginForm: React.FC = () => {
           </IonButton>
 
           <div className="ion-text-center ion-padding-vertical">
-            <IonText>
-              <p>{t('common.or')}</p>
-            </IonText>
+            <p>{t('common.or')}</p>
           </div>
 
           <GoogleLoginButton />
