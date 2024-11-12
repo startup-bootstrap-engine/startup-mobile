@@ -14,7 +14,7 @@ export const isTokenValid = (token: string | null): boolean => {
     const decoded: IDecodedToken = jwtDecode(token);
     const currentTime = Date.now() / 1000; // em segundos
     return decoded.exp > currentTime;
-  } catch (error: unknown) {
+  } catch (error) {
     if (error instanceof Error) {
       console.error('Token decoding error:', error.message);
     } else {

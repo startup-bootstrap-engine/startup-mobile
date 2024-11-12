@@ -1,5 +1,6 @@
-import { IonButton, IonLoading, IonText } from '@ionic/react';
-import React from 'react';
+import { useToastStore } from '@hooks/useToastStore';
+import { IonButton, IonLoading } from '@ionic/react';
+import React, { useEffect } from 'react';
 import type { Path } from 'react-hook-form';
 import { FormField } from './FormField';
 
@@ -15,17 +16,15 @@ export interface IFormField<T> {
 }
 
 interface IFormProps<T> {
-  title: string;
   fields: IFormField<T>[];
   onSubmit: (e: React.FormEvent) => Promise<void>;
   isLoading?: boolean;
-  error: string | null;
+  error?: string | null;
   submitText: string;
   loadingText?: string;
   values: Record<string, any>;
-  errors: Record<string, any>;
+  fieldErrors: Record<string, any>;
   onChange: (name: Path<T>, value: any) => void;
-  showBackButton?: boolean;
   children?: React.ReactNode;
 }
 
@@ -37,18 +36,25 @@ export const Form = <T extends Record<string, any>>({
   submitText,
   loadingText,
   values,
-  errors,
+  fieldErrors,
   onChange,
   children,
 }: IFormProps<T>): React.JSX.Element => {
+  const { showToast } = useToastStore();
+
+  // show toasts on error
+
+  useEffect(() => {
+    if (error) {
+      showToast({
+        message: error,
+        type: 'error',
+      });
+    }
+  }, [error, showToast]);
+
   return (
     <form onSubmit={onSubmit} className="ion-padding">
-      {error && (
-        <IonText color="danger" className="ion-padding-bottom">
-          <p>{error}</p>
-        </IonText>
-      )}
-
       {fields.map((field) => (
         <FormField
           key={field.name.toString()}
@@ -56,7 +62,7 @@ export const Form = <T extends Record<string, any>>({
           value={values[field.name.toString()]}
           onChange={(value) => onChange(field.name, value)}
           type={field.type}
-          error={errors[field.name.toString()]?.message}
+          error={fieldErrors[field.name.toString()]?.message}
           required={field.required}
           clearInput={field.clearInput}
           placeholder={field.placeholder}

@@ -32,14 +32,10 @@ export const LoginForm: React.FC = () => {
     },
     onSubmit: async (data) => {
       await login(data.email, data.password);
-      const isUserAuthenticated = await checkAuth();
-      if (isUserAuthenticated) {
+      const isAuthenticated = await checkAuth();
+      if (isAuthenticated) {
         history.push('/dashboard');
       }
-    },
-    loadingState: {
-      isLoading,
-      error: error ?? null,
     },
   });
 
@@ -64,7 +60,6 @@ export const LoginForm: React.FC = () => {
   return (
     <PageLayout title={t('loginForm.title')} showBackButton={false}>
       <Form<LoginSchema>
-        title={t('loginForm.title')}
         fields={fields}
         onSubmit={form.onSubmit}
         isLoading={isLoading}
@@ -72,9 +67,8 @@ export const LoginForm: React.FC = () => {
         submitText={t('loginForm.login')}
         loadingText={t('loginForm.loggingIn')}
         values={form.watch()}
-        errors={form.formState.errors}
+        fieldErrors={form.formState.errors}
         onChange={form.setFieldValue}
-        showBackButton={false}
       >
         <div className="ion-text-center ion-padding-vertical">
           <p>{t('common.or')}</p>

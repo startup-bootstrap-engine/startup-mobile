@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from '@hookform/resolvers/zod';
 import type React from 'react';
 import type {
@@ -9,20 +10,14 @@ import type {
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import type { ZodType } from 'zod';
-import { useToastStore } from './useToastStore';
 import { useTranslatedSchema } from './useTranslatedSchema';
-import { useTranslations } from './useTranslations';
 
 interface IUseFormHandlerConfig<T> {
   schema: ZodType;
   defaultValues: DefaultValues<T>;
   onSubmit: (data: T) => Promise<void>;
-  onError?: (error: unknown) => void;
+  onError?: (error: any) => void;
   redirectTo?: string;
-  loadingState?: {
-    isLoading: boolean;
-    error: string | null;
-  };
 }
 
 export interface IFormField<T> {
@@ -38,13 +33,10 @@ export function useFormHandler<T extends Record<string, any>>(
   config: IUseFormHandlerConfig<T>,
 ): Omit<UseFormReturn<T>, 'handleSubmit'> & {
   setFieldValue: (name: Path<T>, value: any) => void;
-  isLoading?: boolean;
-  error: string | null;
+
   onSubmit: (e: React.FormEvent) => Promise<void>;
 } {
   const history = useHistory();
-  const { t } = useTranslations();
-  const { showToast } = useToastStore();
   const translatedSchema = useTranslatedSchema(() => config.schema);
 
   const methods = useForm<T>({
@@ -61,11 +53,6 @@ export function useFormHandler<T extends Record<string, any>>(
     } catch (err) {
       if (config.onError) {
         config.onError(err);
-      } else {
-        showToast({
-          message: t('common.error'),
-          type: 'error',
-        });
       }
     }
   };
@@ -83,7 +70,5 @@ export function useFormHandler<T extends Record<string, any>>(
     ...methods,
     setFieldValue,
     onSubmit,
-    isLoading: config.loadingState?.isLoading,
-    error: config.loadingState?.error ?? null,
   };
 }
