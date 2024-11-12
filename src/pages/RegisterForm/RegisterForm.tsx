@@ -1,55 +1,64 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import type { ZodIssue } from 'zod';
 
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
-import { useTranslations } from '@hooks/index';
-import { useRegistrationSchema } from '@hooks/useRegistrationSchema';
+import { useTranslatedSchema, useTranslations } from '@hooks/index';
+import { useToastStore } from '@hooks/useToastStore';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
+
+import type { RegistrationSchema } from '@schemas/authSchema';
+import { registrationSchema } from '@schemas/authSchema';
+import { useForm } from 'react-hook-form';
 
 export const RegisterForm: React.FC = () => {
   const history = useHistory();
   const { signUp, isLoading, error } = useAuthStore();
+  const { showToast } = useToastStore();
   const { t } = useTranslations();
-  const registrationSchema = useRegistrationSchema();
+  const schema = useTranslatedSchema(registrationSchema);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
+  const {
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<RegistrationSchema>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      passwordConfirmation: '',
+    },
   });
 
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const formValues = watch();
 
-  const handleInputChange = (field: string, value: string): void => {
-    setFormData({ ...formData, [field]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
-
-    const validation = registrationSchema.safeParse(formData);
-
-    if (!validation.success) {
-      const errors: Record<string, string> = {};
-      validation.error.errors.forEach((err: ZodIssue) => {
-        errors[err.path[0]] = err.message;
+  useEffect(() => {
+    if (error) {
+      showToast({
+        message: error,
+        type: 'error',
       });
-      setFormErrors(errors);
-      return;
     }
+  }, [error, showToast]);
 
-    const { name, email, password, passwordConfirmation } = formData;
-    await signUp(email, password, passwordConfirmation, name);
+  const onSubmit = async (data: RegistrationSchema): Promise<void> => {
+    await signUp(
+      data.email,
+      data.password,
+      data.passwordConfirmation,
+      data.name,
+    );
     history.push('/login');
   };
 
   return (
     <PageLayout title={t('registrationForm.title')}>
-      <form onSubmit={handleSubmit} className="ion-padding">
+      <form onSubmit={handleSubmit(onSubmit)} className="ion-padding">
         {error && (
           <IonText color="danger" className="ion-padding-bottom">
             <p>{t('registrationForm.registerError')}</p>
@@ -58,39 +67,47 @@ export const RegisterForm: React.FC = () => {
 
         <FormField
           label={t('registrationForm.name')}
-          value={formData.name}
-          onChange={(value) => handleInputChange('name', value)}
-          error={formErrors.name}
+          value={formValues.name}
+          onChange={(value) =>
+            setValue('name', value, { shouldValidate: true })
+          }
+          error={errors.name?.message}
           required={true}
           placeholder={t('registrationForm.namePlaceholder')}
         />
 
         <FormField
           label={t('loginForm.email')}
-          value={formData.email}
-          onChange={(value) => handleInputChange('email', value)}
+          value={formValues.email}
+          onChange={(value) =>
+            setValue('email', value, { shouldValidate: true })
+          }
           type="email"
-          error={formErrors.email}
+          error={errors.email?.message}
           required={true}
           placeholder={t('loginForm.emailPlaceholder')}
         />
 
         <FormField
           label={t('loginForm.password')}
-          value={formData.password}
-          onChange={(value) => handleInputChange('password', value)}
+          value={formValues.password}
+          onChange={(value) =>
+            setValue('password', value, { shouldValidate: true })
+          }
           type="password"
-          error={formErrors.password}
+          error={errors.password?.message}
           required={true}
           placeholder={t('loginForm.passwordPlaceholder')}
         />
 
         <FormField
           label={t('registrationForm.confirmPassword')}
-          value={formData.passwordConfirmation}
-          onChange={(value) => handleInputChange('passwordConfirmation', value)}
+          value={formValues.passwordConfirmation}
+          onChange={(value) =>
+            setValue('passwordConfirmation', value, { shouldValidate: true })
+          }
           type="password"
-          error={formErrors.passwordConfirmation}
+          error={errors.passwordConfirmation?.message}
           required={true}
           placeholder={t('loginForm.passwordPlaceholder')}
         />

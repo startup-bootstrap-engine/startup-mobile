@@ -73,3 +73,35 @@ export const forgotPasswordSchema = (
 export type ForgotPasswordSchema = z.infer<
   ReturnType<typeof forgotPasswordSchema>
 >;
+
+export const registrationSchema = (
+  t: TranslationFn,
+): z.Schema<{
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+}> =>
+  z
+    .object({
+      name: z.string().min(1, t('validations.required')),
+      email: z.string().email(t('validations.email')),
+      password: z
+        .string()
+        .min(
+          MIN_PASSWORD_CHARACTERS_NUMBER,
+          t('validations.password', { number: MIN_PASSWORD_CHARACTERS_NUMBER }),
+        ),
+      passwordConfirmation: z
+        .string()
+        .min(
+          MIN_PASSWORD_CHARACTERS_NUMBER,
+          t('validations.password', { number: MIN_PASSWORD_CHARACTERS_NUMBER }),
+        ),
+    })
+    .refine((data) => data.password === data.passwordConfirmation, {
+      message: t('validations.passwordNotMatch'),
+      path: ['passwordConfirmation'],
+    });
+
+export type RegistrationSchema = z.infer<ReturnType<typeof registrationSchema>>;
