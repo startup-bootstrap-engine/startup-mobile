@@ -68,7 +68,7 @@ export const ForgotPasswordForm: React.FC = () => {
           label={t('loginForm.email')}
           value={formValues.email}
           onChange={(value) =>
-            setValue('email', value, { shouldValidate: true })
+            setValue('email', value.toString(), { shouldValidate: true })
           }
           type="email"
           error={errors.email?.message}

@@ -45,7 +45,6 @@ export const LoginForm: React.FC = () => {
       label: t('loginForm.email'),
       type: 'email',
       required: true,
-      clearInput: true,
       placeholder: t('loginForm.emailPlaceholder'),
     },
     {
