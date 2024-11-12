@@ -41,6 +41,7 @@ import { ThemeProvider } from './contexts/ThemeProvider';
 import { ChangePasswordForm } from './pages/Auth/ChangePasswordForm';
 import { ForgotPasswordForm } from './pages/Auth/ForgotPasswordForm';
 import { LoginForm } from './pages/Auth/LoginForm';
+import { Logout } from './pages/Auth/Logout';
 import { RegisterForm } from './pages/Auth/RegisterForm';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Language } from './pages/Settings/Language';
@@ -81,6 +82,7 @@ export const App: React.FC = () => {
                 component={Dashboard}
                 exact={true}
               />
+              <PrivateRoute path="/logout" component={Logout} exact={true} />
               <Route
                 path="/settings"
                 render={() => <Settings />}

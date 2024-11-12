@@ -92,5 +92,8 @@
       "pt-BR": "Português (Brasil)",
       "ja": "日本語"
     }
+  },
+  "auth": {
+    "logout": "ログアウト"
   }
 }

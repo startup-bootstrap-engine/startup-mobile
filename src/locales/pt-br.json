@@ -92,5 +92,8 @@
       "pt-BR": "Português (Brasil)",
       "ja": "Japonês"
     }
+  },
+  "auth": {
+    "logout": "Sair"
   }
 }

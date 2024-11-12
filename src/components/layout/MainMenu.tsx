@@ -7,12 +7,18 @@ import {
   IonMenu,
   IonMenuToggle,
 } from '@ionic/react';
-import { lockClosedOutline, settingsOutline } from 'ionicons/icons';
+import {
+  lockClosedOutline,
+  logOutOutline,
+  settingsOutline,
+} from 'ionicons/icons';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAuthStore } from '../../store/api/userApi/useAuthStore';
 
 export const MainMenu: FC = () => {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuthStore();
 
   return (
     <IonMenu contentId="main-content" type="overlay">
@@ -30,6 +36,14 @@ export const MainMenu: FC = () => {
               <IonLabel>{t('passwordForms.changePasswordForm')}</IonLabel>
             </IonItem>
           </IonMenuToggle>
+          {isAuthenticated && (
+            <IonMenuToggle autoHide={false}>
+              <IonItem routerLink="/logout" routerDirection="none">
+                <IonIcon icon={logOutOutline} slot="start" />
+                <IonLabel>{t('loginForm.logout')}</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+          )}
         </IonList>
       </IonContent>
     </IonMenu>
