@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import { alertController } from '@ionic/core/components';
-import { IAlertState } from './IAlertState';
-import { IAlertOptions } from './IAlertOptions';
+import type { IAlertState } from './IAlertState';
+import type { IAlertOptions } from './IAlertOptions';
 
 export const useAlertStore = create<IAlertState>(() => {
   // eslint-disable-next-line no-undef
   let currentAlert: HTMLIonAlertElement | null = null;
   const alertQueue: (() => Promise<void>)[] = [];
 
-  const processQueue = async () => {
+  const processQueue = async (): Promise<void> => {
     if (alertQueue.length === 0 || currentAlert) {
       return;
     }
@@ -24,8 +24,8 @@ export const useAlertStore = create<IAlertState>(() => {
       header: string,
       message: string,
       options: IAlertOptions = {},
-    ) => {
-      const createAlert = async () => {
+    ): Promise<void> => {
+      const createAlert = async (): Promise<void> => {
         try {
           if (currentAlert) {
             await currentAlert.dismiss();
@@ -40,24 +40,29 @@ export const useAlertStore = create<IAlertState>(() => {
           });
 
           await currentAlert.present();
-          currentAlert.onDidDismiss().then(() => {
-            currentAlert = null;
-            processQueue();
-          });
+          currentAlert
+            .onDidDismiss()
+            .then(() => {
+              currentAlert = null;
+              void processQueue();
+            })
+            .catch((error) => {
+              console.error('Error dismissing alert:', error);
+            });
         } catch (error) {
           console.error('Error showing alert:', error);
         }
       };
 
       alertQueue.push(createAlert);
-      processQueue();
+      void processQueue();
     },
-    closeAlert: async () => {
+    closeAlert: async (): Promise<void> => {
       try {
         if (currentAlert) {
           await currentAlert.dismiss();
           currentAlert = null;
-          processQueue();
+          void processQueue();
         }
       } catch (error) {
         console.error('Error closing alert:', error);

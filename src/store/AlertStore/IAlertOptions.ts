@@ -1,5 +1,5 @@
-import { IAlertInput } from './IAlertInput';
-import { IAlertButton } from './IAlertButton';
+import type { IAlertInput } from './IAlertInput';
+import type { IAlertButton } from './IAlertButton';
 
 /**
  * Interface for alert options.

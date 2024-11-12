@@ -1,4 +1,4 @@
-import { IBaseInput } from './IBaseInput';
+import type { IBaseInput } from './IBaseInput';
 
 /**
  * Interface for text input properties.

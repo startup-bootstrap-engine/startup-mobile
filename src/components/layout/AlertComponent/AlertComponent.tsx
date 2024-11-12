@@ -1,8 +1,8 @@
 import React from 'react';
 import { IonButton } from '@ionic/react';
 import { useAlertStore } from '@store/AlertStore/useAlertStore';
-import { IAlertButton } from '@store/AlertStore/IAlertButton';
-import { IAlertComponentProps } from './IAlertProps';
+import type { IAlertButton } from '@store/AlertStore/IAlertButton';
+import type { IAlertComponentProps } from './IAlertProps';
 
 export const AlertComponent: React.FC<IAlertComponentProps> = ({
   header,

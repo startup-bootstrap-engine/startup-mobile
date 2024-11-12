@@ -1,4 +1,4 @@
-import { IAlertOptions } from './IAlertOptions';
+import type { IAlertOptions } from './IAlertOptions';
 
 /**
  * Interface for alert state.

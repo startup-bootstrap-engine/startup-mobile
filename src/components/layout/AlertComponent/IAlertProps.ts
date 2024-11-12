@@ -1,6 +1,6 @@
-import { IAlertButton } from '@store/AlertStore/IAlertButton';
-import { IAlertInput } from '@store/AlertStore/IAlertInput';
-import { IFormData } from '@store/AlertStore/IFormData';
+import type { IAlertButton } from '@store/AlertStore/IAlertButton';
+import type { IAlertInput } from '@store/AlertStore/IAlertInput';
+import type { IFormData } from '@store/AlertStore/IFormData';
 
 export interface IAlertComponentProps {
   header: string;

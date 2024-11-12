@@ -1,5 +1,5 @@
-import { ITextInput } from './ITextInput';
-import { IRadioInput } from './IRadioInput';
+import type { ITextInput } from './ITextInput';
+import type { IRadioInput } from './IRadioInput';
 
 /**
  * Union type for alert inputs.

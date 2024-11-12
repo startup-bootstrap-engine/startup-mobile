@@ -1,7 +1,7 @@
 import React from 'react';
 import { AlertComponent } from '@components/layout/AlertComponent/AlertComponent';
-import { IAlertInput } from '@store/AlertStore/IAlertInput';
-import { IFormData } from '@store/AlertStore/IFormData';
+import type { IAlertInput } from '@store/AlertStore/IAlertInput';
+import type { IFormData } from '@store/AlertStore/IFormData';
 
 const inputConfigurations: IAlertInput[] = [
   { name: 'name', type: 'text', placeholder: 'Name' },
