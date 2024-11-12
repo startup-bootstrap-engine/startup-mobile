@@ -66,7 +66,8 @@
     "registerError": "Falha ao criar conta",
     "registeringUser": "Criando sua conta...",
     "existingUser": "Já tem uma conta? Entre",
-    "authenticationVerification": "Verificando..."
+    "authenticationVerification": "Verificando...",
+    "nonExistingUser": "Não tem uma conta? Inscrever-se!"
   },
   "settings": {
     "title": "Configurações",

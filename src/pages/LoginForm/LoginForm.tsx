@@ -114,7 +114,7 @@ export const LoginForm: React.FC = () => {
               size="small"
               onClick={() => history.push('/register')}
             >
-              {t('registrationForm.existingUser')}
+              {t('registrationForm.nonExistingUser')}
             </IonButton>
           </div>
         </div>

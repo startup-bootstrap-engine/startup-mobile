@@ -66,6 +66,7 @@
     "registerError": "Failed to create account",
     "registeringUser": "Creating your account...",
     "existingUser": "Already have an account? Sign in",
+    "nonExistingUser": "Don't have an account? Sign up!",
     "authenticationVerification": "Verifying..."
   },
   "settings": {
