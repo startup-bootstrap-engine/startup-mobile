@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 
 import { appleLogin } from './appleLogin';
 import { changePassword } from './changePassword';
-import { checkAuth } from './checkAuth';
+import { checkAuthApi } from './checkAuth';
 import { forgotPassword } from './forgotPassword';
 import { getGoogleOAuthUrl } from './googleOAuth';
 import { login } from './login';
@@ -23,7 +23,7 @@ interface IUseStoreAuth {
     _name: string,
   ) => Promise<void>;
   logout: () => Promise<void>;
-  checkAuth: () => Promise<void>;
+  isUserAuthenticated: () => Promise<boolean>;
   changePassword: (
     _currentPassword: string,
     _newPassword: string,
@@ -86,11 +86,12 @@ export const useAuthStore = create<IUseStoreAuth>()(
         }
       },
 
-      checkAuth: async () => {
+      isUserAuthenticated: async () => {
         try {
           set({ isLoading: true });
-          await checkAuth(set);
-          set({ isLoading: false });
+          const isAuthenticated = await checkAuthApi(set);
+          set({ isLoading: false, isAuthenticated });
+          return isAuthenticated;
         } catch (error: unknown) {
           set({
             isLoading: false,
@@ -98,6 +99,7 @@ export const useAuthStore = create<IUseStoreAuth>()(
             isAuthenticated: false,
             error: (error as Error).message,
           });
+          return false;
         }
       },
 

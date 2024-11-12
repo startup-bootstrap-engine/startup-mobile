@@ -1,13 +1,10 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { IonButton, IonLoading } from '@ionic/react';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { IonButton } from '@ionic/react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { FormField } from '@components/forms/FormField';
-import { PageLayout } from '@components/layout/PageLayout';
+import { Form, type IFormField } from '@components/forms/Form';
 import { useTranslatedSchema, useTranslations } from '@hooks/index';
-import { useToastStore } from '@hooks/useToastStore';
+import { useFormHandler } from '@hooks/useFormHandler';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
 import type { LoginSchema } from '@schemas/authSchema';
@@ -17,110 +14,92 @@ import { GoogleLoginButton } from './GoogleLoginButton';
 
 export const LoginForm: React.FC = () => {
   const history = useHistory();
-  const { login, isLoading, error, isAuthenticated, checkAuth } =
-    useAuthStore();
-  const { showToast } = useToastStore();
+  const {
+    login,
+    isLoading,
+    error,
+    isUserAuthenticated: checkAuth,
+  } = useAuthStore();
   const { t } = useTranslations();
   const schema = useTranslatedSchema(loginSchema);
 
-  const {
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useForm<LoginSchema>({
-    resolver: zodResolver(schema),
+  const form = useFormHandler<LoginSchema>({
+    schema,
     defaultValues: {
       email: '',
       password: '',
     },
+    onSubmit: async (data) => {
+      await login(data.email, data.password);
+      const isUserAuthenticated = await checkAuth();
+      if (isUserAuthenticated) {
+        history.push('/dashboard');
+      }
+    },
+    loadingState: {
+      isLoading,
+      error: error ?? null,
+    },
   });
 
-  const formValues = watch();
-
-  useEffect(() => {
-    if (error) {
-      showToast({
-        message: error,
-        type: 'error',
-      });
-    }
-  }, [error, showToast]);
-
-  const onSubmit = async (data: LoginSchema): Promise<void> => {
-    await login(data.email, data.password);
-    await checkAuth();
-  };
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      history.push('/dashboard');
-    }
-  }, [isAuthenticated, history]);
+  const fields: IFormField<LoginSchema>[] = [
+    {
+      name: 'email',
+      label: t('loginForm.email'),
+      type: 'email',
+      required: true,
+      clearInput: true,
+      placeholder: t('loginForm.emailPlaceholder'),
+    },
+    {
+      name: 'password',
+      label: t('loginForm.password'),
+      type: 'password',
+      required: true,
+      placeholder: t('loginForm.passwordPlaceholder'),
+    },
+  ];
 
   return (
-    <PageLayout title={t('loginForm.title')} showBackButton={false}>
-      <form onSubmit={handleSubmit(onSubmit)} className="ion-padding">
-        <FormField
-          label={t('loginForm.email')}
-          value={formValues.email}
-          onChange={(value) =>
-            setValue('email', value, { shouldValidate: true })
-          }
-          type="email"
-          error={errors.email?.message}
-          required={true}
-          clearInput={true}
-          placeholder={t('loginForm.emailPlaceholder')}
-        />
+    <Form<LoginSchema>
+      title={t('loginForm.title')}
+      fields={fields}
+      onSubmit={form.onSubmit}
+      isLoading={isLoading}
+      error={error}
+      submitText={t('loginForm.login')}
+      loadingText={t('loginForm.loggingIn')}
+      values={form.watch()}
+      errors={form.formState.errors}
+      onChange={form.setFieldValue}
+      showBackButton={false}
+    >
+      <div className="ion-text-center ion-padding-vertical">
+        <p>{t('common.or')}</p>
+      </div>
 
-        <FormField
-          label={t('loginForm.password')}
-          value={formValues.password}
-          onChange={(value) =>
-            setValue('password', value, { shouldValidate: true })
-          }
-          type="password"
-          error={errors.password?.message}
-          required={true}
-          placeholder={t('loginForm.passwordPlaceholder')}
-        />
+      <GoogleLoginButton />
+      <AppleLoginButton />
 
-        <div className="ion-padding-top">
-          <IonButton expand="block" type="submit" disabled={isLoading}>
-            {t('loginForm.login')}
-          </IonButton>
+      <div className="ion-text-center ion-padding-top">
+        <IonButton
+          fill="clear"
+          size="small"
+          onClick={() => history.push('/forgot-password')}
+        >
+          {t('loginForm.forgotPassword')}
+        </IonButton>
+      </div>
 
-          <div className="ion-text-center ion-padding-vertical">
-            <p>{t('common.or')}</p>
-          </div>
-
-          <GoogleLoginButton />
-          <AppleLoginButton />
-
-          <div className="ion-text-center ion-padding-top">
-            <IonButton
-              fill="clear"
-              size="small"
-              onClick={() => history.push('/forgot-password')}
-            >
-              {t('loginForm.forgotPassword')}
-            </IonButton>
-          </div>
-
-          <div className="ion-text-center">
-            <IonButton
-              fill="clear"
-              size="small"
-              onClick={() => history.push('/register')}
-            >
-              {t('registrationForm.nonExistingUser')}
-            </IonButton>
-          </div>
-        </div>
-
-        <IonLoading isOpen={isLoading} message={t('loginForm.loggingIn')} />
-      </form>
-    </PageLayout>
+      <div className="ion-text-center">
+        <IonButton
+          fill="clear"
+          size="small"
+          onClick={() => history.push('/register')}
+        >
+          {t('registrationForm.nonExistingUser')}
+        </IonButton>
+      </div>
+    </Form>
   );
 };
