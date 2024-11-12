@@ -4,9 +4,9 @@ import { IonButton, IonContent, IonPage } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AlertInput } from './AlertInput';
-import { AlertRadio } from './AlertRadio';
-import { AlertSimple } from './AlertSimple';
+import { AlertInput } from '../../components/alert/AlertInput';
+import { AlertRadio } from '../../components/alert/AlertRadio';
+import { AlertSimple } from '../../components/alert/AlertSimple';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();
