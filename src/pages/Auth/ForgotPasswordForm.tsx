@@ -1,4 +1,3 @@
-import { IonButton, IonLoading, IonText } from '@ionic/react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -44,42 +43,17 @@ export const ForgotPasswordForm: React.FC = () => {
 
   return (
     <PageLayout title={t('passwordForms.passwordRecoveryForm')}>
-      <form onSubmit={form.onSubmit} className="ion-padding">
-        {error && (
-          <IonText color="danger" className="ion-padding-bottom">
-            <p>{error}</p>
-          </IonText>
-        )}
-
-        <Form<ForgotPasswordSchema>
-          fields={fields}
-          onSubmit={form.onSubmit}
-          isLoading={isLoading}
-          error={error}
-          submitText={t('common.submit')}
-          loadingText={t('passwordForms.updatingPassword')}
-          values={form.watch()}
-          fieldErrors={form.formState.errors}
-          onChange={form.setFieldValue}
-        />
-
-        <div className="ion-padding-top">
-          <div className="ion-text-center ion-padding-top">
-            <IonButton
-              fill="clear"
-              size="small"
-              onClick={() => history.push('/login')}
-            >
-              {t('common.backToLogin')}
-            </IonButton>
-          </div>
-        </div>
-
-        <IonLoading
-          isOpen={isLoading}
-          message={t('passwordForms.updatingPassword')}
-        />
-      </form>
+      <Form<ForgotPasswordSchema>
+        fields={fields}
+        onSubmit={form.onSubmit}
+        isLoading={isLoading}
+        error={error}
+        submitText={t('common.submit')}
+        loadingText={t('passwordForms.updatingPassword')}
+        values={form.watch()}
+        fieldErrors={form.formState.errors}
+        onChange={form.setFieldValue}
+      />
     </PageLayout>
   );
 };
