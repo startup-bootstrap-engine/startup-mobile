@@ -67,7 +67,8 @@
     "registeringUser": "Creating your account...",
     "existingUser": "Already have an account? Sign in",
     "nonExistingUser": "Don't have an account? Sign up!",
-    "authenticationVerification": "Verifying..."
+    "authenticationVerification": "Verifying...",
+    "successMessage": "Account created successfully!"
   },
   "settings": {
     "title": "Settings",

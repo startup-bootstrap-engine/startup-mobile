@@ -67,7 +67,8 @@
     "registeringUser": "Criando sua conta...",
     "existingUser": "Já tem uma conta? Entre",
     "authenticationVerification": "Verificando...",
-    "nonExistingUser": "Não tem uma conta? Inscrever-se!"
+    "nonExistingUser": "Não tem uma conta? Inscrever-se!",
+    "successMessage": "Conta criada com sucesso!"
   },
   "settings": {
     "title": "Configurações",

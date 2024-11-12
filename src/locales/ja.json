@@ -67,7 +67,8 @@
     "registeringUser": "アカウントを作成中...",
     "existingUser": "既にアカウントをお持ちですか？ サインイン",
     "authenticationVerification": "認証中...",
-    "nonExistingUser": "アカウントをお持ちでない場合は、サインアップ！"
+    "nonExistingUser": "アカウントをお持ちでない場合は、サインアップ！",
+    "successMessage": "アカウントが正常に作成されました。"
   },
   "settings": {
     "title": "設定",

@@ -26,7 +26,7 @@ export const signUp = async (
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Falha no registro');
+      throw new Error(errorData.message || 'Failed to register user!');
     }
 
     const newUser: IUser = await response.json();

@@ -6,6 +6,7 @@ import { Form, type IFormField } from '@components/forms/Form';
 import { PageLayout } from '@components/layout/PageLayout';
 import { useTranslatedSchema, useTranslations } from '@hooks/index';
 import { useFormHandler } from '@hooks/useFormHandler';
+import { useToastStore } from '@hooks/useToastStore';
 import type { RegistrationSchema } from '@schemas/authSchema';
 import { registrationSchema } from '@schemas/authSchema';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
@@ -15,6 +16,7 @@ export const RegisterForm: React.FC = () => {
   const { signUp, isLoading, error } = useAuthStore();
   const { t } = useTranslations();
   const schema = useTranslatedSchema(registrationSchema);
+  const { showToast } = useToastStore();
 
   const form = useFormHandler<RegistrationSchema>({
     schema,
@@ -25,13 +27,21 @@ export const RegisterForm: React.FC = () => {
       passwordConfirmation: '',
     },
     onSubmit: async (data) => {
-      await signUp(
-        data.email,
-        data.password,
-        data.passwordConfirmation,
-        data.name,
-      );
-      history.push('/login');
+      try {
+        await signUp(
+          data.email,
+          data.password,
+          data.passwordConfirmation,
+          data.name,
+        );
+        showToast({
+          message: t('registrationForm.successMessage'),
+          type: 'success',
+        });
+        history.push('/login');
+      } catch (err) {
+        console.error('Registration error:', err);
+      }
     },
   });
 
