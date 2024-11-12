@@ -1,12 +1,12 @@
 import { PageLayout } from '@components/layout/PageLayout';
-import { useTranslations } from '@hooks';
+import { useTranslations } from '@hooks/useTranslations';
 import { IonButton, IonContent, IonPage } from '@ionic/react';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AlertSimple } from './AlertSimple';
 import { AlertInput } from './AlertInput';
 import { AlertRadio } from './AlertRadio';
+import { AlertSimple } from './AlertSimple';
 
 export const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();

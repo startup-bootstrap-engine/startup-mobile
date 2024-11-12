@@ -1,12 +1,12 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
 import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import { FormField } from '@components/forms/FormField';
 import { PageLayout } from '@components/layout/PageLayout';
-import { useChangePasswordSchema, useTranslations } from '@hooks';
+import { useChangePasswordSchema, useTranslations } from '@hooks/index';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
 interface IPasswordData {

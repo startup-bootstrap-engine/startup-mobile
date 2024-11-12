@@ -23,7 +23,7 @@
       "@config/*": ["src/config/*"],
       "@contexts/*": ["src/contexts/*"],
       "@store/*": ["src/store/*"],
-      "@hooks": ["src/hooks"],
+      "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
       "@components/*": ["src/components/*"],
       "@styles/*": ["src/styles/*"],
