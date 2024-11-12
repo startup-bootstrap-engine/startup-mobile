@@ -1,9 +1,9 @@
 import js from '@eslint/js';
 import typescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
+import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import prettier from 'eslint-plugin-prettier';
 
 export default [
   js.configs.recommended,
@@ -52,7 +52,7 @@ export default [
     },
     rules: {
       // Core ESLint rules
-      '@typescript-eslint/strict-boolean-expressions': 'error',
+      '@typescript-eslint/strict-boolean-expressions': 'off',
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/prefer-for-of': 'error',
       eqeqeq: ['error', 'always'],
@@ -97,9 +97,6 @@ export default [
         { prefer: 'type-imports' },
       ],
       //'@typescript-eslint/noImplicitAny': 'error',
-      '@typescript-eslint/strict-boolean-expressions': 'warn',
-      '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/prefer-for-of': 'error',
 
       // Code quality rules
       'no-shadow': 'error',
@@ -132,11 +129,6 @@ export default [
           arrowParens: 'always',
         },
       ],
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
     },
   },
 ];

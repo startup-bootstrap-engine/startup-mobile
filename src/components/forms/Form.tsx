@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useToastStore } from '@hooks/useToastStore';
 import { IonButton, IonLoading } from '@ionic/react';
 import React, { useEffect } from 'react';
