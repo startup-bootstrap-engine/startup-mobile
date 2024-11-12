@@ -47,9 +47,11 @@
     "changePasswordForm": "パスワードの変更",
     "updatePassword": "パスワードを更新",
     "error": {
-      "reset": "リセットメールの送信に失敗しました"
+      "reset": "リセットメールの送信に失敗しました",
+      "change": "パスワードの更新に失敗しました"
     },
-    "resetSuccess": "パスワードリセットメールが正常に送信されました。"
+    "resetSuccess": "パスワードリセットメールが正常に送信されました。",
+    "changeSuccess": "パスワードが正常に更新されました。"
   },
   "validations": {
     "required": "必須項目です。",

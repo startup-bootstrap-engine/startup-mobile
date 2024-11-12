@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Form, type IFormField } from '@components/forms/Form';
 import { useTranslatedSchema, useTranslations } from '@hooks/index';
 import { useFormHandler } from '@hooks/useFormHandler';
+import { useToastStore } from '@hooks/useToastStore';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
 import { PageLayout } from '@components/layout/PageLayout';
@@ -13,9 +14,9 @@ import { changePasswordSchema } from '@schemas/authSchema';
 export const ChangePasswordForm: React.FC = () => {
   const history = useHistory();
   const { changePassword, isLoading, error } = useAuthStore();
-
   const { t } = useTranslations();
   const schema = useTranslatedSchema(changePasswordSchema);
+  const { showToast } = useToastStore();
 
   const form = useFormHandler<ChangePasswordSchema>({
     schema,
@@ -26,8 +27,18 @@ export const ChangePasswordForm: React.FC = () => {
     },
     onSubmit: async (data) => {
       const { currentPassword, newPassword } = data;
-      await changePassword(currentPassword, newPassword);
-      history.push('/login');
+      try {
+        await changePassword(currentPassword, newPassword);
+        showToast({
+          message: t('passwordForms.changeSuccess'),
+          type: 'success',
+        });
+        history.push('/login');
+      } catch {
+        form.setError('currentPassword', {
+          message: t('passwordForms.error.change'),
+        });
+      }
     },
   });
 

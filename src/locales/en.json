@@ -47,9 +47,11 @@
     "changePasswordForm": "Change Password",
     "updatePassword": "Update Password",
     "error": {
-      "reset": "Failed to send reset email"
+      "reset": "Failed to send reset email",
+      "change": "Failed to update password"
     },
-    "resetSuccess": "Password reset email sent successfully!"
+    "resetSuccess": "Password reset email sent successfully!",
+    "changeSuccess": "Password updated successfully!"
   },
   "validations": {
     "required": "Field required.",

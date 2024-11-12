@@ -47,9 +47,11 @@
     "changePasswordForm": "Alterar Senha",
     "updatePassword": "Atualizar Senha",
     "error": {
-      "reset": "Falha ao enviar email de redefinição"
+      "reset": "Falha ao enviar email de redefinição",
+      "change": "Falha ao atualizar a senha"
     },
-    "resetSuccess": "E-mail de redefinição de senha enviado com sucesso!"
+    "resetSuccess": "E-mail de redefinição de senha enviado com sucesso!",
+    "changeSuccess": "Senha atualizada com sucesso!"
   },
   "validations": {
     "required": "Campo obrigatório.",
