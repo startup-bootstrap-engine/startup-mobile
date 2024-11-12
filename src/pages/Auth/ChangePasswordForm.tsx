@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
 import React, { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
 import { FormField } from '@components/forms/FormField';
@@ -22,12 +22,20 @@ export const ChangePasswordForm: React.FC = () => {
   const schema = useTranslatedSchema(changePasswordSchema);
 
   const {
-    control,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm<ChangePasswordSchema>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: '',
+    },
   });
+
+  const formValues = watch();
 
   useEffect(() => {
     if (error) {
@@ -53,49 +61,37 @@ export const ChangePasswordForm: React.FC = () => {
           </IonText>
         )}
 
-        <Controller
-          name="currentPassword"
-          control={control}
-          render={({ field }) => (
-            <FormField
-              label={t('passwordForms.currentPassword')}
-              value={field.value || ''}
-              onChange={field.onChange}
-              type="password"
-              error={errors.currentPassword?.message || null}
-              required={true}
-            />
-          )}
+        <FormField
+          label={t('passwordForms.currentPassword')}
+          value={formValues.currentPassword}
+          onChange={(value) =>
+            setValue('currentPassword', value, { shouldValidate: true })
+          }
+          type="password"
+          error={errors.currentPassword?.message || null}
+          required={true}
         />
 
-        <Controller
-          name="newPassword"
-          control={control}
-          render={({ field }) => (
-            <FormField
-              label={t('passwordForms.newPassword')}
-              value={field.value || ''}
-              onChange={field.onChange}
-              type="password"
-              error={errors.newPassword?.message || null}
-              required={true}
-            />
-          )}
+        <FormField
+          label={t('passwordForms.newPassword')}
+          value={formValues.newPassword}
+          onChange={(value) =>
+            setValue('newPassword', value, { shouldValidate: true })
+          }
+          type="password"
+          error={errors.newPassword?.message || null}
+          required={true}
         />
 
-        <Controller
-          name="newPasswordConfirmation"
-          control={control}
-          render={({ field }) => (
-            <FormField
-              label={t('passwordForms.confirmPassword')}
-              value={field.value || ''}
-              onChange={field.onChange}
-              type="password"
-              error={errors.newPasswordConfirmation?.message || null}
-              required={true}
-            />
-          )}
+        <FormField
+          label={t('passwordForms.confirmPassword')}
+          value={formValues.newPasswordConfirmation}
+          onChange={(value) =>
+            setValue('newPasswordConfirmation', value, { shouldValidate: true })
+          }
+          type="password"
+          error={errors.newPasswordConfirmation?.message || null}
+          required={true}
         />
 
         <IonLoading
