@@ -160,6 +160,10 @@ export const useAuthStore = create<IUseStoreAuth>()(
     }),
     {
       name: 'auth-store',
+      partialize: (state) => ({
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+      }),
     },
   ),
 );
