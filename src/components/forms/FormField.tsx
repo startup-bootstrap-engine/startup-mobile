@@ -50,7 +50,7 @@ const FormField: React.FC<IProps> = ({
             labelPlacement="floating"
             type={type}
             value={value as string}
-            onIonChange={(e) => onChange(e.detail.value || '')}
+            onIonChange={(e) => onChange(e.detail.value ?? '')}
             placeholder={placeholder}
             clearInput={clearInput}
             required={required}

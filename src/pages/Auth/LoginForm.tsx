@@ -7,6 +7,7 @@ import { useTranslatedSchema, useTranslations } from '@hooks/index';
 import { useFormHandler } from '@hooks/useFormHandler';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
+import { PageLayout } from '@components/layout/PageLayout';
 import type { LoginSchema } from '@schemas/authSchema';
 import { loginSchema } from '@schemas/authSchema';
 import { AppleLoginButton } from './AppleLoginButton';
@@ -61,45 +62,47 @@ export const LoginForm: React.FC = () => {
   ];
 
   return (
-    <Form<LoginSchema>
-      title={t('loginForm.title')}
-      fields={fields}
-      onSubmit={form.onSubmit}
-      isLoading={isLoading}
-      error={error}
-      submitText={t('loginForm.login')}
-      loadingText={t('loginForm.loggingIn')}
-      values={form.watch()}
-      errors={form.formState.errors}
-      onChange={form.setFieldValue}
-      showBackButton={false}
-    >
-      <div className="ion-text-center ion-padding-vertical">
-        <p>{t('common.or')}</p>
-      </div>
+    <PageLayout title={t('loginForm.title')} showBackButton={false}>
+      <Form<LoginSchema>
+        title={t('loginForm.title')}
+        fields={fields}
+        onSubmit={form.onSubmit}
+        isLoading={isLoading}
+        error={error}
+        submitText={t('loginForm.login')}
+        loadingText={t('loginForm.loggingIn')}
+        values={form.watch()}
+        errors={form.formState.errors}
+        onChange={form.setFieldValue}
+        showBackButton={false}
+      >
+        <div className="ion-text-center ion-padding-vertical">
+          <p>{t('common.or')}</p>
+        </div>
 
-      <GoogleLoginButton />
-      <AppleLoginButton />
+        <GoogleLoginButton />
+        <AppleLoginButton />
 
-      <div className="ion-text-center ion-padding-top">
-        <IonButton
-          fill="clear"
-          size="small"
-          onClick={() => history.push('/forgot-password')}
-        >
-          {t('loginForm.forgotPassword')}
-        </IonButton>
-      </div>
+        <div className="ion-text-center ion-padding-top">
+          <IonButton
+            fill="clear"
+            size="small"
+            onClick={() => history.push('/forgot-password')}
+          >
+            {t('loginForm.forgotPassword')}
+          </IonButton>
+        </div>
 
-      <div className="ion-text-center">
-        <IonButton
-          fill="clear"
-          size="small"
-          onClick={() => history.push('/register')}
-        >
-          {t('registrationForm.nonExistingUser')}
-        </IonButton>
-      </div>
-    </Form>
+        <div className="ion-text-center">
+          <IonButton
+            fill="clear"
+            size="small"
+            onClick={() => history.push('/register')}
+          >
+            {t('registrationForm.nonExistingUser')}
+          </IonButton>
+        </div>
+      </Form>
+    </PageLayout>
   );
 };
