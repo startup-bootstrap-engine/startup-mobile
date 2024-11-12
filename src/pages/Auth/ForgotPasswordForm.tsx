@@ -1,86 +1,69 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { IonButton, IonLoading, IonText } from '@ionic/react';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { FormField } from '@components/forms/FormField';
-import { PageLayout } from '@components/layout/PageLayout';
+import { Form, type IFormField } from '@components/forms/Form';
 import { useTranslatedSchema, useTranslations } from '@hooks/index';
-import { useToastStore } from '@hooks/useToastStore';
+import { useFormHandler } from '@hooks/useFormHandler';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
+import { PageLayout } from '@components/layout/PageLayout';
 import type { ForgotPasswordSchema } from '@schemas/authSchema';
 import { forgotPasswordSchema } from '@schemas/authSchema';
 
 export const ForgotPasswordForm: React.FC = () => {
   const history = useHistory();
   const { forgotPassword, isLoading, error } = useAuthStore();
-  const { showToast } = useToastStore();
   const { t } = useTranslations();
   const schema = useTranslatedSchema(forgotPasswordSchema);
 
-  const {
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useForm<ForgotPasswordSchema>({
-    resolver: zodResolver(schema),
+  const form = useFormHandler<ForgotPasswordSchema>({
+    schema,
     defaultValues: {
       email: '',
     },
+    onSubmit: async (data) => {
+      try {
+        await forgotPassword(data.email);
+        history.push('/login');
+      } catch {
+        form.setError('email', { message: t('passwordForms.error.reset') });
+      }
+    },
   });
 
-  const formValues = watch();
-
-  useEffect(() => {
-    if (error) {
-      showToast({
-        message: error,
-        type: 'error',
-      });
-    }
-  }, [error, showToast]);
-
-  const onSubmit = async (data: ForgotPasswordSchema): Promise<void> => {
-    try {
-      await forgotPassword(data.email);
-      history.push('/login');
-    } catch {
-      showToast({
-        message: t('passwordForms.error.reset'),
-        type: 'error',
-      });
-    }
-  };
+  const fields: IFormField<ForgotPasswordSchema>[] = [
+    {
+      name: 'email',
+      label: t('loginForm.email'),
+      type: 'email',
+      required: true,
+      placeholder: t('loginForm.emailPlaceholder'),
+    },
+  ];
 
   return (
     <PageLayout title={t('passwordForms.passwordRecoveryForm')}>
-      <form onSubmit={handleSubmit(onSubmit)} className="ion-padding">
+      <form onSubmit={form.onSubmit} className="ion-padding">
         {error && (
           <IonText color="danger" className="ion-padding-bottom">
             <p>{error}</p>
           </IonText>
         )}
 
-        <FormField
-          label={t('loginForm.email')}
-          value={formValues.email}
-          onChange={(value) =>
-            setValue('email', value.toString(), { shouldValidate: true })
-          }
-          type="email"
-          error={errors.email?.message}
-          required={true}
-          placeholder={t('loginForm.emailPlaceholder')}
+        <Form<ForgotPasswordSchema>
+          fields={fields}
+          onSubmit={form.onSubmit}
+          isLoading={isLoading}
+          error={error}
+          submitText={t('common.submit')}
+          loadingText={t('passwordForms.updatingPassword')}
+          values={form.watch()}
+          fieldErrors={form.formState.errors}
+          onChange={form.setFieldValue}
         />
 
         <div className="ion-padding-top">
-          <IonButton expand="block" type="submit" disabled={isLoading}>
-            {t('common.submit')}
-          </IonButton>
-
           <div className="ion-text-center ion-padding-top">
             <IonButton
               fill="clear"
