@@ -48,7 +48,8 @@
     "updatePassword": "Update Password",
     "error": {
       "reset": "Failed to send reset email"
-    }
+    },
+    "resetSuccess": "Password reset email sent successfully!"
   },
   "validations": {
     "required": "Field required.",

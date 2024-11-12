@@ -48,7 +48,8 @@
     "updatePassword": "Atualizar Senha",
     "error": {
       "reset": "Falha ao enviar email de redefinição"
-    }
+    },
+    "resetSuccess": "E-mail de redefinição de senha enviado com sucesso!"
   },
   "validations": {
     "required": "Campo obrigatório.",

@@ -48,7 +48,8 @@
     "updatePassword": "パスワードを更新",
     "error": {
       "reset": "リセットメールの送信に失敗しました"
-    }
+    },
+    "resetSuccess": "パスワードリセットメールが正常に送信されました。"
   },
   "validations": {
     "required": "必須項目です。",

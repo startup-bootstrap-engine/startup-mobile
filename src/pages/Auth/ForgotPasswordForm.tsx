@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Form, type IFormField } from '@components/forms/Form';
 import { useTranslatedSchema, useTranslations } from '@hooks/index';
 import { useFormHandler } from '@hooks/useFormHandler';
+import { useToastStore } from '@hooks/useToastStore';
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
 
 import { PageLayout } from '@components/layout/PageLayout';
@@ -15,6 +16,7 @@ export const ForgotPasswordForm: React.FC = () => {
   const { forgotPassword, isLoading, error } = useAuthStore();
   const { t } = useTranslations();
   const schema = useTranslatedSchema(forgotPasswordSchema);
+  const { showToast } = useToastStore();
 
   const form = useFormHandler<ForgotPasswordSchema>({
     schema,
@@ -24,6 +26,10 @@ export const ForgotPasswordForm: React.FC = () => {
     onSubmit: async (data) => {
       try {
         await forgotPassword(data.email);
+        showToast({
+          message: t('passwordForms.resetSuccess'),
+          type: 'success',
+        });
         history.push('/login');
       } catch {
         form.setError('email', { message: t('passwordForms.error.reset') });
