@@ -98,5 +98,11 @@
   },
   "auth": {
     "logout": "ログアウト"
+  },
+  "index": {
+    "title": "ホームページ",
+    "home": "家",
+    "search": "検索",
+    "profile": "プロフィール"
   }
 }

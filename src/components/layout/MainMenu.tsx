@@ -11,6 +11,8 @@ import {
   lockClosedOutline,
   logOutOutline,
   settingsOutline,
+  gridOutline,
+  home,
 } from 'ionicons/icons';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,19 +32,36 @@ export const MainMenu: FC = () => {
               <IonLabel>{t('settings.title')}</IonLabel>
             </IonItem>
           </IonMenuToggle>
-          <IonMenuToggle autoHide={false}>
-            <IonItem routerLink="/change-password" routerDirection="forward">
-              <IonIcon icon={lockClosedOutline} slot="start" />
-              <IonLabel>{t('passwordForms.changePasswordForm')}</IonLabel>
-            </IonItem>
-          </IonMenuToggle>
           {isAuthenticated && (
-            <IonMenuToggle autoHide={false}>
-              <IonItem routerLink="/logout" routerDirection="none">
-                <IonIcon icon={logOutOutline} slot="start" />
-                <IonLabel>{t('loginForm.logout')}</IonLabel>
-              </IonItem>
-            </IonMenuToggle>
+            <>
+              <IonMenuToggle autoHide={false}>
+                <IonItem routerLink="/index/home" routerDirection="none">
+                  <IonIcon icon={home} slot="start" />
+                  <IonLabel>{t('index.title')}</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
+              <IonMenuToggle autoHide={false}>
+                <IonItem routerLink="/dashboard" routerDirection="none">
+                  <IonIcon icon={gridOutline} slot="start" />
+                  <IonLabel>{t('dashboard.title')}</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
+              <IonMenuToggle autoHide={false}>
+                <IonItem
+                  routerLink="/change-password"
+                  routerDirection="forward"
+                >
+                  <IonIcon icon={lockClosedOutline} slot="start" />
+                  <IonLabel>{t('passwordForms.changePasswordForm')}</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
+              <IonMenuToggle autoHide={false}>
+                <IonItem routerLink="/logout" routerDirection="none">
+                  <IonIcon icon={logOutOutline} slot="start" />
+                  <IonLabel>{t('loginForm.logout')}</IonLabel>
+                </IonItem>
+              </IonMenuToggle>
+            </>
           )}
         </IonList>
       </IonContent>
