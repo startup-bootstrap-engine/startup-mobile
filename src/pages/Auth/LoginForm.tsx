@@ -34,7 +34,7 @@ export const LoginForm: React.FC = () => {
       await login(data.email, data.password);
       const isAuthenticated = await checkAuth();
       if (isAuthenticated) {
-        history.push('/dashboard');
+        history.push('/index/home');
       }
     },
   });

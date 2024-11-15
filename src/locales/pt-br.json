@@ -98,5 +98,11 @@
   },
   "auth": {
     "logout": "Sair"
+  },
+  "index": {
+    "title": "Página inicial",
+    "home": "Lar",
+    "search": "Procurar",
+    "profile": "Perfil"
   }
 }

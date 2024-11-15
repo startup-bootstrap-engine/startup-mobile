@@ -12,13 +12,16 @@
     "backToLogin": "Back to login",
     "or": "or"
   },
-  "dashboard": {
-    "title": "Dashboard",
-    "subtitle": "Welcome to the dashboard.",
-    "description": "Here you can see the private content of the authenticated user.",
+  "index": {
+    "title": "Home Page",
     "home": "Home",
     "search": "Search",
     "profile": "Profile"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Welcome to the dashboard.",
+    "description": "Here you can see the private content of the authenticated user."
   },
   "loginForm": {
     "title": "Sign In",
