@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 
 import { DEFAULT_THEME } from '@constants';
-import { useLocalStorage } from '@hooks';
+import { useLocalStorage } from '@hooks/useLocalStorage';
 import type { Mode, Theme } from '@utils/types';
 
 interface IThemeContext {

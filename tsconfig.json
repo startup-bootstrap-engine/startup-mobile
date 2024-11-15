@@ -23,12 +23,13 @@
       "@config/*": ["src/config/*"],
       "@contexts/*": ["src/contexts/*"],
       "@store/*": ["src/store/*"],
-      "@hooks": ["src/hooks"],
+      "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
       "@components/*": ["src/components/*"],
       "@styles/*": ["src/styles/*"],
       "@locales/*": ["src/locales/*"],
-      "@tests/*": ["src/tests/*"]
+      "@tests/*": ["src/tests/*"],
+      "@schemas/*": ["src/schemas/*"]
     }
   },
   "include": ["src", "setupTests.ts", "vitest.config.ts"],

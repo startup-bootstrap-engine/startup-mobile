@@ -1,26 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from 'zustand';
-
-type ToastType = 'success' | 'error' | 'warning' | 'info';
 
 interface IToastState {
   isVisible: boolean;
   message: string;
-  type: ToastType;
+  type: 'success' | 'error' | 'warning' | 'info';
   duration: number;
   position: 'top' | 'middle' | 'bottom';
-  showToast: (
-    options: Omit<IToastState, 'isVisible' | 'showToast' | 'hideToast'>,
-  ) => void;
+  showToast: (options: { message: string; type?: IToastState['type'] }) => void;
   hideToast: () => void;
 }
 
-export const useToastStore = create<IToastState>((set: any) => ({
-  isVisible: false,
-  message: '',
-  type: 'info',
-  duration: 3000,
-  position: 'bottom',
-  showToast: (options: any) => set({ ...options, isVisible: true }),
-  hideToast: () => set({ isVisible: false }),
-}));
+export const useToastStore = create<IToastState>((set) => {
+  let timeoutId: number;
+
+  return {
+    isVisible: false,
+    message: '',
+    type: 'info',
+    duration: 3000,
+    position: 'top',
+    showToast: ({ message, type = 'info' }) => {
+      window.clearTimeout(timeoutId);
+      set({ message, type, isVisible: true });
+      timeoutId = window.setTimeout(() => {
+        set({ isVisible: false });
+      }, 3000);
+    },
+    hideToast: () => set({ isVisible: false }),
+  };
+});

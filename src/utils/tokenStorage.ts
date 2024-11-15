@@ -15,7 +15,7 @@ export const getToken = async (): Promise<ITokenResponse | null> => {
   const accessToken = await Preferences.get({ key: 'accessToken' });
   const refreshToken = await Preferences.get({ key: 'refreshToken' });
 
-  if (accessToken.value && refreshToken.value) {
+  if (accessToken?.value && refreshToken.value) {
     return {
       accessToken: accessToken.value,
       refreshToken: refreshToken.value,

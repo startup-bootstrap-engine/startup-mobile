@@ -50,8 +50,11 @@
     "changePasswordForm": "Alterar Senha",
     "updatePassword": "Atualizar Senha",
     "error": {
-      "reset": "Falha ao enviar email de redefinição"
-    }
+      "reset": "Falha ao enviar email de redefinição",
+      "change": "Falha ao atualizar a senha"
+    },
+    "resetSuccess": "E-mail de redefinição de senha enviado com sucesso!",
+    "changeSuccess": "Senha atualizada com sucesso!"
   },
   "validations": {
     "required": "Campo obrigatório.",
@@ -69,7 +72,9 @@
     "registerError": "Falha ao criar conta",
     "registeringUser": "Criando sua conta...",
     "existingUser": "Já tem uma conta? Entre",
-    "authenticationVerification": "Verificando..."
+    "authenticationVerification": "Verificando...",
+    "nonExistingUser": "Não tem uma conta? Inscrever-se!",
+    "successMessage": "Conta criada com sucesso!"
   },
   "settings": {
     "title": "Configurações",
@@ -90,5 +95,8 @@
       "pt-BR": "Português (Brasil)",
       "ja": "Japonês"
     }
+  },
+  "auth": {
+    "logout": "Sair"
   }
 }

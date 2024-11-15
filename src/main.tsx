@@ -24,7 +24,7 @@ import '@ionic/react/css/text-transformation.css';
 import './styles/global.css';
 
 const container = document.getElementById('root');
-const root = createRoot(container!);
+const root = createRoot(container as HTMLElement);
 root.render(
   <React.StrictMode>
     <App />

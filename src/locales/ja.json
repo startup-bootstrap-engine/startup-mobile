@@ -50,8 +50,11 @@
     "changePasswordForm": "パスワードの変更",
     "updatePassword": "パスワードを更新",
     "error": {
-      "reset": "リセットメールの送信に失敗しました"
-    }
+      "reset": "リセットメールの送信に失敗しました",
+      "change": "パスワードの更新に失敗しました"
+    },
+    "resetSuccess": "パスワードリセットメールが正常に送信されました。",
+    "changeSuccess": "パスワードが正常に更新されました。"
   },
   "validations": {
     "required": "必須項目です。",
@@ -69,7 +72,9 @@
     "registerError": "アカウントの作成に失敗しました",
     "registeringUser": "アカウントを作成中...",
     "existingUser": "既にアカウントをお持ちですか？ サインイン",
-    "authenticationVerification": "認証中..."
+    "authenticationVerification": "認証中...",
+    "nonExistingUser": "アカウントをお持ちでない場合は、サインアップ！",
+    "successMessage": "アカウントが正常に作成されました。"
   },
   "settings": {
     "title": "設定",
@@ -90,5 +95,8 @@
       "pt-BR": "Português (Brasil)",
       "ja": "日本語"
     }
+  },
+  "auth": {
+    "logout": "ログアウト"
   }
 }

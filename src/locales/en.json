@@ -50,8 +50,11 @@
     "changePasswordForm": "Change Password",
     "updatePassword": "Update Password",
     "error": {
-      "reset": "Failed to send reset email"
-    }
+      "reset": "Failed to send reset email",
+      "change": "Failed to update password"
+    },
+    "resetSuccess": "Password reset email sent successfully!",
+    "changeSuccess": "Password updated successfully!"
   },
   "validations": {
     "required": "Field required.",
@@ -69,7 +72,9 @@
     "registerError": "Failed to create account",
     "registeringUser": "Creating your account...",
     "existingUser": "Already have an account? Sign in",
-    "authenticationVerification": "Verifying..."
+    "nonExistingUser": "Don't have an account? Sign up!",
+    "authenticationVerification": "Verifying...",
+    "successMessage": "Account created successfully!"
   },
   "settings": {
     "title": "Settings",
@@ -90,5 +95,8 @@
       "pt-BR": "Portuguese (Brazil)",
       "ja": "Japanese"
     }
+  },
+  "auth": {
+    "logout": "Logout"
   }
 }

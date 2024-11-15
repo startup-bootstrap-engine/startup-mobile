@@ -36,12 +36,14 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import { MainMenu } from './components/layout/MainMenu';
 import { PrivateRoute } from './components/PrivateRoute';
+import { Toast } from './components/Toast';
 import { ThemeProvider } from './contexts/ThemeProvider';
-import { ChangePasswordForm } from './pages/ChangePasswordForm/ChangePasswordForm';
+import { ChangePasswordForm } from './pages/Auth/ChangePasswordForm';
+import { ForgotPasswordForm } from './pages/Auth/ForgotPasswordForm';
+import { LoginForm } from './pages/Auth/LoginForm';
+import { Logout } from './pages/Auth/Logout';
+import { RegisterForm } from './pages/Auth/RegisterForm';
 import { Dashboard } from './pages/Dashboard/Dashboard';
-import { ForgotPasswordForm } from './pages/ForgotPasswordForm/ForgotPasswordForm';
-import { LoginForm } from './pages/LoginForm/LoginForm';
-import { RegisterForm } from './pages/RegisterForm/RegisterForm';
 import { Language } from './pages/Settings/Language';
 import { Settings } from './pages/Settings/Settings';
 import { Theme } from './pages/Settings/Theme';
@@ -53,6 +55,7 @@ export const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <MainMenu />
+        <Toast />
         <IonRouterOutlet id="main-content">
           <ThemeProvider>
             <Suspense
@@ -79,6 +82,7 @@ export const App: React.FC = () => {
                 component={Dashboard}
                 exact={false}
               />
+              <PrivateRoute path="/logout" component={Logout} exact={true} />
               <Route
                 path="/settings"
                 render={() => <Settings />}

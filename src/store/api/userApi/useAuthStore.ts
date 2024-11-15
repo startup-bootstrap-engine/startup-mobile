@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 
 import { appleLogin } from './appleLogin';
 import { changePassword } from './changePassword';
-import { checkAuth } from './checkAuth';
+import { checkAuthApi } from './checkAuth';
 import { forgotPassword } from './forgotPassword';
 import { getGoogleOAuthUrl } from './googleOAuth';
 import { login } from './login';
@@ -15,25 +15,25 @@ interface IUseStoreAuth {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (_email: string, _password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   signUp: (
-    _email: string,
-    _password: string,
-    _passwordConfirmation: string,
-    _name: string,
+    email: string,
+    password: string,
+    passwordConfirmation: string,
+    name: string,
   ) => Promise<void>;
   logout: () => Promise<void>;
-  checkAuth: () => Promise<void>;
+  isUserAuthenticated: () => Promise<boolean>;
   changePassword: (
-    _currentPassword: string,
-    _newPassword: string,
+    currentPassword: string,
+    newPassword: string,
   ) => Promise<void>;
   forgotPassword: (_email: string) => Promise<void>;
   getGoogleOAuthUrl: () => Promise<void>;
   appleLogin: (
-    _idToken: string,
-    _email: string,
-    _authorizationCode: string,
+    idToken: string,
+    email: string,
+    authorizationCode: string,
   ) => Promise<void>;
 }
 
@@ -68,7 +68,7 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true, error: null });
           await signUp(email, password, passwordConfirmation, name, set);
           set({ isLoading: false });
-        } catch (error: unknown) {
+        } catch (error) {
           set({
             isLoading: false,
             error: (error as Error).message,
@@ -81,23 +81,25 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true });
           await logout(set);
           set({ isLoading: false });
-        } catch (error: unknown) {
+        } catch (error) {
           set({ isLoading: false, error: (error as Error).message });
         }
       },
 
-      checkAuth: async () => {
+      isUserAuthenticated: async () => {
         try {
           set({ isLoading: true });
-          await checkAuth(set);
-          set({ isLoading: false });
-        } catch (error: unknown) {
+          const isAuthenticated = await checkAuthApi(set);
+          set({ isLoading: false, isAuthenticated });
+          return isAuthenticated;
+        } catch (error) {
           set({
             isLoading: false,
             token: null,
             isAuthenticated: false,
             error: (error as Error).message,
           });
+          return false;
         }
       },
 
@@ -106,7 +108,7 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true });
           await changePassword(currentPassword, newPassword, set);
           set({ isLoading: false });
-        } catch (error: unknown) {
+        } catch (error) {
           set({
             isLoading: false,
             error: (error as Error).message,
@@ -119,7 +121,7 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true });
           await forgotPassword(email, set);
           set({ isLoading: false });
-        } catch (error: unknown) {
+        } catch (error) {
           set({
             isLoading: false,
             error: (error as Error).message,
@@ -133,7 +135,7 @@ export const useAuthStore = create<IUseStoreAuth>()(
           const googleOAuthUrl = await getGoogleOAuthUrl();
           window.location.href = googleOAuthUrl;
           set({ isLoading: false });
-        } catch (error: unknown) {
+        } catch (error) {
           set({
             isLoading: false,
             error: (error as Error).message,
@@ -150,7 +152,7 @@ export const useAuthStore = create<IUseStoreAuth>()(
           set({ isLoading: true });
           await appleLogin(idToken, email, authorizationCode, set);
           set({ isLoading: false });
-        } catch (error: unknown) {
+        } catch (error) {
           set({
             isLoading: false,
             error: (error as Error).message,
@@ -160,6 +162,10 @@ export const useAuthStore = create<IUseStoreAuth>()(
     }),
     {
       name: 'auth-store',
+      partialize: (state) => ({
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+      }),
     },
   ),
 );
