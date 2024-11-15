@@ -15,7 +15,10 @@
   "dashboard": {
     "title": "Painel",
     "subtitle": "Bem-vindo ao painel.",
-    "description": "Aqui você pode ver o conteúdo privado do usuário autenticado."
+    "description": "Aqui você pode ver o conteúdo privado do usuário autenticado.",
+    "home": "Lar",
+    "search": "Procurar",
+    "profile": "Perfil"
   },
   "loginForm": {
     "title": "Entrar",

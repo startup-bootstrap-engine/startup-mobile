@@ -15,7 +15,10 @@
   "dashboard": {
     "title": "Dashboard",
     "subtitle": "Welcome to the dashboard.",
-    "description": "Here you can see the private content of the authenticated user."
+    "description": "Here you can see the private content of the authenticated user.",
+    "home": "Home",
+    "search": "Search",
+    "profile": "Profile"
   },
   "loginForm": {
     "title": "Sign In",

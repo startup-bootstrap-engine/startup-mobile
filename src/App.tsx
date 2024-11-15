@@ -77,7 +77,7 @@ export const App: React.FC = () => {
               <PrivateRoute
                 path="/dashboard"
                 component={Dashboard}
-                exact={true}
+                exact={false}
               />
               <Route
                 path="/settings"
