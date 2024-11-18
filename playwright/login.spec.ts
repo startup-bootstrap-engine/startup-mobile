@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 function generateEmail() {
   const randomString = Math.random().toString(36).substring(2, 12); // Gera uma string aleatória de 10 caracteres
@@ -36,7 +36,6 @@ test('Create an Account and login, go to dashboard page', async ({ page }) => {
   await passwordInput.fill('12345678910');
   const loginButton = await page.getByRole('button', { name: 'Sign In' });
   await loginButton.click();
-  const signOutButton = await page.getByRole('button', { name: 'Sign Out' });
-  await page.waitForTimeout(5000);
-  await expect(signOutButton).toBeVisible();
+
+  await expect(page.getByText('Welcome Home')).toBeVisible();
 });
