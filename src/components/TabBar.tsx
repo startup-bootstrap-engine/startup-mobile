@@ -9,7 +9,13 @@ import {
 import React from 'react';
 import { PrivateRoute } from './PrivateRoute';
 import { IonReactRouter } from '@ionic/react-router';
-import type { ITabConfig } from '@utils/types';
+
+export interface ITabConfig {
+  route: string;
+  label: string;
+  icon: string;
+  component: React.ComponentType;
+}
 
 interface IProps {
   tabs: ITabConfig[];

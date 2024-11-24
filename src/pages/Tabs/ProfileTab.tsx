@@ -4,7 +4,9 @@ import {
   IonAvatar,
   IonItem,
   IonLabel,
+  IonIcon,
 } from '@ionic/react';
+import { personCircle } from 'ionicons/icons';
 import React from 'react';
 
 export const ProfileTab: React.FC = () => {
@@ -13,9 +15,9 @@ export const ProfileTab: React.FC = () => {
       <IonContent className="ion-padding">
         <IonItem>
           <IonAvatar slot="start">
-            <img
-              alt="Profile"
-              src="https://ionicframework.com/docs/img/demos/avatar.svg"
+            <IonIcon
+              icon={personCircle}
+              style={{ fontSize: '48px', width: '100%', height: '100%' }}
             />
           </IonAvatar>
           <IonLabel>

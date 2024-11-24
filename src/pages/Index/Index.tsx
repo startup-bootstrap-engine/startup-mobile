@@ -5,9 +5,8 @@ import { IonPage } from '@ionic/react';
 import { HomeTab } from '../Tabs/HomeTab';
 import { SearchTab } from '../Tabs/SearchTab';
 import { ProfileTab } from '../Tabs/ProfileTab';
-import { TabBar } from '@components/TabBar';
+import { TabBar, type ITabConfig } from '@components/TabBar';
 import { home, search, person } from 'ionicons/icons';
-import type { ITabConfig } from '@utils/types';
 
 export const Index: React.FC = () => {
   const { t } = useTranslations();
