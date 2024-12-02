@@ -39,9 +39,15 @@
     "env:switch:dev": "./environment/env-switch.sh dev",
     "env:switch:prod": "./environment/env-switch.sh prod",
     "translate": "node translate.js",
-    "docs": "cd docs && yarn install && yarn dev"
+    "docs": "cd docs && yarn install && yarn dev",
+    "mobile:resources:android": "node environment/android/android-resources.js --android",
+    "mobile:resources:ios": "node environment/android/android-resources.js --ios",
+    "mobile:resources": "node environment/android/android-resources.js --all",
+    "android:build:debug": "./environment/android/android-build.sh debug",
+    "android:build:release": "./environment/android/android-build.sh release"
   },
   "dependencies": {
+    "@capacitor/android": "6.1.2",
     "@capacitor/app": "6.0.1",
     "@capacitor/core": "6.1.2",
     "@capacitor/haptics": "6.0.1",
@@ -56,6 +62,7 @@
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "@vitalets/google-translate-api": "^9.2.0",
+    "cordova-res": "^0.15.4",
     "i18next": "^23.16.1",
     "i18next-browser-languagedetector": "^8.0.0",
     "ionicons": "^7.0.0",
@@ -77,7 +84,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.13",
     "@types/jwt-decode": "^3.1.0",
-    "@types/node": "^22.7.5",
+    "@types/node": "^22.10.1",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^8.12.2",
