@@ -8,6 +8,20 @@ import reactHooks from 'eslint-plugin-react-hooks';
 export default [
   js.configs.recommended,
   {
+    files: ['environment/**/*.js'],
+    languageOptions: {
+      sourceType: 'module',
+      ecmaVersion: 2023,
+      globals: {
+        console: true,
+        process: true,
+      },
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
     files: ['src/**/*.{ts,tsx}'],
     ignores: [
       'node_modules/**',
@@ -96,7 +110,6 @@ export default [
         'error',
         { prefer: 'type-imports' },
       ],
-      //'@typescript-eslint/noImplicitAny': 'error',
 
       // Code quality rules
       'no-shadow': 'error',
