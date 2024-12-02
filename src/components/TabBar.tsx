@@ -1,13 +1,11 @@
 import {
   IonIcon,
   IonLabel,
-  IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
 } from '@ionic/react';
 import React from 'react';
-import { PrivateRoute } from './PrivateRoute';
 
 export interface ITabConfig {
   route: string;
@@ -18,21 +16,13 @@ export interface ITabConfig {
 
 interface IProps {
   tabs: ITabConfig[];
+  children: React.ReactNode;
 }
 
-export const TabBar: React.FC<IProps> = ({ tabs }) => {
+export const TabBar: React.FC<IProps> = ({ tabs, children }) => {
   return (
     <IonTabs>
-      <IonRouterOutlet id="tabs-router">
-        {tabs.map(({ route, component: Component }) => (
-          <PrivateRoute
-            key={`route-${route}`}
-            path={route}
-            component={Component}
-            exact={true}
-          />
-        ))}
-      </IonRouterOutlet>
+      {children}
 
       <IonTabBar slot="bottom">
         {tabs.map(({ route, label, icon }) => (
