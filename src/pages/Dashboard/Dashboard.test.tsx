@@ -6,14 +6,21 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { Dashboard } from './Dashboard';
 
-vi.mock('@store/api/userApi/useAuthStore', () => ({
-  useAuthStore: () => ({
-    isAuthenticated: true,
+vi.mock('@hooks/useTranslations', () => ({
+  useTranslations: () => ({
+    t: (key: string) => {
+      const translations: { [key: string]: string } = {
+        'dashboard.title': 'Dashboard',
+        'dashboard.subtitle': 'Welcome to the dashboard.',
+        'dashboard.description': 'This is your dashboard.',
+      };
+      return translations[key];
+    },
   }),
 }));
 
 describe('Dashboard Component', () => {
-  it('should render the Dashboard and handle logout', async () => {
+  it('should render the Dashboard with correct title, subtitle, and description', () => {
     render(
       <MemoryRouter>
         <Dashboard />
@@ -24,5 +31,6 @@ describe('Dashboard Component', () => {
     expect(
       screen.getByRole('heading', { name: 'Welcome to the dashboard.' }),
     ).toBeInTheDocument();
+    expect(screen.getByText('This is your dashboard.')).toBeInTheDocument();
   });
 });
