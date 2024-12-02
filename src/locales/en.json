@@ -12,6 +12,12 @@
     "backToLogin": "Back to login",
     "or": "or"
   },
+  "index": {
+    "title": "Home Page",
+    "home": "Home",
+    "search": "Search",
+    "profile": "Profile"
+  },
   "dashboard": {
     "title": "Dashboard",
     "subtitle": "Welcome to the dashboard.",

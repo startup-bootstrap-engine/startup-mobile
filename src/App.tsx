@@ -47,6 +47,7 @@ import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Language } from './pages/Settings/Language';
 import { Settings } from './pages/Settings/Settings';
 import { Theme } from './pages/Settings/Theme';
+import { Index } from './pages/Index/Index';
 
 setupIonicReact();
 
@@ -82,6 +83,7 @@ export const App: React.FC = () => {
                 component={Dashboard}
                 exact={true}
               />
+              <PrivateRoute path="/index" component={Index} exact={false} />
               <PrivateRoute path="/logout" component={Logout} exact={true} />
               <Route
                 path="/settings"

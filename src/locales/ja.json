@@ -15,7 +15,10 @@
   "dashboard": {
     "title": "ダッシュボード",
     "subtitle": "ダッシュボードへようこそ。",
-    "description": "ここでは認証されたユーザーの非公開コンテンツを確認できます。"
+    "description": "ここでは認証されたユーザーの非公開コンテンツを確認できます。",
+    "home": "家",
+    "search": "検索",
+    "profile": "プロフィール"
   },
   "loginForm": {
     "title": "サインイン",
@@ -95,5 +98,11 @@
   },
   "auth": {
     "logout": "ログアウト"
+  },
+  "index": {
+    "title": "ホームページ",
+    "home": "家",
+    "search": "検索",
+    "profile": "プロフィール"
   }
 }
