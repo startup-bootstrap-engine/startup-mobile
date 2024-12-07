@@ -44,7 +44,8 @@
     "mobile:resources:ios": "node environment/android/android-resources.js --ios",
     "mobile:resources": "node environment/android/android-resources.js --all",
     "android:build:debug": "./environment/android/android-build.sh debug",
-    "android:build:release": "./environment/android/android-build.sh release"
+    "android:build:release": "./environment/android/android-build.sh release",
+    "configure": "./environment/configure.sh"
   },
   "dependencies": {
     "@capacitor/android": "6.1.2",

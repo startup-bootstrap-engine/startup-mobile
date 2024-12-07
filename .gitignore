@@ -37,3 +37,7 @@ yarn-error.log*
 
 /test-results
 crkdrc.json
+
+
+Dockerfile
+docker-compose.yml
