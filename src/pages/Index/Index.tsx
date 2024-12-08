@@ -1,12 +1,13 @@
 import { PageLayout } from '@components/layout/PageLayout';
-import React from 'react';
-import { useTranslations } from '@hooks/useTranslations';
-import { IonPage } from '@ionic/react';
-import { HomeTab } from '../Tabs/HomeTab';
-import { SearchTab } from '../Tabs/SearchTab';
-import { ProfileTab } from '../Tabs/ProfileTab';
+import { PrivateRoute } from '@components/PrivateRoute';
 import { TabBar, type ITabConfig } from '@components/TabBar';
-import { home, search, person } from 'ionicons/icons';
+import { useTranslations } from '@hooks/useTranslations';
+import { IonPage, IonRouterOutlet } from '@ionic/react';
+import { home, person, search } from 'ionicons/icons';
+import React from 'react';
+import { HomeTab } from '../Tabs/HomeTab';
+import { ProfileTab } from '../Tabs/ProfileTab';
+import { SearchTab } from '../Tabs/SearchTab';
 
 export const Index: React.FC = () => {
   const { t } = useTranslations();
@@ -35,7 +36,18 @@ export const Index: React.FC = () => {
   return (
     <PageLayout showBackButton={false} title={t('index.title')}>
       <IonPage>
-        <TabBar tabs={tabs} />
+        <TabBar tabs={tabs}>
+          <IonRouterOutlet id="tabs-router">
+            {tabs.map(({ route, component: Component }) => (
+              <PrivateRoute
+                key={`route-${route}`}
+                path={route}
+                component={Component}
+                exact={true}
+              />
+            ))}
+          </IonRouterOutlet>
+        </TabBar>
       </IonPage>
     </PageLayout>
   );

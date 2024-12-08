@@ -33,3 +33,11 @@ yarn-error.log*
 
 #iosAndroidFolder
 /ios
+
+
+/test-results
+crkdrc.json
+
+
+Dockerfile
+docker-compose.yml

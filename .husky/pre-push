@@ -1,3 +1,4 @@
 yarn tsc
 yarn lint --fix
 yarn test
+yarn test:e2e

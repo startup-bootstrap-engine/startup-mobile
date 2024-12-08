@@ -91,6 +91,7 @@ export const LoginForm: React.FC = () => {
             fill="clear"
             size="small"
             onClick={() => history.push('/register')}
+            data-testId="register-button"
           >
             {t('registrationForm.nonExistingUser')}
           </IonButton>
