@@ -1,8 +1,10 @@
 // import { IonLoading } from '@ionic/react';
 import React from 'react';
+import type { RouteComponentProps } from 'react-router-dom';
 import { Redirect, Route } from 'react-router-dom';
 
 import { useAuthStore } from '@store/api/userApi/useAuthStore';
+import { useIonToast } from '@ionic/react';
 
 interface IProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,6 +18,8 @@ export const PrivateRoute: React.FC<IProps> = ({
   ...rest
 }) => {
   const { isAuthenticated } = useAuthStore();
+  const [presentToast] = useIonToast();
+
   // const { t } = useTranslations();
 
   // if (isLoading) {
@@ -30,9 +34,33 @@ export const PrivateRoute: React.FC<IProps> = ({
   return (
     <Route
       {...rest}
-      render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
-      }
+      render={(props: RouteComponentProps) => {
+        if (!isAuthenticated) {
+          void presentToast({
+            message: 'You need to log in to access this page.',
+            duration: 3000,
+            color: 'danger',
+            position: 'top',
+          });
+
+          return (
+            <Redirect
+              to={{
+                pathname: '/login',
+                state: {
+                  from: props.location,
+                  error: {
+                    code: 401,
+                    message: 'Unauthorized access. Please log in.',
+                  },
+                },
+              }}
+            />
+          );
+        }
+
+        return <Component {...props} />;
+      }}
     />
   );
 };

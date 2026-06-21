@@ -84,7 +84,7 @@ export const App: React.FC = () => {
                 exact={true}
               />
               <PrivateRoute path="/index" component={Index} exact={false} />
-              <PrivateRoute path="/logout" component={Logout} exact={true} />
+              <Route path="/logout" component={Logout} exact={true} />
               <Route
                 path="/settings"
                 render={() => <Settings />}
